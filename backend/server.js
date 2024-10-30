@@ -1,19 +1,19 @@
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
 
 const app = express();
 const port = 5000;
 
 app.use(cors());
+app.use(express.json());
 
-app.get("/api/substitute", (req, res) => {
-  const subject = req.query.subject;
-  const query = "SELECT * FROM sub_candidates WHERE subjects = ?";
-  db.query(query, [subject], (err, results) => {
-    if (err) throw err;
-    res.json(results);
-  });
+mongoose.connect("mongodb://localhost:27017/tuuraaja", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
+
+app.get("/api/substitute", (req, res) => {});
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
