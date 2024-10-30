@@ -3,13 +3,21 @@ import SubjectDropdown from "./components/filters/SubjectDropdown";
 import CalendarComponent from "./components/filters/CalendarComponent";
 import { useState } from "react";
 import { Button } from "@mui/material";
+import axios from "axios";
 
 export default function Home() {
+  const [candidates, setCandidates] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedSubject, setSelectedSubject] = useState("");
 
   const fetchSubs = async () => {
     console.log("finding subs...");
+    try {
+      const response = await axios.get("http://localhost:5000/api/substitute");
+      setCandidates(response.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -24,6 +32,14 @@ export default function Home() {
           onDateChange={setSelectedDate}
         />
         <Button onClick={fetchSubs}>Find!</Button>
+        <ul>
+          {candidates.map((candidate) => (
+            <li key={candidate.id}>
+              {candidate.name} - {candidate.phone_number} - Subjects:{" "}
+              {candidate.subjects}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
