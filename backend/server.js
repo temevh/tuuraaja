@@ -20,10 +20,13 @@ db.connect((err) => {
 });
 
 app.get("/api/substitute", (req, res) => {
-  db.query("SELECT * FROM sub_candidates", (err, results) => {
-    if (err) throw err;
-    res.json(results);
-  });
+  db.query(
+    "SELECT * FROM sub_candidates WHERE first_name = Alisa",
+    (err, results) => {
+      if (err) throw err;
+      res.json(results);
+    }
+  );
 });
 
 app.listen(port, () => {

@@ -10,10 +10,14 @@ export default function Home() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedSubject, setSelectedSubject] = useState("");
 
-  const fetchSubs = async () => {
+  const fetchSubs = async (first_name) => {
     console.log("finding subs...");
     try {
-      const response = await axios.get("http://localhost:5000/api/substitute");
+      const response = await axios.get("http://localhost:5000/api/substitute", {
+        params: {
+          first_name: first_name,
+        },
+      });
       setCandidates(response.data);
     } catch (err) {
       console.log(err);
@@ -31,7 +35,7 @@ export default function Home() {
           selectedDate={selectedDate}
           onDateChange={setSelectedDate}
         />
-        <Button onClick={fetchSubs}>Find!</Button>
+        <Button onClick={fetchSubs("Alisa")}>Find!</Button>
         <ul>
           {candidates.map((candidate) => (
             <li key={candidate.id}>
