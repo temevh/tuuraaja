@@ -6,17 +6,16 @@ import { Button } from "@mui/material";
 import axios from "axios";
 
 export default function Home() {
-  const [candidates, setCandidates] = useState([]);
+  const [substitutes, setSubstitutes] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedSubject, setSelectedSubject] = useState("");
 
   const fetchSubs = async () => {
-    console.log("finding subs...");
     try {
-      const response = await axios.get("http://localhost:5000/api/substitute");
-      setCandidates(response.data);
-    } catch (err) {
-      console.log(err);
+      const response = await axios.get("http://localhost:5000/api/substitutes");
+      setSubstitutes(response.data);
+    } catch (error) {
+      console.error("Error fetching subs", error);
     }
   };
 
@@ -33,10 +32,10 @@ export default function Home() {
         />
         <Button onClick={fetchSubs}>Find!</Button>
         <ul>
-          {candidates.map((candidate) => (
-            <li key={candidate.id}>
-              {candidate.first_name}, {candidate.last_name} Subjects:{" "}
-              {candidate.subjects}
+          {substitutes.map((candidate) => (
+            <li key={candidate._id.$oid}>
+              {candidate.firstName} {candidate.lastName}, Subjects:{" "}
+              {candidate.aineet.join(", ")}
             </li>
           ))}
         </ul>

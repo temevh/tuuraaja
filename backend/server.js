@@ -1,22 +1,39 @@
 const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
-const Sijainen = require("./schemas/sijainenModel");
-
+const { MongoClient } = require("mongodb");
 const app = express();
 const port = 5000;
 
-app.use(cors());
-app.use(express.json());
+const uri = "mongodb://localhost:27017";
 
-mongoose.connect("mongodb://localhost:27017/tuuraaja");
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
-const sub = mongoose.model("sijaiset", Sijainen);
+async function connectToDatabase() {
+  try {
+    await client.connect();
+    console.log("connected to db");
+  } catch (err) {
+    console.error(err);
+  }
+}
 
-app.get("/api/substitute", (req, res) => {
-  res.json(sub.find());
+connectToDatabase();
+
+app.get("/api/substitutes", async (req, res) => {
+  try {
+    const database = client.db("tuuraja");
+    const collection = database.collection("sijaiset");
+
+    const substitutes = await collection.find({}).toArray();
+
+    res.status(200).json(substitutes);
+  } catch (err) {
+    res.status(500).json({ error: "An error occured while retrieving data" });
+  }
 });
 
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+  console.log("server running on http://localhost:${port}");
 });
