@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const Sijainen = require("./schemas/sijainenModel");
 
 const app = express();
 const port = 5000;
