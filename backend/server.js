@@ -1,6 +1,8 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
 const app = express();
+const cors = require("cors");
+
 const port = 5000;
 
 const uri = "mongodb://localhost:27017";
@@ -21,9 +23,11 @@ async function connectToDatabase() {
 
 connectToDatabase();
 
+app.use(cors());
+
 app.get("/api/substitutes", async (req, res) => {
   try {
-    const database = client.db("tuuraja");
+    const database = client.db("tuuraaja");
     const collection = database.collection("sijaiset");
 
     const substitutes = await collection.find({}).toArray();

@@ -14,6 +14,7 @@ export default function Home() {
     try {
       const response = await axios.get("http://localhost:5000/api/substitutes");
       setSubstitutes(response.data);
+      console.log(response);
     } catch (error) {
       console.error("Error fetching subs", error);
     }
