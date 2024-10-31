@@ -13,11 +13,7 @@ export default function Home() {
   const fetchSubs = async () => {
     console.log("finding subs...");
     try {
-      const response = await axios.get("http://localhost:5000/api/substitute", {
-        params: {
-          subject: selectedSubject,
-        },
-      });
+      const response = await axios.get("http://localhost:5000/api/substitute");
       setCandidates(response.data);
     } catch (err) {
       console.log(err);

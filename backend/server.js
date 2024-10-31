@@ -9,12 +9,13 @@ const port = 5000;
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect("mongodb://localhost:27017/tuuraaja", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect("mongodb://localhost:27017/tuuraaja");
 
-app.get("/api/substitute", (req, res) => {});
+const sub = mongoose.model("sijaiset", Sijainen);
+
+app.get("/api/substitute", (req, res) => {
+  res.json(sub.find());
+});
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
