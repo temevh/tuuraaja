@@ -5,6 +5,8 @@ import { useState } from "react";
 import { Button } from "@mui/material";
 import axios from "axios";
 
+import ListEntry from "./components/list/ListEntry";
+
 export default function Home() {
   const [substitutes, setSubstitutes] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -41,10 +43,11 @@ export default function Home() {
         <Button onClick={fetchSubs}>Find!</Button>
         <ul>
           {substitutes.map((candidate) => (
-            <li key={candidate._id.$oid}>
-              {candidate.firstName} {candidate.lastName}, Subjects:{" "}
-              {candidate.aineet.join(", ")}
-            </li>
+            <ListEntry
+              firstName={candidate.firstName}
+              lastName={candidate.lastName}
+              subjects={candidate.subjects.join(", ")}
+            />
           ))}
         </ul>
       </div>

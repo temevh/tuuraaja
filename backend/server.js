@@ -28,12 +28,12 @@ app.use(cors());
 app.get("/api/substitutes", async (req, res) => {
   try {
     const database = client.db("tuuraaja");
-    const collection = database.collection("sijaiset");
+    const collection = database.collection("substitutes");
 
     const { getSubject } = req.query;
     let query = {};
     if (getSubject) {
-      query = { aineet: getSubject };
+      query = { subjects: getSubject };
     }
 
     const substitutes = await collection.find(query).toArray();
