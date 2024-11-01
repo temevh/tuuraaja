@@ -12,7 +12,14 @@ export default function Home() {
 
   const fetchSubs = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/substitutes");
+      const response = await axios.get(
+        "http://localhost:5000/api/substitutes",
+        {
+          params: {
+            getSubject: selectedSubject,
+          },
+        }
+      );
       setSubstitutes(response.data);
       console.log(response);
     } catch (error) {

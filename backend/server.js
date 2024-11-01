@@ -30,7 +30,13 @@ app.get("/api/substitutes", async (req, res) => {
     const database = client.db("tuuraaja");
     const collection = database.collection("sijaiset");
 
-    const substitutes = await collection.find({}).toArray();
+    const { getSubject } = req.query;
+    let query = {};
+    if (getSubject) {
+      query = { aineet: getSubject };
+    }
+
+    const substitutes = await collection.find(query).toArray();
 
     res.status(200).json(substitutes);
   } catch (err) {
