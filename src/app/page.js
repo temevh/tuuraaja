@@ -30,23 +30,29 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full bg-amber-600">
+    <div className="min-h-screen w-full bg-amber-600 flex justify-center items-center p-6">
       <div className="w-1/2 grid grid-cols-1 gap-y-6">
         <SubjectDropdown
           selectedSubject={selectedSubject}
           onSubjectChange={setSelectedSubject}
         />
-        <CalendarComponent
-          selectedDate={selectedDate}
-          onDateChange={setSelectedDate}
-        />
+        <div>
+          <CalendarComponent
+            selectedDate={selectedDate}
+            onDateChange={setSelectedDate}
+          />
+        </div>
         <Button onClick={fetchSubs}>Find!</Button>
+        <p className="font-bold text-black text-xl">
+          People who know {selectedSubject}
+        </p>
         <ul>
           {substitutes.map((candidate) => (
             <ListEntry
               firstName={candidate.firstName}
               lastName={candidate.lastName}
               subjects={candidate.subjects.join(", ")}
+              phoneNumber={candidate.phoneNumber}
             />
           ))}
         </ul>

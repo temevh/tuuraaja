@@ -37,6 +37,7 @@ app.get("/api/substitutes", async (req, res) => {
     }
 
     const substitutes = await collection.find(query).toArray();
+    console.log(substitutes);
 
     res.status(200).json(substitutes);
   } catch (err) {
