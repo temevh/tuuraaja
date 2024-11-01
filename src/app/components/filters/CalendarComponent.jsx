@@ -1,16 +1,28 @@
+"use client";
 import React from "react";
-import Calendar from "react-calendar";
+import { useState } from "react";
+import dayjs from "dayjs";
+import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 
-const CalendarComponent = ({ selectedDate, onDateChange }) => {
-  const handleChange = (date) => {
-    console.log("changed date to", date);
-    onDateChange(date);
+const CalendarComponent = ({ onDateChange }) => {
+  const [value, setValue] = useState(dayjs());
+
+  const handleDateChange = (newValue) => {
+    setValue(newValue);
+    onDateChange(newValue);
   };
 
   return (
-    <div>
-      <Calendar onChange={handleChange} value={selectedDate} />
-    </div>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DemoContainer components={["DateCalendar", "DateCalendar"]}>
+        <DemoItem label="Select a date">
+          <DateCalendar value={value} onChange={handleDateChange} />
+        </DemoItem>
+      </DemoContainer>
+    </LocalizationProvider>
   );
 };
 

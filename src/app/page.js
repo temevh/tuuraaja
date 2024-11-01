@@ -4,12 +4,13 @@ import CalendarComponent from "./components/filters/CalendarComponent";
 import { useState } from "react";
 import { Button } from "@mui/material";
 import axios from "axios";
+import dayjs from "dayjs";
 
 import ListEntry from "./components/list/ListEntry";
 
 export default function Home() {
   const [substitutes, setSubstitutes] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(dayjs());
   const [selectedSubject, setSelectedSubject] = useState("");
 
   const fetchSubs = async () => {
@@ -18,7 +19,8 @@ export default function Home() {
         "http://localhost:5000/api/substitutes",
         {
           params: {
-            getSubject: selectedSubject,
+            subject: selectedSubject,
+            date: selectedDate,
           },
         }
       );
@@ -37,12 +39,11 @@ export default function Home() {
           onSubjectChange={setSelectedSubject}
         />
         <div>
-          <CalendarComponent
-            selectedDate={selectedDate}
-            onDateChange={setSelectedDate}
-          />
+          <CalendarComponent onDateChange={setSelectedDate} />
         </div>
-        <Button onClick={fetchSubs}>Find!</Button>
+        <Button onClick={fetchSubs} className="bg-amber-400 w-1/4 ">
+          <p className="text-black font-bold text-md">Etsi sijainen</p>
+        </Button>
         <p className="font-bold text-black text-xl">
           People who know {selectedSubject}
         </p>

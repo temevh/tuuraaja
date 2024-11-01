@@ -30,14 +30,15 @@ app.get("/api/substitutes", async (req, res) => {
     const database = client.db("tuuraaja");
     const collection = database.collection("substitutes");
 
-    const { getSubject } = req.query;
+    const { subject, date } = req.query;
+    console.log("subject: ", subject, "date:", date);
     let query = {};
-    if (getSubject) {
-      query = { subjects: getSubject };
+    if (subject) {
+      query = { subjects: subject };
     }
 
     const substitutes = await collection.find(query).toArray();
-    console.log(substitutes);
+    //console.log(substitutes);
 
     res.status(200).json(substitutes);
   } catch (err) {
