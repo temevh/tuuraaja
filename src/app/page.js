@@ -1,12 +1,12 @@
 "use client";
 import SubjectDropdown from "./components/filters/SubjectDropdown";
 import CalendarComponent from "./components/filters/CalendarComponent";
+import SubList from "./components/list/SubList";
+
 import { useState } from "react";
 import { Button } from "@mui/material";
 import axios from "axios";
 import dayjs from "dayjs";
-
-import ListEntry from "./components/list/ListEntry";
 
 export default function Home() {
   const [substitutes, setSubstitutes] = useState([]);
@@ -47,16 +47,7 @@ export default function Home() {
         <p className="font-bold text-black text-xl">
           People who know {selectedSubject}
         </p>
-        <ul>
-          {substitutes.map((candidate) => (
-            <ListEntry
-              firstName={candidate.firstName}
-              lastName={candidate.lastName}
-              subjects={candidate.subjects.join(", ")}
-              phoneNumber={candidate.phoneNumber}
-            />
-          ))}
-        </ul>
+        <SubList substitutes={substitutes} />
       </div>
     </div>
   );
