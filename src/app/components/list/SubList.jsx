@@ -2,14 +2,19 @@ import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 
 const columns = [
-  { field: "id", headerName: "ID", width: 90 },
-  { field: "firstName", headerName: "First name", width: 150, editable: true },
-  { field: "lastName", headerName: "Last name", width: 150, editable: true },
+  { field: "firstName", headerName: "Etunimi", width: 100, editable: false },
+  { field: "lastName", headerName: "Sukunimi", width: 120, editable: false },
   {
     field: "phoneNumber",
     headerName: "Phone Number",
     width: 150,
-    editable: true,
+    editable: false,
+  },
+  {
+    field: "email",
+    headerName: "Sähköposti",
+    width: 200,
+    editable: false,
   },
 ];
 
@@ -19,6 +24,7 @@ const SubList = ({ substitutes }) => {
     firstName: substitute.firstName,
     lastName: substitute.lastName,
     phoneNumber: substitute.phoneNumber,
+    email: substitute.email,
     subjects: substitute.subjects,
   }));
 
