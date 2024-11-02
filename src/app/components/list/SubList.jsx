@@ -6,7 +6,7 @@ const columns = [
   { field: "lastName", headerName: "Sukunimi", width: 120, editable: false },
   {
     field: "phoneNumber",
-    headerName: "Phone Number",
+    headerName: "Puhelinnumero",
     width: 150,
     editable: false,
   },
