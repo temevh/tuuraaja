@@ -15,13 +15,7 @@ const CalendarComponent = ({ onDateChange }) => {
   };
 
   return (
-    <LocalizationProvider
-      dateAdapter={AdapterDayjs}
-      adapterLocale="fi"
-      localeText={
-        fiFi.components.MuiLocalizationProvider.defaultProps.localeText
-      }
-    >
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fi">
       <DateCalendar
         value={value}
         onChange={handleDateChange}
