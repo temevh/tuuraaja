@@ -44,9 +44,7 @@ export default function Home() {
         <Button onClick={fetchSubs} className="bg-amber-400 w-1/4 ">
           <p className="text-black font-bold text-md">Etsi sijainen</p>
         </Button>
-        <p className="font-bold text-black text-xl">
-          People who know {selectedSubject}
-        </p>
+        <p className="font-bold text-black text-xl">{selectedSubject}</p>
         <SubList substitutes={substitutes} />
       </div>
     </div>
