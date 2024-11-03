@@ -23,13 +23,14 @@ async function connectToDatabase() {
 
 connectToDatabase();
 
+const database = client.db("tuuraaja");
+const collection = database.collection("substitutes");
+
 app.use(cors());
+app.use(express.json());
 
 app.get("/api/substitutes", async (req, res) => {
   try {
-    const database = client.db("tuuraaja");
-    const collection = database.collection("substitutes");
-
     const { subject, date } = req.query;
     console.log("subject: ", subject, "date:", date);
     let query = {};
@@ -41,6 +42,19 @@ app.get("/api/substitutes", async (req, res) => {
     //console.log(substitutes);
 
     res.status(200).json(substitutes);
+  } catch (err) {
+    res.status(500).json({ error: "An error occured while retrieving data" });
+  }
+});
+
+app.post("/api/addsub", async (req, res) => {
+  try {
+    const newSub = req.body;
+    console.log("new sub data", newSub);
+
+    const result = await collection.insertOne(newSub);
+
+    res.status(201).json({ message: "Substitute added successfully", result });
   } catch (err) {
     res.status(500).json({ error: "An error occured while retrieving data" });
   }

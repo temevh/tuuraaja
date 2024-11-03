@@ -2,19 +2,20 @@
 import { useState } from "react";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
+import axios from "axios";
 
 const SubInfo = () => {
-  const [etunimi, setEtunimi] = useState("");
-  const [sukunimi, setSukunimi] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState(0);
 
-  const updateEtunimi = (event) => {
-    setEtunimi(event.target.value);
+  const updateFirstname = (event) => {
+    setFirstname(event.target.value);
   };
 
-  const updateSukunimi = (event) => {
-    setSukunimi(event.target.value);
+  const updateLastname = (event) => {
+    setLastname(event.target.value);
   };
 
   const updateEmail = (event) => {
@@ -25,11 +26,23 @@ const SubInfo = () => {
     setNumber(event.target.value);
   };
 
-  const sendInfo = () => {
-    console.log(etunimi);
-    console.log(sukunimi);
+  const sendInfo = async () => {
+    console.log(firstname);
+    console.log(lastname);
     console.log(email);
     console.log(number);
+
+    try {
+      const response = await axios.post("http://localhost:5000/api/addsub", {
+        firstName: firstname,
+        lastName: lastname,
+        phoneNumber: number,
+        email: email,
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error sending info:", error);
+    }
   };
 
   return (
@@ -39,13 +52,13 @@ const SubInfo = () => {
           id="outlined-basic"
           label="Etunimi"
           variant="outlined"
-          onChange={updateEtunimi}
+          onChange={updateFirstname}
         />
         <TextField
           id="outlined-basic"
           label="Sukunimi"
           variant="outlined"
-          onChange={updateSukunimi}
+          onChange={updateLastname}
         />
       </div>
       <div className="flex gap-6">
