@@ -1,20 +1,29 @@
 const express = require("express");
-const { MongoClient } = require("mongodb");
+const { MongoClient, ServerApiVersion } = require("mongodb");
 const app = express();
 const cors = require("cors");
+require("dotenv").config();
 
 const port = 5000;
 
-const uri = "mongodb://localhost:27017";
+//const uri = "mongodb://localhost:27017";
+const uri = process.env.DB_URI;
 
 const client = new MongoClient(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  },
 });
 
 async function connectToDatabase() {
   try {
     await client.connect();
+    await client.db("admin").command({ ping: 1 });
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!"
+    );
     console.log("connected to db");
   } catch (err) {
     console.error(err);
