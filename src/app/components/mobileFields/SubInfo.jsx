@@ -10,13 +10,14 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import { Theme, useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
 
 const SubInfo = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState(0);
-  const [course, setCourse] = useState([]);
+  const [subject, setSubject] = useState([]);
 
   const theme = useTheme();
 
@@ -53,7 +54,7 @@ const SubInfo = () => {
     const {
       target: { value },
     } = event;
-    setCourse(typeof value === "string" ? value.split(",") : value);
+    setSubject(typeof value === "string" ? value.split(",") : value);
   };
 
   function getStyles(name, personName, theme) {
@@ -113,6 +114,30 @@ const SubInfo = () => {
           type="number"
           onChange={updateNumber}
         />
+      </div>
+      <div className="w-full">
+        <FormControl>
+          <InputLabel>Aineet</InputLabel>
+          <Select
+            multiple
+            value={subject}
+            onChange={handleChange}
+            renderValue={(selected) => (
+              <Box>
+                {selected.map((value) => (
+                  <Chip key={value} label={value} />
+                ))}
+              </Box>
+            )}
+            MenuProps={MenuProps}
+          >
+            {subjects.map((subject) => (
+              <MenuItem key={subject} value={subject}>
+                {subject}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </div>
       <Button className="bg-green-500 mt-8" onClick={sendInfo}>
         <p className="text-xl text-black">Lähetä!</p>
