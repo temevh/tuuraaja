@@ -3,13 +3,11 @@ import { useState } from "react";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import axios from "axios";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
-import { Theme, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 
 const SubInfo = () => {
@@ -17,11 +15,15 @@ const SubInfo = () => {
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState(0);
-  const [subject, setSubject] = useState([]);
+  const [subjects, setSubjects] = useState([]);
 
-  const theme = useTheme();
-
-  const subjects = ["matikka", "historia", "biologia", "äidinkieli", "kemia"];
+  const subjectList = [
+    "Matikka",
+    "Historia",
+    "Biologia",
+    "Äidinkieli",
+    "Kemia",
+  ];
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -54,22 +56,15 @@ const SubInfo = () => {
     const {
       target: { value },
     } = event;
-    setSubject(typeof value === "string" ? value.split(",") : value);
+    setSubjects(typeof value === "string" ? value.split(",") : value);
   };
-
-  function getStyles(name, personName, theme) {
-    return {
-      fontWeight: personName.includes(name)
-        ? theme.typography.fontWeightMedium
-        : theme.typography.fontWeightRegular,
-    };
-  }
 
   const sendInfo = async () => {
     console.log(firstname);
     console.log(lastname);
     console.log(email);
     console.log(number);
+    console.log(subjects);
 
     try {
       const response = await axios.post("http://localhost:5000/api/addsub", {
@@ -77,6 +72,7 @@ const SubInfo = () => {
         lastName: lastname,
         phoneNumber: number,
         email: email,
+        subjects: subjects,
       });
       console.log(response.data);
     } catch (error) {
@@ -115,12 +111,12 @@ const SubInfo = () => {
           onChange={updateNumber}
         />
       </div>
-      <div className="w-full">
-        <FormControl>
+      <div className="pt-4">
+        <FormControl sx={{ width: 300 }}>
           <InputLabel>Aineet</InputLabel>
           <Select
             multiple
-            value={subject}
+            value={subjects}
             onChange={handleChange}
             renderValue={(selected) => (
               <Box>
@@ -131,7 +127,7 @@ const SubInfo = () => {
             )}
             MenuProps={MenuProps}
           >
-            {subjects.map((subject) => (
+            {subjectList.map((subject) => (
               <MenuItem key={subject} value={subject}>
                 {subject}
               </MenuItem>
