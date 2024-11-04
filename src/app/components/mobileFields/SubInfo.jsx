@@ -3,12 +3,35 @@ import { useState } from "react";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import axios from "axios";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Chip from "@mui/material/Chip";
+import { Theme, useTheme } from "@mui/material/styles";
 
 const SubInfo = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState(0);
+  const [course, setCourse] = useState([]);
+
+  const theme = useTheme();
+
+  const subjects = ["matikka", "historia", "biologia", "äidinkieli", "kemia"];
+
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
 
   const updateFirstname = (event) => {
     setFirstname(event.target.value);
@@ -25,6 +48,21 @@ const SubInfo = () => {
   const updateNumber = (event) => {
     setNumber(event.target.value);
   };
+
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setCourse(typeof value === "string" ? value.split(",") : value);
+  };
+
+  function getStyles(name, personName, theme) {
+    return {
+      fontWeight: personName.includes(name)
+        ? theme.typography.fontWeightMedium
+        : theme.typography.fontWeightRegular,
+    };
+  }
 
   const sendInfo = async () => {
     console.log(firstname);
