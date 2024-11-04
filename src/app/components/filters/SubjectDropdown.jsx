@@ -4,7 +4,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
 const SubjectDropdown = ({ selectedSubject, onSubjectChange }) => {
-  const subjects = ["Matikka", "Historia", "Biologia", "Äidinkieli"];
+  const subjects = ["Matikka", "Historia", "Biologia", "Äidinkieli", "Kemia"];
 
   const handleChange = (event) => {
     onSubjectChange(event.target.value);
