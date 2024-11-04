@@ -14,8 +14,9 @@ const SubInfo = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
-  const [number, setNumber] = useState(0);
+  const [phonenumber, setPhonenumber] = useState(null);
   const [subjects, setSubjects] = useState([]);
+  const [sent, setSent] = useState(false);
 
   const subjectList = [
     "Matikka",
@@ -49,7 +50,7 @@ const SubInfo = () => {
   };
 
   const updateNumber = (event) => {
-    setNumber(event.target.value);
+    setPhonenumber(event.target.value);
   };
 
   const handleChange = (event) => {
@@ -59,22 +60,26 @@ const SubInfo = () => {
     setSubjects(typeof value === "string" ? value.split(",") : value);
   };
 
-  const sendInfo = async () => {
-    console.log(firstname);
-    console.log(lastname);
-    console.log(email);
-    console.log(number);
-    console.log(subjects);
+  const resetForm = () => {
+    setFirstname("");
+    setLastname("");
+    setEmail("");
+    setPhonenumber(null);
+    setSubjects([]);
+    setSent(true);
+  };
 
+  const sendInfo = async () => {
     try {
       const response = await axios.post("http://localhost:5000/api/addsub", {
         firstName: firstname,
         lastName: lastname,
-        phoneNumber: number,
+        phoneNumber: phonenumber,
         email: email,
         subjects: subjects,
       });
       console.log(response.data);
+      resetForm(); // Reset the form after successful submission
     } catch (error) {
       console.error("Error sending info:", error);
     }
@@ -88,12 +93,14 @@ const SubInfo = () => {
           label="Etunimi"
           variant="outlined"
           onChange={updateFirstname}
+          value={firstname}
         />
         <TextField
           id="outlined-basic"
           label="Sukunimi"
           variant="outlined"
           onChange={updateLastname}
+          value={lastname}
         />
       </div>
       <div className="flex gap-6">
@@ -102,6 +109,7 @@ const SubInfo = () => {
           label="Sähköposti"
           variant="outlined"
           onChange={updateEmail}
+          value={email}
         />
         <TextField
           id="outlined-basic"
@@ -109,6 +117,7 @@ const SubInfo = () => {
           variant="outlined"
           type="number"
           onChange={updateNumber}
+          value={phonenumber === null ? "" : phonenumber}
         />
       </div>
       <div className="pt-4">
@@ -136,7 +145,7 @@ const SubInfo = () => {
         </FormControl>
       </div>
       <Button className="bg-green-500 mt-8" onClick={sendInfo}>
-        <p className="text-xl text-black">Lähetä!</p>
+        <p className="text-xl text-black">{sent ? "lähetetty" : "lähetä"}</p>
       </Button>
     </div>
   );
