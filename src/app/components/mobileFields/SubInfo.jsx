@@ -9,10 +9,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import Box from "@mui/material/Box";
-
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
+import SubCalendar from "./SubCalendar";
 
 const SubInfo = () => {
   const [firstname, setFirstname] = useState("");
@@ -83,7 +80,7 @@ const SubInfo = () => {
         subjects: subjects,
       });
       console.log(response.data);
-      resetForm(); // Reset the form after successful submission
+      resetForm();
     } catch (error) {
       console.error("Error sending info:", error);
     }
@@ -150,9 +147,7 @@ const SubInfo = () => {
         <p className="text-black text-xl text-center mt-4">
           Valitse mahdolliset päivät
         </p>
-        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fi">
-          <DateCalendar displayWeekNumber />
-        </LocalizationProvider>
+        <SubCalendar />
       </div>
       <Button className="bg-green-500 mt-8" onClick={sendInfo}>
         <p className="text-xl text-black">{sent ? "lähetetty" : "lähetä"}</p>
