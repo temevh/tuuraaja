@@ -40,7 +40,7 @@ app.use(express.json());
 app.get("/api/substitutes", async (req, res) => {
   try {
     const { subject, date } = req.query;
-    console.log("subject: ", subject, "date:", date);
+    console.log("subject:", subject, "date:", date);
     let query = {};
     if (subject) {
       query = { subjects: subject };
