@@ -6,7 +6,6 @@ require("dotenv").config();
 
 const port = 5000;
 
-//const uri = "mongodb://localhost:27017";
 const uri = process.env.DB_URI;
 
 const client = new MongoClient(uri, {
@@ -48,7 +47,6 @@ app.get("/api/substitutes", async (req, res) => {
     }
 
     const substitutes = await collection.find(query).toArray();
-    //console.log(substitutes);
 
     res.status(200).json(substitutes);
   } catch (err) {
@@ -70,5 +68,5 @@ app.post("/api/addsub", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log("server running on http://localhost:${port}");
+  console.log("server running on http://localhost:" + port);
 });

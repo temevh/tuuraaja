@@ -4,14 +4,14 @@ import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
-import { fiFI } from "@mui/x-date-pickers/locales";
 
 const CalendarComponent = ({ onDateChange }) => {
   const [value, setValue] = useState(dayjs());
 
   const handleDateChange = (newValue) => {
+    console.log(newValue.date(), newValue.month(), newValue.year());
     setValue(newValue);
-    onDateChange(newValue);
+    onDateChange([newValue.date(), newValue.month(), newValue.year()]);
   };
 
   return (
