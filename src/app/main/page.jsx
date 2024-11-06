@@ -1,12 +1,11 @@
 "use client";
-import SubjectDropdown from "./components/filters/SubjectDropdown";
-import CalendarComponent from "./components/filters/CalendarComponent";
-import SubList from "./components/list/SubList";
+import SubjectDropdown from "./components/SubjectDropdown";
+import CalendarComponent from "./components/CalendarComponent";
+import SubList from "./components/SubList";
 
 import { useState } from "react";
 import { Button } from "@mui/material";
 import axios from "axios";
-import dayjs from "dayjs";
 
 export default function Home() {
   const [substitutes, setSubstitutes] = useState([]);

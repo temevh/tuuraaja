@@ -1,4 +1,4 @@
-import SubInfo from "../components/mobileFields/SubInfo";
+import SubInfo from "./components/SubInfo";
 
 export default function Page() {
   return (

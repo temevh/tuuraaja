@@ -3,13 +3,13 @@ import { useState } from "react";
 import { Button } from "@mui/material";
 import axios from "axios";
 
-import SubCalendar from "./SubCalendar";
+import SubCalendar from "./fields/SubCalendar";
 
-import FirstNameField from "./FirstNameField";
-import LastNameField from "./LastNameField";
-import EmailField from "./EmailField";
-import PhoneNumberField from "./PhoneNumberField";
-import SubjectsField from "./SubjectsField";
+import FirstNameField from "./fields/FirstNameField";
+import LastNameField from "./fields/LastNameField";
+import EmailField from "./fields/EmailField";
+import PhoneNumberField from "./fields/PhoneNumberField";
+import SubjectsField from "./fields/SubjectsField";
 
 const SubInfo = () => {
   const [firstname, setFirstname] = useState("");
