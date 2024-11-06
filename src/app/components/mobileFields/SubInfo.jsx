@@ -1,20 +1,15 @@
 "use client";
 import { useState } from "react";
-import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import axios from "axios";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import Chip from "@mui/material/Chip";
-import Box from "@mui/material/Box";
+
 import SubCalendar from "./SubCalendar";
 
 import FirstNameField from "./FirstNameField";
 import LastNameField from "./LastNameField";
 import EmailField from "./EmailField";
 import PhoneNumberField from "./PhoneNumberField";
+import SubjectsField from "./SubjectsField";
 
 const SubInfo = () => {
   const [firstname, setFirstname] = useState("");
@@ -32,17 +27,6 @@ const SubInfo = () => {
     "Äidinkieli",
     "Kemia",
   ];
-
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
-      },
-    },
-  };
 
   const updateFirstname = (event) => {
     setFirstname(event.target.value);
@@ -77,7 +61,7 @@ const SubInfo = () => {
     }
   };
 
-  const handleChange = (event) => {
+  const updateSubjects = (event) => {
     const {
       target: { value },
     } = event;
@@ -95,12 +79,11 @@ const SubInfo = () => {
   };
 
   const sendInfo = async () => {
-    console.log(selectedDates);
     try {
       const response = await axios.post("http://localhost:5000/api/addsub", {
         firstName: firstname,
         lastName: lastname,
-        phoneNumber: phonenumber,
+        phoneNumber: phoneNumber,
         email: email,
         subjects: subjects,
         dates: selectedDates,
@@ -128,29 +111,12 @@ const SubInfo = () => {
           updateNumber={updateNumber}
         />
       </div>
+      <SubjectsField
+        subjectList={subjectList}
+        selectedSubjects={subjects}
+        updateSelectedSubjects={updateSubjects}
+      />
       <div className="pt-4">
-        <FormControl sx={{ width: 300 }}>
-          <InputLabel>Aineet</InputLabel>
-          <Select
-            multiple
-            value={subjects}
-            onChange={handleChange}
-            renderValue={(selected) => (
-              <Box>
-                {selected.map((value) => (
-                  <Chip key={value} label={value} />
-                ))}
-              </Box>
-            )}
-            MenuProps={MenuProps}
-          >
-            {subjectList.map((subject) => (
-              <MenuItem key={subject} value={subject}>
-                {subject}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
         <p className="text-black text-xl text-center mt-4">
           Valitse mahdolliset päivät
         </p>
