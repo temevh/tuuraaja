@@ -16,11 +16,21 @@ const SubCalendar = () => {
     );
   };
 
-  const dayClicked = (event) => {
-    if (selectedDates.includes(event)) {
-      alert("already included");
+  const dayClicked = (date) => {
+    const dateString = date.toDateString();
+    const isAlreadySelected = selectedDates.some(
+      (highlightedDate) => highlightedDate.toDateString() === dateString
+    );
+
+    if (isAlreadySelected) {
+      setSelectedDates((prevDates) =>
+        prevDates.filter(
+          (highlightedDate) => highlightedDate.toDateString() !== dateString
+        )
+      );
+    } else {
+      setSelectedDates((prevDates) => [...prevDates, date]);
     }
-    setSelectedDates((prevDates) => [...prevDates, event]);
   };
 
   return (
