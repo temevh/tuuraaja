@@ -18,6 +18,7 @@ const SubInfo = () => {
   const [phonenumber, setPhonenumber] = useState(null);
   const [subjects, setSubjects] = useState([]);
   const [sent, setSent] = useState(false);
+  const [selectedDates, setSelectedDates] = useState([]);
 
   const subjectList = [
     "Matikka",
@@ -54,6 +55,23 @@ const SubInfo = () => {
     setPhonenumber(event.target.value);
   };
 
+  const handleDateChange = (date) => {
+    const dateString = date.toDateString();
+    const isAlreadySelected = selectedDates.some(
+      (highlightedDate) => highlightedDate.toDateString() === dateString
+    );
+
+    if (isAlreadySelected) {
+      setSelectedDates((prevDates) =>
+        prevDates.filter(
+          (highlightedDate) => highlightedDate.toDateString() !== dateString
+        )
+      );
+    } else {
+      setSelectedDates((prevDates) => [...prevDates, date]);
+    }
+  };
+
   const handleChange = (event) => {
     const {
       target: { value },
@@ -71,6 +89,7 @@ const SubInfo = () => {
   };
 
   const sendInfo = async () => {
+    console.log(selectedDates);
     try {
       const response = await axios.post("http://localhost:5000/api/addsub", {
         firstName: firstname,
@@ -147,7 +166,10 @@ const SubInfo = () => {
         <p className="text-black text-xl text-center mt-4">
           Valitse mahdolliset päivät
         </p>
-        <SubCalendar />
+        <SubCalendar
+          onDateChange={handleDateChange}
+          selectedDates={selectedDates}
+        />
       </div>
       <Button className="bg-green-500 mt-8" onClick={sendInfo}>
         <p className="text-xl text-black">{sent ? "lähetetty" : "lähetä"}</p>

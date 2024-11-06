@@ -3,9 +3,8 @@ import { useState } from "react";
 import Calendar from "react-calendar";
 import "./SubCalendar.css";
 
-const SubCalendar = () => {
+const SubCalendar = ({ selectedDates, onDateChange }) => {
   const [value, setValue] = useState(new Date());
-  const [selectedDates, setSelectedDates] = useState([]);
 
   const isHighlighted = (date) => {
     return selectedDates.some(
@@ -17,20 +16,7 @@ const SubCalendar = () => {
   };
 
   const dayClicked = (date) => {
-    const dateString = date.toDateString();
-    const isAlreadySelected = selectedDates.some(
-      (highlightedDate) => highlightedDate.toDateString() === dateString
-    );
-
-    if (isAlreadySelected) {
-      setSelectedDates((prevDates) =>
-        prevDates.filter(
-          (highlightedDate) => highlightedDate.toDateString() !== dateString
-        )
-      );
-    } else {
-      setSelectedDates((prevDates) => [...prevDates, date]);
-    }
+    onDateChange(date);
   };
 
   return (

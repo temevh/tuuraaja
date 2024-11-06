@@ -1,4 +1,5 @@
 .react-calendar__tile.highlight {
-  background: yellow;
+  background: #22c55e;
+  border-radius: 40%;
   color: black;
 }
