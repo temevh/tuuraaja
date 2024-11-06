@@ -11,11 +11,16 @@ import Chip from "@mui/material/Chip";
 import Box from "@mui/material/Box";
 import SubCalendar from "./SubCalendar";
 
+import FirstNameField from "./FirstNameField";
+import LastNameField from "./LastNameField";
+import EmailField from "./EmailField";
+import PhoneNumberField from "./PhoneNumberField";
+
 const SubInfo = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
-  const [phonenumber, setPhonenumber] = useState(null);
+  const [phoneNumber, setPhonenumber] = useState(null);
   const [subjects, setSubjects] = useState([]);
   const [sent, setSent] = useState(false);
   const [selectedDates, setSelectedDates] = useState([]);
@@ -86,6 +91,7 @@ const SubInfo = () => {
     setPhonenumber(null);
     setSubjects([]);
     setSent(true);
+    setSelectedDates([]);
   };
 
   const sendInfo = async () => {
@@ -97,6 +103,7 @@ const SubInfo = () => {
         phoneNumber: phonenumber,
         email: email,
         subjects: subjects,
+        dates: selectedDates,
       });
       console.log(response.data);
       resetForm();
@@ -108,36 +115,17 @@ const SubInfo = () => {
   return (
     <div>
       <div className="flex gap-6 pb-6">
-        <TextField
-          id="outlined-basic"
-          label="Etunimi"
-          variant="outlined"
-          onChange={updateFirstname}
-          value={firstname}
+        <FirstNameField
+          firstName={firstname}
+          updateFirstName={updateFirstname}
         />
-        <TextField
-          id="outlined-basic"
-          label="Sukunimi"
-          variant="outlined"
-          onChange={updateLastname}
-          value={lastname}
-        />
+        <LastNameField lastName={lastname} updateLastName={updateLastname} />
       </div>
       <div className="flex gap-6">
-        <TextField
-          id="outlined-basic"
-          label="Sähköposti"
-          variant="outlined"
-          onChange={updateEmail}
-          value={email}
-        />
-        <TextField
-          id="outlined-basic"
-          label="Numero"
-          variant="outlined"
-          type="number"
-          onChange={updateNumber}
-          value={phonenumber === null ? "" : phonenumber}
+        <EmailField email={email} updateEmail={updateEmail} />
+        <PhoneNumberField
+          phoneNumber={phoneNumber}
+          updateNumber={updateNumber}
         />
       </div>
       <div className="pt-4">
