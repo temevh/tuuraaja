@@ -5,15 +5,10 @@ import "./SubCalendar.css";
 
 const SubCalendar = () => {
   const [value, setValue] = useState(new Date());
-
-  const highlightedDates = [
-    new Date(2024, 10, 5),
-    new Date(2024, 10, 10),
-    new Date(2024, 10, 15),
-  ];
+  const [selectedDates, setSelectedDates] = useState([]);
 
   const isHighlighted = (date) => {
-    return highlightedDates.some(
+    return selectedDates.some(
       (highlightedDate) =>
         date.getFullYear() === highlightedDate.getFullYear() &&
         date.getMonth() === highlightedDate.getMonth() &&
@@ -21,11 +16,19 @@ const SubCalendar = () => {
     );
   };
 
+  const dayClicked = (event) => {
+    if (selectedDates.includes(event)) {
+      alert("already included");
+    }
+    setSelectedDates((prevDates) => [...prevDates, event]);
+  };
+
   return (
     <div>
       <Calendar
         onChange={setValue}
         value={value}
+        onClickDay={dayClicked}
         tileClassName={({ date, view }) => {
           if (view === "month" && isHighlighted(date)) {
             return "highlight";
