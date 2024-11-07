@@ -3,15 +3,15 @@ import { useState } from "react";
 import Calendar from "react-calendar";
 import "../../globals.css";
 
-const CalendarComponent = ({ selectedDates, onDateChange }) => {
+const CalendarComponent = ({ selectedDate, onDateChange }) => {
   const [value, setValue] = useState(new Date());
 
   const isHighlighted = (date) => {
-    return selectedDates.some(
-      (highlightedDate) =>
-        date.getFullYear() === highlightedDate.getFullYear() &&
-        date.getMonth() === highlightedDate.getMonth() &&
-        date.getDate() === highlightedDate.getDate()
+    if (!selectedDate) return false;
+    return (
+      date.getFullYear() === selectedDate.getFullYear() &&
+      date.getMonth() === selectedDate.getMonth() &&
+      date.getDate() === selectedDate.getDate()
     );
   };
 

@@ -9,7 +9,7 @@ import axios from "axios";
 
 export default function Home() {
   const [substitutes, setSubstitutes] = useState([]);
-  const [selectedDates, setSelectedDates] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
   const [selectedSubject, setSelectedSubject] = useState("");
 
   const fetchSubs = async () => {
@@ -31,20 +31,8 @@ export default function Home() {
   };
 
   const handleDateChange = (date) => {
-    const dateString = date.toDateString();
-    const isAlreadySelected = selectedDates.some(
-      (highlightedDate) => highlightedDate.toDateString() === dateString
-    );
-
-    if (isAlreadySelected) {
-      setSelectedDates((prevDates) =>
-        prevDates.filter(
-          (highlightedDate) => highlightedDate.toDateString() !== dateString
-        )
-      );
-    } else {
-      setSelectedDates((prevDates) => [...prevDates, date]);
-    }
+    setSelectedDate(date);
+    console.log("Updated selectedDate:", date);
   };
 
   return (
@@ -57,7 +45,7 @@ export default function Home() {
         <div>
           <CalendarComponent
             onDateChange={handleDateChange}
-            selectedDates={selectedDates}
+            selectedDate={selectedDate}
           />
         </div>
         <Button onClick={fetchSubs} className="bg-amber-400 w-1/4 ">
