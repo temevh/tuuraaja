@@ -19,3 +19,9 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.react-calendar__tile.highlight {
+  background: #22c55e;
+  border-radius: 40%;
+  color: black;
+}

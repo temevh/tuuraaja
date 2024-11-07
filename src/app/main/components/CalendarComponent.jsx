@@ -1,27 +1,37 @@
 "use client";
 import { useState } from "react";
-import dayjs from "dayjs";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
+import Calendar from "react-calendar";
+import "../../globals.css";
 
-const CalendarComponent = ({ onDateChange }) => {
-  const [value, setValue] = useState(dayjs());
+const CalendarComponent = ({ selectedDates, onDateChange }) => {
+  const [value, setValue] = useState(new Date());
 
-  const handleDateChange = (newValue) => {
-    console.log(newValue.date(), newValue.month(), newValue.year());
-    setValue(newValue);
-    onDateChange([newValue.date(), newValue.month(), newValue.year()]);
+  const isHighlighted = (date) => {
+    return selectedDates.some(
+      (highlightedDate) =>
+        date.getFullYear() === highlightedDate.getFullYear() &&
+        date.getMonth() === highlightedDate.getMonth() &&
+        date.getDate() === highlightedDate.getDate()
+    );
+  };
+
+  const dayClicked = (date) => {
+    onDateChange(date);
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fi">
-      <DateCalendar
+    <div>
+      <Calendar
+        onChange={setValue}
         value={value}
-        onChange={handleDateChange}
-        displayWeekNumber
+        onClickDay={dayClicked}
+        tileClassName={({ date, view }) => {
+          if (view === "month" && isHighlighted(date)) {
+            return "highlight";
+          }
+        }}
       />
-    </LocalizationProvider>
+    </div>
   );
 };
 

@@ -9,7 +9,7 @@ import axios from "axios";
 
 export default function Home() {
   const [substitutes, setSubstitutes] = useState([]);
-  const [selectedDate, setSelectedDate] = useState([]);
+  const [selectedDates, setSelectedDates] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState("");
 
   const fetchSubs = async () => {
@@ -30,6 +30,23 @@ export default function Home() {
     }
   };
 
+  const handleDateChange = (date) => {
+    const dateString = date.toDateString();
+    const isAlreadySelected = selectedDates.some(
+      (highlightedDate) => highlightedDate.toDateString() === dateString
+    );
+
+    if (isAlreadySelected) {
+      setSelectedDates((prevDates) =>
+        prevDates.filter(
+          (highlightedDate) => highlightedDate.toDateString() !== dateString
+        )
+      );
+    } else {
+      setSelectedDates((prevDates) => [...prevDates, date]);
+    }
+  };
+
   return (
     <div className="min-h-screen w-full bg-amber-600 flex justify-center items-center p-6">
       <div className="w-1/2 grid grid-cols-1 gap-y-6">
@@ -38,7 +55,10 @@ export default function Home() {
           onSubjectChange={setSelectedSubject}
         />
         <div>
-          <CalendarComponent onDateChange={setSelectedDate} />
+          <CalendarComponent
+            onDateChange={handleDateChange}
+            selectedDates={selectedDates}
+          />
         </div>
         <Button onClick={fetchSubs} className="bg-amber-400 w-1/4 ">
           <p className="text-black font-bold text-md">Etsi sijainen</p>

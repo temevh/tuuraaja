@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Calendar from "react-calendar";
-import "./SubCalendar.css";
+import "../../../globals.css";
 
 const SubCalendar = ({ selectedDates, onDateChange }) => {
   const [value, setValue] = useState(new Date());
