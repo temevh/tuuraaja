@@ -3,7 +3,7 @@ import SubjectDropdown from "./components/SubjectDropdown";
 import CalendarComponent from "./components/CalendarComponent";
 import SubList from "./components/SubList";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import axios from "axios";
 
@@ -13,12 +13,16 @@ export default function Home() {
   const [selectedSubject, setSelectedSubject] = useState("");
 
   const fetchSubs = async () => {
-    console.log("date", selectedDate);
+    console.log("Selected date:", selectedDate);
     try {
+      const formattedDate = selectedDate
+        ? selectedDate.toISOString().split("T")[0]
+        : null;
+      console.log("formattedDate", formattedDate);
       const response = await axios.get("http://localhost:5000/api/getsub", {
         params: {
           subject: selectedSubject,
-          date: selectedDate,
+          date: formattedDate,
         },
       });
       setSubstitutes(response.data);
@@ -30,7 +34,12 @@ export default function Home() {
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    //console.log("Date passed to handleDateChange:", date);
   };
+
+  useEffect(() => {
+    //console.log("Selected date updated:", selectedDate);
+  }, [selectedDate]);
 
   return (
     <div className="min-h-screen w-full bg-amber-600 flex justify-center items-center p-6">

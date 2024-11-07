@@ -1,10 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "../../globals.css";
 
 const CalendarComponent = ({ selectedDate, onDateChange }) => {
-  const [value, setValue] = useState(new Date());
+  const [value, setValue] = useState(null);
 
   const isHighlighted = (date) => {
     if (!selectedDate) return false;
@@ -16,9 +16,13 @@ const CalendarComponent = ({ selectedDate, onDateChange }) => {
   };
 
   const dayClicked = (date) => {
+    //console.log("Date clicked:", date);
     onDateChange(date);
   };
 
+  useEffect(() => {
+    setValue(selectedDate);
+  }, [selectedDate]);
   return (
     <div>
       <Calendar
