@@ -13,16 +13,14 @@ export default function Home() {
   const [selectedSubject, setSelectedSubject] = useState("");
 
   const fetchSubs = async () => {
+    console.log("date", selectedDate);
     try {
-      const response = await axios.get(
-        "http://localhost:5000/api/substitutes",
-        {
-          params: {
-            subject: selectedSubject,
-            date: selectedDate,
-          },
-        }
-      );
+      const response = await axios.get("http://localhost:5000/api/getsub", {
+        params: {
+          subject: selectedSubject,
+          date: selectedDate,
+        },
+      });
       setSubstitutes(response.data);
       console.log(response);
     } catch (error) {
@@ -32,7 +30,6 @@ export default function Home() {
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    console.log("Updated selectedDate:", date);
   };
 
   return (

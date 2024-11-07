@@ -37,13 +37,13 @@ const collection = database.collection("substitutes");
 app.use(cors());
 app.use(express.json());
 
-app.get("/api/substitutes", async (req, res) => {
+app.get("/api/getsub", async (req, res) => {
   try {
     const { subject, date } = req.query;
     console.log("subject:", subject, "date:", date);
     let query = {};
     if (subject) {
-      query = { subjects: subject };
+      query = { subjects: subject, dates: date };
     }
 
     const substitutes = await collection.find(query).toArray();
