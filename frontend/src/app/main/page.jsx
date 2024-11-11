@@ -42,7 +42,7 @@ export default function Home() {
   }, [selectedDate]);
 
   return (
-    <div className="min-h-screen w-full bg-amber-600 flex justify-center items-center p-6">
+    <div className="min-h-screen w-full bg-green-700 flex justify-center items-center p-6">
       <div className="w-1/2 grid grid-cols-1 gap-y-6">
         <SubjectDropdown
           selectedSubject={selectedSubject}
@@ -57,7 +57,6 @@ export default function Home() {
         <Button onClick={fetchSubs} className="bg-amber-400 w-1/4 ">
           <p className="text-black font-bold text-md">Etsi sijainen</p>
         </Button>
-        <p className="font-bold text-black text-xl">{selectedSubject}</p>
         <SubList substitutes={substitutes} />
       </div>
     </div>
