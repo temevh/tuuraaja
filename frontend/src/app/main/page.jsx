@@ -54,8 +54,8 @@ export default function Home() {
             selectedDate={selectedDate}
           />
         </div>
-        <Button onClick={fetchSubs} className="bg-amber-400 w-1/4 ">
-          <p className="text-black font-bold text-md">Etsi sijainen</p>
+        <Button onClick={fetchSubs} className="bg-green-950 w-1/4 ">
+          <p className="text-white font-bold text-md">Etsi sijainen</p>
         </Button>
         <SubList substitutes={substitutes} />
       </div>
