@@ -1,5 +1,7 @@
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
+import EmailIcon from "@mui/icons-material/Email";
+import IconButton from "@mui/material/IconButton";
 
 const columns = [
   { field: "firstName", headerName: "Etunimi", width: 100, editable: false },
@@ -15,6 +17,22 @@ const columns = [
     headerName: "Sähköposti",
     width: 200,
     editable: false,
+  },
+  {
+    field: "sendEmail",
+    headerName: "",
+    width: 50,
+    editable: false,
+    renderCell: (params) => (
+      <IconButton
+        onClick={() => {
+          const email = params.row.email;
+          window.location.href = `mailto:${email}`;
+        }}
+      >
+        <EmailIcon sx={{ color: "white" }} />
+      </IconButton>
+    ),
   },
 ];
 
@@ -36,13 +54,24 @@ const SubList = ({ substitutes }) => {
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 5,
+              pageSize: 10,
             },
           },
         }}
-        pageSizeOptions={[5]}
+        pageSizeOptions={[10]}
         checkboxSelection
         disableRowSelectionOnClick
+        sx={{
+          "& .MuiDataGrid-cell": {
+            color: "white",
+          },
+          "& .MuiDataGrid-checkboxInput .Mui-checked": {
+            color: "green",
+          },
+          "& .MuiDataGrid-checkboxInput .MuiSvgIcon-root": {
+            color: "black",
+          },
+        }}
       />
     </Box>
   );
