@@ -12,12 +12,20 @@ export default function Home() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedSubject, setSelectedSubject] = useState("");
 
+  const formatDates = (selectedDates) => {
+    const pad = (number) => (number < 10 ? `0${number}` : number);
+
+    const year = selectedDates.getFullYear();
+    const month = pad(selectedDates.getMonth() + 1);
+    const day = pad(selectedDates.getDate());
+
+    return `${year}-${month}-${day}`;
+  };
+
   const fetchSubs = async () => {
     console.log("Selected date:", selectedDate);
     try {
-      const formattedDate = selectedDate
-        ? selectedDate.toISOString().split("T")[0]
-        : null;
+      const formattedDate = formatDates(selectedDate);
       console.log("formattedDate", formattedDate);
       const response = await axios.get("http://localhost:5000/api/getsub", {
         params: {

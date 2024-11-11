@@ -78,14 +78,15 @@ const SubInfo = () => {
   };
 
   const formatDates = (selectedDates) => {
-    const newDates = [];
-    selectedDates.map((date) => {
-      const day = [date.getDate(), date.getMonth(), date.getYear() + 1900];
-      newDates.push(day);
-      //console.log(typeof date, date.getDate());
-      //console.log(day);
+    const pad = (number) => (number < 10 ? `0${number}` : number);
+
+    return selectedDates.map((date) => {
+      const year = date.getFullYear();
+      const month = pad(date.getMonth() + 1);
+      const day = pad(date.getDate());
+
+      return `${year}-${month}-${day}`;
     });
-    return newDates;
   };
 
   const sendInfo = async () => {
@@ -98,7 +99,7 @@ const SubInfo = () => {
         phoneNumber: phoneNumber,
         email: email,
         subjects: subjects,
-        dates: selectedDates,
+        dates: formattedDates,
       });
       console.log(response.data);
       resetForm();

@@ -60,6 +60,7 @@ app.get("/api/getsub", async (req, res) => {
 app.post("/api/addsub", async (req, res) => {
   try {
     const newSub = req.body;
+    console.log("addsub new info", newSub);
     console.log("new sub data", newSub);
 
     const result = await collection.insertOne(newSub);
