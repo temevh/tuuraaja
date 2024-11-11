@@ -21,20 +21,23 @@ const columns = [
   {
     field: "sendEmail",
     headerName: "",
-    width: 50,
+    width: 100,
     editable: false,
     renderCell: (params) => (
       <IconButton
         onClick={() => {
-          const email = params.row.email;
-          window.location.href = `mailto:${email}`;
+          sendEmail(params.row.email);
         }}
       >
-        <EmailIcon sx={{ color: "white" }} />
+        <EmailIcon sx={{ color: "black" }} />
       </IconButton>
     ),
   },
 ];
+
+const sendEmail = (person) => {
+  console.log("email to", person);
+};
 
 const SubList = ({ substitutes }) => {
   const rows = substitutes.map((substitute, index) => ({

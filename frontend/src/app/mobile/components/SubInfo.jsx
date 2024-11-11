@@ -14,7 +14,7 @@ const SubInfo = () => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
-  const [phoneNumber, setPhonenumber] = useState("");
+  const [phoneNumber, setPhonenumber] = useState(null);
   const [subjects, setSubjects] = useState([]);
   const [sent, setSent] = useState(false);
   const [selectedDates, setSelectedDates] = useState([]);
