@@ -77,8 +77,21 @@ const SubInfo = () => {
     setSelectedDates([]);
   };
 
+  const formatDates = (selectedDates) => {
+    const newDates = [];
+    selectedDates.map((date) => {
+      const day = [date.getDate(), date.getMonth(), date.getYear() + 1900];
+      newDates.push(day);
+      //console.log(typeof date, date.getDate());
+      //console.log(day);
+    });
+    return newDates;
+  };
+
   const sendInfo = async () => {
     try {
+      const formattedDates = formatDates(selectedDates);
+      console.log(formattedDates);
       const response = await axios.post("http://localhost:5000/api/addsub", {
         firstName: firstname,
         lastName: lastname,

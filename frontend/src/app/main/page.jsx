@@ -34,12 +34,9 @@ export default function Home() {
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    //console.log("Date passed to handleDateChange:", date);
   };
 
-  useEffect(() => {
-    //console.log("Selected date updated:", selectedDate);
-  }, [selectedDate]);
+  useEffect(() => {}, [selectedDate]);
 
   return (
     <div className="min-h-screen w-full bg-green-700 flex justify-center items-center p-6">

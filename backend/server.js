@@ -43,11 +43,14 @@ app.get("/api/getsub", async (req, res) => {
     console.log("subject:", subject, "date:", date);
 
     let query = {};
+
     if (subject) {
       query = { subjects: subject, dates: new Date(date) }; // Ensure date is interpreted correctly
+      console.log(query);
     }
 
     const substitutes = await collection.find(query).toArray();
+    console.log(substitutes);
     res.status(200).json(substitutes);
   } catch (err) {
     res.status(500).json({ error: "An error occurred while retrieving data" });
