@@ -45,7 +45,7 @@ app.get("/api/getsub", async (req, res) => {
     let query = {};
 
     if (subject) {
-      query = { subjects: subject, dates: new Date(date) }; // Ensure date is interpreted correctly
+      query = { subjects: subject, dates: date };
       console.log(query);
     }
 
