@@ -27,7 +27,7 @@ const SubCalendar = ({ selectedDates, onDateChange }) => {
         onClickDay={dayClicked}
         tileClassName={({ date, view }) => {
           if (view === "month" && isHighlighted(date)) {
-            return "highlight";
+            return "selected-day";
           }
         }}
       />
@@ -109,16 +109,11 @@ const CalendarContainer = styled.div`
   .react-calendar__month-view__days__day--weekend {
     color: #dfdfdf;
   }
-  .react-calendar__tile--active {
-    background: #15803d !important;
-    border-radius: 10% !important;
-    color: black !important;
-  }
 
-  /* ~~~ highlight styles ~~~ */
-  .highlight {
-    background-color: #ffeb3b !important;
-    color: black !important;
+  /* ~~~ selected day styles ~~~ */
+  .selected-day {
+    background-color: #15803d !important;
+    color: white !important;
   }
 
   /* ~~~ other view styles ~~~ */
