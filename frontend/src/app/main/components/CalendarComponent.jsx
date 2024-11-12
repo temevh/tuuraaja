@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import styled from "styled-components";
-//import "../../globals.css";
 
 const CalendarComponent = ({ selectedDate, onDateChange }) => {
   const [value, setValue] = useState(null);
@@ -24,6 +23,7 @@ const CalendarComponent = ({ selectedDate, onDateChange }) => {
   useEffect(() => {
     setValue(selectedDate);
   }, [selectedDate]);
+
   return (
     <CalendarContainer>
       <Calendar
@@ -44,12 +44,17 @@ export default CalendarComponent;
 
 const CalendarContainer = styled.div`
   /* ~~~ container styles ~~~ */
-  max-width: 800px;
+  max-width: 700px;
   margin: auto;
   margin-top: 20px;
   background-color: #d4f7d4;
   padding: 10px;
   border-radius: 3px;
+
+  /* ~~~ calendar width ~~~ */
+  .react-calendar {
+    width: 100%;
+  }
 
   /* ~~~ navigation styles ~~~ */
   .react-calendar__navigation {
@@ -67,6 +72,7 @@ const CalendarContainer = styled.div`
   /* ~~~ label styles ~~~ */
   .react-calendar__month-view__weekdays {
     text-align: center;
+    color: black;
   }
 
   /* ~~~ button styles ~~~ */
@@ -107,6 +113,11 @@ const CalendarContainer = styled.div`
   }
   .react-calendar__month-view__days__day--weekend {
     color: #dfdfdf;
+  }
+  .react-calendar__tile--active {
+    background: #15803d !important;
+    border-radius: 10% !important;
+    color: black !important;
   }
 
   /* ~~~ other view styles ~~~ */
