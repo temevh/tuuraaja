@@ -5,12 +5,18 @@
 :root {
   --background: #ffffff;
   --foreground: #add8e6;
+  --highlight-color: #22c55e;
+  --tile-hover-color: #e0f7fa;
+  --nav-button-color: #00796b;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #ffffff;
+    --background: #333333;
     --foreground: #ffffff;
+    --highlight-color: #4caf50;
+    --tile-hover-color: #004d40;
+    --nav-button-color: #004d40;
   }
 }
 
@@ -20,8 +26,47 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.react-calendar {
+  border: none;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.react-calendar__tile {
+  padding: 10px;
+  background: var(--highlight-color);
+  border-radius: 10%;
+  transition: background 0.3s ease;
+}
+
+.react-calendar__tile:hover {
+  background: var(--tile-hover-color);
+}
+
 .react-calendar__tile.highlight {
-  background: #22c55e;
-  border-radius: 40%;
+  background: var(--highlight-color);
+  border-radius: 50%;
   color: black;
+}
+
+.react-calendar__navigation button {
+  color: black;
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.react-calendar__navigation button:disabled {
+  color: #ccc;
+}
+
+.react-calendar__month-view__weekdays {
+  text-align: center;
+  font-weight: bold;
+  color: var(--foreground);
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: var(--foreground);
 }
