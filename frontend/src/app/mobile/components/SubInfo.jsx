@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import axios from "axios";
 
@@ -18,14 +18,39 @@ const SubInfo = () => {
   const [subjects, setSubjects] = useState([]);
   const [sent, setSent] = useState(false);
   const [selectedDates, setSelectedDates] = useState([]);
+  const [subjectList, setSubjectList] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const fetchSubjects = async () => {
+      console.log("loaded site");
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/getsubjects"
+        );
+        const tempSub = response.data;
+        console.log("tempSub", tempSub);
+        const subjectNames = tempSub.map((subject) => subject.name);
+        setSubjectList(subjectNames);
+        console.log("subjects", subjectNames);
+        setLoading(false);
+      } catch (error) {
+        console.log("error loading courses", error);
+        setLoading(false);
+      }
+    };
+
+    fetchSubjects();
+  }, []);
+
+  /*
   const subjectList = [
     "Matikka",
     "Historia",
     "Biologia",
     "Äidinkieli",
     "Kemia",
-  ];
+  ];*/
 
   const updateFirstname = (event) => {
     setFirstname(event.target.value);
@@ -109,35 +134,46 @@ const SubInfo = () => {
   };
 
   return (
-    <div>
-      <div className="flex gap-6 pb-6">
-        <FirstNameField
-          firstName={firstname}
-          updateFirstName={updateFirstname}
-        />
-        <LastNameField lastName={lastname} updateLastName={updateLastname} />
-      </div>
-      <div className="flex gap-6">
-        <EmailField email={email} updateEmail={updateEmail} />
-        <PhoneNumberField
-          phoneNumber={phoneNumber}
-          updateNumber={updateNumber}
-        />
-      </div>
-      <SubjectsField
-        subjectList={subjectList}
-        selectedSubjects={subjects}
-        updateSelectedSubjects={updateSubjects}
-      />
-      <div className="pt-4">
-        <SubCalendar
-          onDateChange={handleDateChange}
-          selectedDates={selectedDates}
-        />
-      </div>
-      <Button className="bg-green-500 mt-8" onClick={sendInfo}>
-        <p className="text-xl text-black">{sent ? "lähetetty" : "lähetä"}</p>
-      </Button>
+    <div className="min-h-screen w-full bg-green-700 flex justify-center items-center p-6">
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div>
+          <div className="flex gap-6 pb-6">
+            <FirstNameField
+              firstName={firstname}
+              updateFirstName={updateFirstname}
+            />
+            <LastNameField
+              lastName={lastname}
+              updateLastName={updateLastname}
+            />
+          </div>
+          <div className="flex gap-6">
+            <EmailField email={email} updateEmail={updateEmail} />
+            <PhoneNumberField
+              phoneNumber={phoneNumber}
+              updateNumber={updateNumber}
+            />
+          </div>
+          <SubjectsField
+            subjectList={subjectList}
+            selectedSubjects={subjects}
+            updateSelectedSubjects={updateSubjects}
+          />
+          <div className="pt-4">
+            <SubCalendar
+              onDateChange={handleDateChange}
+              selectedDates={selectedDates}
+            />
+          </div>
+          <Button className="bg-green-500 mt-8" onClick={sendInfo}>
+            <p className="text-xl text-black">
+              {sent ? "lähetetty" : "lähetä"}
+            </p>
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

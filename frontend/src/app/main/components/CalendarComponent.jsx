@@ -35,6 +35,7 @@ const CalendarComponent = ({ selectedDate, onDateChange }) => {
             return "highlight";
           }
         }}
+        tileDisabled={({ date }) => [0, 6].includes(date.getDay())}
       />
     </CalendarContainer>
   );

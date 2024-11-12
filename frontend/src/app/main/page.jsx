@@ -15,7 +15,7 @@ export default function Home() {
   const [subjects, setSubjects] = useState([]);
 
   useEffect(() => {
-    const fetchCourses = async () => {
+    const fetchSubjects = async () => {
       console.log("loaded site");
       try {
         const response = await axios.get(
@@ -33,7 +33,7 @@ export default function Home() {
       }
     };
 
-    fetchCourses();
+    fetchSubjects();
   }, []);
 
   const formatDates = (selectedDates) => {
@@ -87,7 +87,16 @@ export default function Home() {
               selectedDate={selectedDate}
             />
           </div>
-          <Button onClick={fetchSubs} className="bg-white w-1/4">
+          <Button
+            onClick={fetchSubs}
+            sx={{
+              backgroundColor: "#6eb087",
+              width: "25%",
+              "&:hover": {
+                backgroundColor: "lightgray",
+              },
+            }}
+          >
             <p className="text-black font-bold text-md">Etsi sijainen</p>
           </Button>
           <SubList substitutes={substitutes} />
