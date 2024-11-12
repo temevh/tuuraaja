@@ -2,13 +2,18 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { useEffect } from "react";
 
-const SubjectDropdown = ({ selectedSubject, onSubjectChange }) => {
-  const subjects = ["Matikka", "Historia", "Biologia", "Äidinkieli", "Kemia"];
+const SubjectDropdown = ({ selectedSubject, onSubjectChange, subjects }) => {
+  //const subjects = ["Matikka", "Historia", "Biologia", "Äidinkieli", "Kemia"];
 
   const handleChange = (event) => {
     onSubjectChange(event.target.value);
   };
+
+  useEffect(() => {
+    console.log(subjects);
+  }, [subjects]);
 
   return (
     <FormControl fullWidth>
@@ -21,7 +26,7 @@ const SubjectDropdown = ({ selectedSubject, onSubjectChange }) => {
         onChange={handleChange}
       >
         {subjects.map((subject) => (
-          <MenuItem key={subject} value={subject}>
+          <MenuItem key={subject.name} value={subject}>
             {subject}
           </MenuItem>
         ))}

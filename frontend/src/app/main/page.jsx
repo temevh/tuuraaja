@@ -11,6 +11,30 @@ export default function Home() {
   const [substitutes, setSubstitutes] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedSubject, setSelectedSubject] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [subjects, setSubjects] = useState([]);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      console.log("loaded site");
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/getsubjects"
+        );
+        const tempSub = response.data;
+        console.log("tempSub", tempSub);
+        const subjectNames = tempSub.map((subject) => subject.name);
+        setSubjects(subjectNames);
+        console.log("subjects", subjectNames);
+        setLoading(false);
+      } catch (error) {
+        console.log("error loading courses", error);
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, []);
 
   const formatDates = (selectedDates) => {
     const pad = (number) => (number < 10 ? `0${number}` : number);
@@ -48,22 +72,27 @@ export default function Home() {
 
   return (
     <div className="min-h-screen w-full bg-green-700 flex justify-center items-center p-6">
-      <div className="w-1/2 grid grid-cols-1 gap-y-6">
-        <SubjectDropdown
-          selectedSubject={selectedSubject}
-          onSubjectChange={setSelectedSubject}
-        />
-        <div>
-          <CalendarComponent
-            onDateChange={handleDateChange}
-            selectedDate={selectedDate}
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="w-1/2 grid grid-cols-1 gap-y-6">
+          <SubjectDropdown
+            selectedSubject={selectedSubject}
+            onSubjectChange={setSelectedSubject}
+            subjects={subjects}
           />
+          <div>
+            <CalendarComponent
+              onDateChange={handleDateChange}
+              selectedDate={selectedDate}
+            />
+          </div>
+          <Button onClick={fetchSubs} className="bg-white w-1/4">
+            <p className="text-black font-bold text-md">Etsi sijainen</p>
+          </Button>
+          <SubList substitutes={substitutes} />
         </div>
-        <Button onClick={fetchSubs} className="bg-green-950 w-1/4 ">
-          <p className="text-white font-bold text-md">Etsi sijainen</p>
-        </Button>
-        <SubList substitutes={substitutes} />
-      </div>
+      )}
     </div>
   );
 }

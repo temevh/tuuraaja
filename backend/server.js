@@ -58,10 +58,10 @@ app.get("/api/getsub", async (req, res) => {
   }
 });
 
-app.get("/api/getcourses", async (req, res) => {
+app.get("/api/getsubjects", async (req, res) => {
   console.log("getcourses get request");
   try {
-    const collection = database.collection("courses");
+    const collection = database.collection("subjects");
     const courses = await collection.find({}).toArray();
     console.log("Courses:", JSON.stringify(courses, null, 2));
     res.status(200).json(courses);
@@ -69,7 +69,7 @@ app.get("/api/getcourses", async (req, res) => {
     console.error("Error retrieving courses:", err);
     res
       .status(500)
-      .json({ error: "An error occurred while retrieving courses" });
+      .json({ error: "An error occurred while retrieving subjects" });
   }
 });
 
