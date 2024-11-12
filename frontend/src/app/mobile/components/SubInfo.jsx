@@ -130,9 +130,6 @@ const SubInfo = () => {
         updateSelectedSubjects={updateSubjects}
       />
       <div className="pt-4">
-        <p className="text-black text-xl text-center mt-4">
-          Valitse mahdolliset päivät
-        </p>
         <SubCalendar
           onDateChange={handleDateChange}
           selectedDates={selectedDates}

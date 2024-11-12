@@ -32,7 +32,7 @@ async function connectToDatabase() {
 connectToDatabase();
 
 const database = client.db("tuuraaja");
-const collection = database.collection("substitutes");
+let collection;
 
 app.use(cors());
 app.use(express.json());
@@ -48,6 +48,7 @@ app.get("/api/getsub", async (req, res) => {
       query = { subjects: subject, dates: date };
       console.log(query);
     }
+    collection = database.collection("substitutes");
 
     const substitutes = await collection.find(query).toArray();
     console.log(substitutes);
@@ -57,11 +58,27 @@ app.get("/api/getsub", async (req, res) => {
   }
 });
 
+app.get("/api/getcourses", async (req, res) => {
+  console.log("getcourses get request");
+  try {
+    const collection = database.collection("courses");
+    const courses = await collection.find({}).toArray();
+    console.log("Courses:", JSON.stringify(courses, null, 2));
+    res.status(200).json(courses);
+  } catch (err) {
+    console.error("Error retrieving courses:", err);
+    res
+      .status(500)
+      .json({ error: "An error occurred while retrieving courses" });
+  }
+});
+
 app.post("/api/addsub", async (req, res) => {
   try {
     const newSub = req.body;
     console.log("addsub new info", newSub);
     console.log("new sub data", newSub);
+    collection = database.collection("substitutes");
 
     const result = await collection.insertOne(newSub);
 
