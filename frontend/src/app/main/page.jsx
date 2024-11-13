@@ -2,6 +2,7 @@
 import SubjectDropdown from "./components/SubjectDropdown";
 import CalendarComponent from "./components/CalendarComponent";
 import SubList from "./components/SubList";
+import AddSubjectButton from "./components/AddSubjectButton";
 
 import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
@@ -76,11 +77,14 @@ export default function Home() {
         <p>Loading...</p>
       ) : (
         <div className="w-1/2 grid grid-cols-1 gap-y-6">
-          <SubjectDropdown
-            selectedSubject={selectedSubject}
-            onSubjectChange={setSelectedSubject}
-            subjects={subjects}
-          />
+          <div className="flex flex-row gap-6">
+            <SubjectDropdown
+              selectedSubject={selectedSubject}
+              onSubjectChange={setSelectedSubject}
+              subjects={subjects}
+            />
+            <AddSubjectButton />
+          </div>
           <div>
             <CalendarComponent
               onDateChange={handleDateChange}

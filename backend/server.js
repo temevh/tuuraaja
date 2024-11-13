@@ -88,6 +88,26 @@ app.post("/api/addsub", async (req, res) => {
   }
 });
 
+app.post("/api/addsubject", async (req, res) => {
+  try {
+    const subject = req.body;
+    console.log("Attempting to add subject:", subject);
+    const collection = database.collection("subjects");
+
+    const existingSubject = await collection.findOne({ name: subject.name });
+    if (existingSubject) {
+      return res.status(400).json({ message: "Subject already exists" });
+    }
+    const result = await collection.insertOne(subject);
+    res.status(201).json({ message: "Subject added successfully", result });
+  } catch (err) {
+    console.error("Error adding subject:", err);
+    res
+      .status(500)
+      .json({ error: "An error occurred while adding the subject" });
+  }
+});
+
 app.listen(port, () => {
   console.log("server running on http://localhost:" + port);
 });
