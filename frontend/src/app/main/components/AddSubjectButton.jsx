@@ -3,7 +3,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   Button,
   TextField,
@@ -13,6 +12,8 @@ import axios from "axios";
 const AddSubjectButton = () => {
   const [open, setOpen] = useState(false);
   const [subjectName, setSubjectName] = useState("");
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -20,28 +21,35 @@ const AddSubjectButton = () => {
 
   const handleClose = () => {
     setOpen(false);
+    setError(false);
+    setErrorMessage("");
+    setSubjectName("");
   };
 
   const handleAddSubject = async () => {
     try {
-      console.log("flag 1");
+      console.log("Attempting to add subject:", subjectName);
       const response = await axios.post(
         "http://localhost:5000/api/addsubject",
-        {
-          name: subjectName,
-        }
+        { name: subjectName }
       );
-      console.log(response);
-    } catch (error) {
-      console.error("Error posting subject", error);
-    }
 
-    setOpen(false);
+      const exists = response.data.exists;
+      if (exists === "true") {
+        setError(true);
+        setErrorMessage("Oppiaine on jo lisätty");
+      } else if (exists !== "true") {
+        handleClose();
+      }
+    } catch (error) {
+      console.error("Error posting subject:", error);
+      alert("An error occurred while adding the subject");
+    }
   };
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
+      <Button variant="contained" color="secondary" onClick={handleClickOpen}>
         Lisää oppiaine
       </Button>
       <Dialog open={open} onClose={handleClose}>
@@ -55,6 +63,8 @@ const AddSubjectButton = () => {
             fullWidth
             value={subjectName}
             onChange={(e) => setSubjectName(e.target.value)}
+            error={error}
+            helperText={error ? errorMessage : ""}
           />
         </DialogContent>
         <DialogActions>

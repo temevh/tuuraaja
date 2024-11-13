@@ -96,7 +96,9 @@ app.post("/api/addsubject", async (req, res) => {
 
     const existingSubject = await collection.findOne({ name: subject.name });
     if (existingSubject) {
-      return res.status(400).json({ message: "Subject already exists" });
+      return res
+        .status(201)
+        .json({ message: "Subject already exists", exists: "true" });
     }
     const result = await collection.insertOne(subject);
     res.status(201).json({ message: "Subject added successfully", result });
