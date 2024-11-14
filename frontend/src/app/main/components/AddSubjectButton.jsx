@@ -49,7 +49,11 @@ const AddSubjectButton = () => {
 
   return (
     <div>
-      <Button variant="contained" color="secondary" onClick={handleClickOpen}>
+      <Button
+        variant="contained"
+        sx={{ backgroundColor: "#739173", height: 55, color: "black" }}
+        onClick={handleClickOpen}
+      >
         Lisää oppiaine
       </Button>
       <Dialog open={open} onClose={handleClose}>

@@ -2,6 +2,7 @@ import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import EmailIcon from "@mui/icons-material/Email";
 import IconButton from "@mui/material/IconButton";
+import SmsIcon from "@mui/icons-material/Sms";
 
 const columns = [
   { field: "firstName", headerName: "Etunimi", width: 100, editable: false },
@@ -33,12 +34,30 @@ const columns = [
       </IconButton>
     ),
   },
+  {
+    field: "sendSms",
+    headerName: "",
+    width: 100,
+    editable: false,
+    renderCell: (params) => (
+      <IconButton
+        onClick={() => {
+          sendSms(params.row.phoneNumber);
+        }}
+      >
+        <SmsIcon sx={{ color: "black" }} />
+      </IconButton>
+    ),
+  },
 ];
 
-const sendEmail = (person) => {
-  console.log("email to", person);
+const sendEmail = (email) => {
+  console.log("email to", email);
 };
 
+const sendSms = (phoneNumber) => {
+  console.log("sms to", phoneNumber);
+};
 const SubList = ({ substitutes }) => {
   const rows = substitutes.map((substitute, index) => ({
     id: substitute._id,
