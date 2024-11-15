@@ -36,9 +36,6 @@ const CalendarComponent = ({ selectedDate, onDateChange }) => {
           }
         }}
         tileDisabled={({ date }) => [0, 6].includes(date.getDay())}
-        minDate={new Date()}
-        activeStartDate={new Date()}
-        showNeighboringCentury={false}
       />
     </CalendarContainer>
   );
@@ -71,6 +68,12 @@ const CalendarContainer = styled.div`
     .react-calendar__navigation__arrow {
       flex-grow: 0.333;
     }
+  }
+
+  /* Hide the previous and next year buttons */
+  .react-calendar__navigation__prev2-button,
+  .react-calendar__navigation__next2-button {
+    display: none;
   }
 
   /* ~~~ label styles ~~~ */
