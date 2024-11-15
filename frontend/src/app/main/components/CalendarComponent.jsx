@@ -36,6 +36,9 @@ const CalendarComponent = ({ selectedDate, onDateChange }) => {
           }
         }}
         tileDisabled={({ date }) => [0, 6].includes(date.getDay())}
+        minDate={new Date()}
+        activeStartDate={new Date()}
+        showNeighboringCentury={false}
       />
     </CalendarContainer>
   );
