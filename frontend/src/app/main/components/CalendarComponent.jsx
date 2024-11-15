@@ -16,7 +16,6 @@ const CalendarComponent = ({ selectedDate, onDateChange }) => {
   };
 
   const dayClicked = (date) => {
-    //console.log("Date clicked:", date);
     onDateChange(date);
   };
 
@@ -103,7 +102,7 @@ const CalendarContainer = styled.div`
   /* ~~~ day grid styles ~~~ */
   .react-calendar__month-view__days {
     display: grid !important;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(7, 2fr);
 
     .react-calendar__tile {
       max-width: initial !important;
@@ -116,11 +115,18 @@ const CalendarContainer = styled.div`
 
   /* ~~~ neighboring month & weekend styles ~~~ */
   .react-calendar__month-view__days__day--neighboringMonth {
-    opacity: 0.7;
+    opacity: 0.3;
   }
   .react-calendar__month-view__days__day--weekend {
     color: #dfdfdf;
+    opacity: 0.3;
   }
+
+  .react-calendar__month-view__weekdays__weekday:nth-child(6),
+  .react-calendar__month-view__weekdays__weekday:nth-child(7) {
+    opacity: 0.5;
+  }
+
   .react-calendar__tile--active {
     background: #15803d !important;
     border-radius: 10% !important;
