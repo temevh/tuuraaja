@@ -74,7 +74,7 @@ export default function Home() {
   return (
     <div className="min-h-screen w-full bg-green-700 flex justify-center items-center p-6">
       {loading ? (
-        <p>Loading...</p>
+        <p className="text-black font-bold font-2xl">Loading...</p>
       ) : (
         <div className="w-1/2 grid grid-cols-1 gap-y-6">
           <div className="flex flex-row gap-6">

@@ -30,6 +30,8 @@ const SubCalendar = ({ selectedDates, onDateChange }) => {
             return "selected-day";
           }
         }}
+        tileDisabled={({ date }) => [0, 6].includes(date.getDay())}
+        locale="FI"
       />
     </CalendarContainer>
   );
@@ -64,6 +66,12 @@ const CalendarContainer = styled.div`
     }
   }
 
+  /* Hide the previous and next year buttons */
+  .react-calendar__navigation__prev2-button,
+  .react-calendar__navigation__next2-button {
+    display: none;
+  }
+
   /* ~~~ label styles ~~~ */
   .react-calendar__month-view__weekdays {
     text-align: center;
@@ -91,7 +99,7 @@ const CalendarContainer = styled.div`
   /* ~~~ day grid styles ~~~ */
   .react-calendar__month-view__days {
     display: grid !important;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(7, 2fr);
 
     .react-calendar__tile {
       max-width: initial !important;
@@ -104,16 +112,22 @@ const CalendarContainer = styled.div`
 
   /* ~~~ neighboring month & weekend styles ~~~ */
   .react-calendar__month-view__days__day--neighboringMonth {
-    opacity: 0.7;
+    opacity: 0.3;
   }
   .react-calendar__month-view__days__day--weekend {
     color: #dfdfdf;
+    opacity: 0.3;
   }
 
-  /* ~~~ selected day styles ~~~ */
-  .selected-day {
-    background-color: #15803d !important;
-    color: white !important;
+  .react-calendar__month-view__weekdays__weekday:nth-child(6),
+  .react-calendar__month-view__weekdays__weekday:nth-child(7) {
+    opacity: 0.5;
+  }
+
+  .react-calendar__tile--active {
+    background: #15803d !important;
+    border-radius: 10% !important;
+    color: black !important;
   }
 
   /* ~~~ other view styles ~~~ */
