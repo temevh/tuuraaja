@@ -2,12 +2,14 @@
 
 import axios from "axios";
 
-import { TextField, InputLabel } from "@mui/material";
+import { TextField } from "@mui/material";
 import { useState, useEffect } from "react";
+import { SubjectsField } from "../mobile/components";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
-  const [subjects, setSubjects] = useState([]);
+  const [selectedSubjects, setSelectedSubjects] = useState([]);
+  const [subjectList, setSubjectList] = useState([]);
 
   useEffect(() => {
     const fetchSubjects = async () => {
@@ -18,7 +20,7 @@ export default function Home() {
         );
         const tempSub = response.data;
         const subjectNames = tempSub.map((subject) => subject.name);
-        setSubjects(subjectNames);
+        setSubjectList(subjectNames);
         setLoading(false);
       } catch (error) {
         console.log("error loading courses", error);
@@ -28,6 +30,13 @@ export default function Home() {
 
     fetchSubjects();
   }, []);
+
+  const updateSubjects = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setSelectedSubjects(typeof value === "string" ? value.split(",") : value);
+  };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen gap-6 bg-gray-600">
@@ -56,6 +65,11 @@ export default function Home() {
               sx={{ width: 300, backgroundColor: "white" }}
             ></TextField>
           </div>
+          <SubjectsField
+            subjectList={subjectList}
+            selectedSubjects={selectedSubjects}
+            updateSelectedSubjects={updateSubjects}
+          />
         </div>
       )}
     </div>

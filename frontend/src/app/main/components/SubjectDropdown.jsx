@@ -5,8 +5,6 @@ import Select from "@mui/material/Select";
 import { useEffect } from "react";
 
 const SubjectDropdown = ({ selectedSubject, onSubjectChange, subjects }) => {
-  //const subjects = ["Matikka", "Historia", "Biologia", "Äidinkieli", "Kemia"];
-
   const handleChange = (event) => {
     onSubjectChange(event.target.value);
   };
