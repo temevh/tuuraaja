@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import axios from "axios";
 
-import SubCalendar from "./fields/SubCalendar";
-import FirstNameField from "./fields/FirstNameField";
-import LastNameField from "./fields/LastNameField";
-import EmailField from "./fields/EmailField";
-import PhoneNumberField from "./fields/PhoneNumberField";
-import SubjectsField from "./fields/SubjectsField";
+import {
+  EmailField,
+  FirstNameField,
+  LastNameField,
+  PhoneNumberField,
+  SubCalendar,
+  SubjectsField,
+} from "./index";
 
 const SubInfo = () => {
   const [firstname, setFirstname] = useState("");
@@ -42,15 +44,6 @@ const SubInfo = () => {
 
     fetchSubjects();
   }, []);
-
-  /*
-  const subjectList = [
-    "Matikka",
-    "Historia",
-    "Biologia",
-    "Äidinkieli",
-    "Kemia",
-  ];*/
 
   const updateFirstname = (event) => {
     setFirstname(event.target.value);

@@ -1,13 +1,15 @@
 "use client";
-import SubjectDropdown from "./components/SubjectDropdown";
-import CalendarComponent from "./components/CalendarComponent";
-import SubList from "./components/SubList";
-import AddSubjectButton from "./components/AddSubjectButton";
-
-import { useState, useEffect } from "react";
 
 import axios from "axios";
-import Buttons from "./components/Buttons";
+import { useState, useEffect } from "react";
+
+import {
+  AddSubjectButton,
+  SubList,
+  CalendarComponent,
+  SubjectDropdown,
+  Buttons,
+} from "./components/index";
 
 export default function Home() {
   const [substitutes, setSubstitutes] = useState([]);
