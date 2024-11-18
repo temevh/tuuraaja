@@ -14,6 +14,7 @@ export default function Home() {
   const [selectedSubject, setSelectedSubject] = useState("");
   const [loading, setLoading] = useState(true);
   const [subjects, setSubjects] = useState([]);
+  const [enableButtons, setEnableButtons] = useState(false);
 
   useEffect(() => {
     const fetchSubjects = async () => {
@@ -60,6 +61,7 @@ export default function Home() {
       });
       setSubstitutes(response.data);
       console.log(response);
+      setEnableButtons(true);
     } catch (error) {
       console.error("Error fetching subs", error);
     }
@@ -70,6 +72,14 @@ export default function Home() {
   };
 
   useEffect(() => {}, [selectedDate]);
+
+  const sendSms = () => {
+    alert("Lähetettiin tekstiviesti (ei oikeesti)");
+  };
+
+  const sendEmail = () => {
+    alert("Lähetettiin sähköposti");
+  };
 
   return (
     <div className="min-h-screen w-full bg-green-700 flex justify-center items-center p-6">
@@ -100,17 +110,27 @@ export default function Home() {
                 "&:hover": {
                   backgroundColor: "lightgray",
                 },
+                "&.Mui-disabled": {
+                  backgroundColor: "gray",
+                  color: "white",
+                },
               }}
             >
               <p className="text-black font-bold text-md">Etsi sijainen</p>
             </Button>
             <Button
               onClick={sendEmail}
+              disabled={!enableButtons}
               sx={{
                 backgroundColor: "#b069db",
                 width: "15%",
                 "&:hover": {
                   backgroundColor: "lightgray",
+                },
+                "&.Mui-disabled": {
+                  backgroundColor: "gray",
+                  color: "white",
+                  opacity: 0.3,
                 },
                 marginLeft: 52,
               }}
@@ -119,11 +139,17 @@ export default function Home() {
             </Button>
             <Button
               onClick={sendSms}
+              disabled={!enableButtons}
               sx={{
                 backgroundColor: "#b069db",
                 width: "15%",
                 "&:hover": {
                   backgroundColor: "lightgray",
+                },
+                "&.Mui-disabled": {
+                  backgroundColor: "gray",
+                  color: "white",
+                  opacity: 0.3,
                 },
                 marginLeft: 4,
               }}
