@@ -57,6 +57,10 @@ const CalendarContainer = styled.div`
     width: 100%;
   }
 
+  .react-calendar__month-view__weekdays__weekday {
+    text-decoration: bibe;
+  }
+
   /* ~~~ navigation styles ~~~ */
   .react-calendar__navigation {
     display: flex;
