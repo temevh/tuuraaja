@@ -91,18 +91,46 @@ export default function Home() {
               selectedDate={selectedDate}
             />
           </div>
-          <Button
-            onClick={fetchSubs}
-            sx={{
-              backgroundColor: "#6eb087",
-              width: "25%",
-              "&:hover": {
-                backgroundColor: "lightgray",
-              },
-            }}
-          >
-            <p className="text-black font-bold text-md">Etsi sijainen</p>
-          </Button>
+          <div className="flex flex-row">
+            <Button
+              onClick={fetchSubs}
+              sx={{
+                backgroundColor: "#6eb087",
+                width: "25%",
+                "&:hover": {
+                  backgroundColor: "lightgray",
+                },
+              }}
+            >
+              <p className="text-black font-bold text-md">Etsi sijainen</p>
+            </Button>
+            <Button
+              onClick={sendEmail}
+              sx={{
+                backgroundColor: "#b069db",
+                width: "15%",
+                "&:hover": {
+                  backgroundColor: "lightgray",
+                },
+                marginLeft: 52,
+              }}
+            >
+              <p className="text-black font-bold text-md">sähköposti</p>
+            </Button>
+            <Button
+              onClick={sendSms}
+              sx={{
+                backgroundColor: "#b069db",
+                width: "15%",
+                "&:hover": {
+                  backgroundColor: "lightgray",
+                },
+                marginLeft: 4,
+              }}
+            >
+              <p className="text-black font-bold text-md">tekstiviesti</p>
+            </Button>
+          </div>
           <SubList substitutes={substitutes} />
         </div>
       )}
