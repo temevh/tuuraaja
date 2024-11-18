@@ -5,8 +5,9 @@ import SubList from "./components/SubList";
 import AddSubjectButton from "./components/AddSubjectButton";
 
 import { useState, useEffect } from "react";
-import { Button } from "@mui/material";
+
 import axios from "axios";
+import Buttons from "./components/Buttons";
 
 export default function Home() {
   const [substitutes, setSubstitutes] = useState([]);
@@ -101,62 +102,12 @@ export default function Home() {
               selectedDate={selectedDate}
             />
           </div>
-          <div className="flex flex-row">
-            <Button
-              onClick={fetchSubs}
-              sx={{
-                backgroundColor: "#6eb087",
-                width: "25%",
-                "&:hover": {
-                  backgroundColor: "lightgray",
-                },
-                "&.Mui-disabled": {
-                  backgroundColor: "gray",
-                  color: "white",
-                },
-              }}
-            >
-              <p className="text-black font-bold text-md">Etsi sijainen</p>
-            </Button>
-            <Button
-              onClick={sendEmail}
-              disabled={!enableButtons}
-              sx={{
-                backgroundColor: "#b069db",
-                width: "15%",
-                "&:hover": {
-                  backgroundColor: "lightgray",
-                },
-                "&.Mui-disabled": {
-                  backgroundColor: "gray",
-                  color: "white",
-                  opacity: 0.3,
-                },
-                marginLeft: 52,
-              }}
-            >
-              <p className="text-black font-bold text-md">sähköposti</p>
-            </Button>
-            <Button
-              onClick={sendSms}
-              disabled={!enableButtons}
-              sx={{
-                backgroundColor: "#b069db",
-                width: "15%",
-                "&:hover": {
-                  backgroundColor: "lightgray",
-                },
-                "&.Mui-disabled": {
-                  backgroundColor: "gray",
-                  color: "white",
-                  opacity: 0.3,
-                },
-                marginLeft: 4,
-              }}
-            >
-              <p className="text-black font-bold text-md">tekstiviesti</p>
-            </Button>
-          </div>
+          <Buttons
+            fetchSubs={fetchSubs}
+            sendSms={sendSms}
+            sendEmail={sendEmail}
+            buttonState={!enableButtons}
+          />
           <SubList substitutes={substitutes} />
         </div>
       )}
