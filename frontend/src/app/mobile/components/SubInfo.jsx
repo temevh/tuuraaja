@@ -45,6 +45,7 @@ const SubInfo = () => {
     fetchSubjects();
   }, []);
 
+  /*
   const updateFirstname = (event) => {
     setFirstname(event.target.value);
   };
@@ -59,6 +60,24 @@ const SubInfo = () => {
 
   const updateNumber = (event) => {
     setPhonenumber(event.target.value);
+  };
+
+  const updateSubjects = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setSubjects(typeof value === "string" ? value.split(",") : value);
+  };
+  */
+
+  const resetForm = () => {
+    setFirstname("");
+    setLastname("");
+    setEmail("");
+    setPhonenumber(null);
+    setSubjects([]);
+    setSent(true);
+    setSelectedDates([]);
   };
 
   const handleDateChange = (date) => {
@@ -76,23 +95,6 @@ const SubInfo = () => {
     } else {
       setSelectedDates((prevDates) => [...prevDates, date]);
     }
-  };
-
-  const updateSubjects = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setSubjects(typeof value === "string" ? value.split(",") : value);
-  };
-
-  const resetForm = () => {
-    setFirstname("");
-    setLastname("");
-    setEmail("");
-    setPhonenumber(null);
-    setSubjects([]);
-    setSent(true);
-    setSelectedDates([]);
   };
 
   const formatDates = (selectedDates) => {
@@ -120,7 +122,7 @@ const SubInfo = () => {
         dates: formattedDates,
       });
       console.log(response.data);
-      resetForm();
+      //resetForm();
     } catch (error) {
       console.error("Error sending info:", error);
     }
@@ -132,7 +134,9 @@ const SubInfo = () => {
         <p>Loading...</p>
       ) : (
         <div>
-          <div className="flex gap-6 pb-6">
+          <div className="flex flex-col gap-6 pb-6">
+            <p className="text-5xl">Valitse sopivat päivämäärät</p>
+            {/*
             <FirstNameField
               firstName={firstname}
               updateFirstName={updateFirstname}
@@ -154,17 +158,21 @@ const SubInfo = () => {
             selectedSubjects={subjects}
             updateSelectedSubjects={updateSubjects}
           />
-          <div className="pt-4">
+
+          <div className="flex pb-6">
+            */}
             <SubCalendar
               onDateChange={handleDateChange}
               selectedDates={selectedDates}
             />
           </div>
-          <Button className="bg-green-500 mt-8" onClick={sendInfo}>
-            <p className="text-xl text-black">
-              {sent ? "lähetetty" : "lähetä"}
-            </p>
-          </Button>
+          <div className="bg-purple-500 mt-8 text-center">
+            <Button onClick={sendInfo}>
+              <p className="text-xl text-black">
+                {sent ? "Tallennettu" : "Tallenna"}
+              </p>
+            </Button>
+          </div>
         </div>
       )}
     </div>
