@@ -6,20 +6,20 @@ import { useRouter } from "next/navigation";
 export default function Home() {
   const router = useRouter();
   const registerClicked = () => {
-    router.push("/login");
+    router.push("/register");
   };
 
   return (
     <div className="flex items-center justify-center h-screen gap-24 bg-gray-600">
       <div className="bg-green-700 rounded-lg hover:bg-green-500">
-        <Button onClick={registerClicked}>
+        <Button>
           <p className="text-white font-bold text-xl hover:text-black">
             Kirjaudu sisään
           </p>
         </Button>
       </div>
       <div className="bg-green-700 rounded-lg hover:bg-green-500">
-        <Button>
+        <Button onClick={registerClicked}>
           <p className="text-white font-bold text-xl hover:text-black">
             Luo profiili
           </p>
