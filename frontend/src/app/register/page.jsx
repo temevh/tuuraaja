@@ -2,7 +2,7 @@
 
 import axios from "axios";
 
-import { Button, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import {
   SubjectsField,
@@ -12,8 +12,10 @@ import {
   PhoneNumberField,
 } from "../mobile/components";
 import CodeField from "./components/CodeField";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [selectedSubjects, setSelectedSubjects] = useState([]);
   const [subjectList, setSubjectList] = useState([]);
@@ -71,20 +73,36 @@ export default function Home() {
     setSchoolCode(event.target.value);
   };
 
-  const createPressed = () => {
+  const createPressed = async () => {
     console.log("name ", firstname, lastname);
     console.log("email", email);
     console.log("number", phoneNumber);
+    console.log("subjects", selectedSubjects);
+    console.log("code", schoolCode);
+    try {
+      const response = await axios.post("http://localhost:5000/api/addsub", {
+        firstName: firstname,
+        lastName: lastname,
+        phoneNumber: phoneNumber,
+        email: email,
+        subjects: selectedSubjects,
+        dates: [],
+        school: schoolCode,
+      });
+      console.log(response.data);
+      router.push("/mobile");
+    } catch (error) {
+      console.error("Error sending info:", error);
+    }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen gap-6 bg-gray-600">
+    <div className="flex flex-col items-center justify-center h-screen gap-6 bg-gray-300">
       {loading ? (
         <p className="text-black font-bold text-3xl">Ladataan...</p>
       ) : (
         <div className="flex flex-col items-center gap-6">
           <div className="flex gap-6 items-center rounded-md">
-            {/*<p className="text-2xl text-">Etunimi</p>*/}
             <FirstNameField
               firstName={firstname}
               updateFirstName={updateFirstname}
