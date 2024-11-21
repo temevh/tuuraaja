@@ -28,6 +28,7 @@ export default function Home() {
   const [schoolCode, setSchoolCode] = useState(null);
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
+  const [passwordMatch, setPasswordMatch] = useState(true);
 
   useEffect(() => {
     const fetchSubjects = async () => {
@@ -84,26 +85,44 @@ export default function Home() {
     setPasswordCheck(event.target.value);
   };
 
+  const checkPasswords = () => {
+    if (password.length < 6) {
+      setPasswordMatch(false);
+      alert("Salasanan tulee olla yli 6 merkkiä pitkä");
+      return;
+    } else if (password !== passwordCheck) {
+      setPasswordMatch(false);
+      alert("Salasanat eivät täsmää");
+      return;
+    } else {
+      setPasswordMatch(true);
+      return;
+    }
+  };
+
   const createPressed = async () => {
-    console.log("name ", firstname, lastname);
-    console.log("email", email);
-    console.log("number", phoneNumber);
-    console.log("subjects", selectedSubjects);
-    console.log("code", schoolCode);
-    try {
-      const response = await axios.post("http://localhost:5000/api/addsub", {
-        firstName: firstname,
-        lastName: lastname,
-        phoneNumber: phoneNumber,
-        email: email,
-        subjects: selectedSubjects,
-        dates: [],
-        school: schoolCode,
-      });
-      console.log(response.data);
-      router.push("/mobile");
-    } catch (error) {
-      console.error("Error sending info:", error);
+    checkPasswords();
+    if (passwordMatch) {
+      console.log("name ", firstname, lastname);
+      console.log("email", email);
+      console.log("number", phoneNumber);
+      console.log("subjects", selectedSubjects);
+      console.log("code", schoolCode);
+      try {
+        const response = await axios.post("http://localhost:5000/api/addsub", {
+          firstName: firstname,
+          lastName: lastname,
+          phoneNumber: phoneNumber,
+          email: email,
+          subjects: selectedSubjects,
+          dates: [],
+          school: schoolCode,
+        });
+        console.log(response.data);
+        router.push("/mobile");
+      } catch (error) {
+        console.error("Error sending info:", error);
+      }
     }
   };
 
