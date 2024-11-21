@@ -28,7 +28,6 @@ export default function Home() {
   const [schoolCode, setSchoolCode] = useState(null);
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
-  const [passwordMatch, setPasswordMatch] = useState(true);
 
   useEffect(() => {
     const fetchSubjects = async () => {
@@ -87,22 +86,19 @@ export default function Home() {
 
   const checkPasswords = () => {
     if (password.length < 6) {
-      setPasswordMatch(false);
       alert("Salasanan tulee olla yli 6 merkkiä pitkä");
-      return;
+      return false;
     } else if (password !== passwordCheck) {
-      setPasswordMatch(false);
       alert("Salasanat eivät täsmää");
-      return;
+      return false;
     } else {
-      setPasswordMatch(true);
-      return;
+      return true;
     }
   };
 
   const createPressed = async () => {
-    checkPasswords();
-    if (passwordMatch) {
+    const passwordsValid = checkPasswords();
+    if (passwordsValid) {
       console.log("name ", firstname, lastname);
       console.log("email", email);
       console.log("number", phoneNumber);
@@ -123,6 +119,8 @@ export default function Home() {
       } catch (error) {
         console.error("Error sending info:", error);
       }
+    } else {
+      return;
     }
   };
 
