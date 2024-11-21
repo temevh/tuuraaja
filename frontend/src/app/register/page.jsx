@@ -13,6 +13,7 @@ import {
 } from "../mobile/components";
 import CodeField from "./components/CodeField";
 import { useRouter } from "next/navigation";
+import PasswordField from "./components/PasswordField";
 
 export default function Home() {
   const router = useRouter();
@@ -25,6 +26,7 @@ export default function Home() {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhonenumber] = useState(null);
   const [schoolCode, setSchoolCode] = useState(null);
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     const fetchSubjects = async () => {
@@ -71,6 +73,10 @@ export default function Home() {
 
   const updateSchoolCode = (event) => {
     setSchoolCode(event.target.value);
+  };
+
+  const updatePassword = (event) => {
+    setPassword(event.target.value);
   };
 
   const createPressed = async () => {
@@ -126,6 +132,16 @@ export default function Home() {
               updateSelectedSubjects={updateSubjects}
             />
             <CodeField code={schoolCode} updateCode={updateSchoolCode} />
+          </div>
+          <div className="flex gap-6 items-center rounded-md">
+            <PasswordField
+              password={password}
+              updatePassword={updatePassword}
+            />
+            <PasswordField
+              password={password}
+              updatePassword={updatePassword}
+            />
           </div>
           <div className="bg-green-500 rounded-md hover:bg-green-900">
             <Button onClick={createPressed}>
