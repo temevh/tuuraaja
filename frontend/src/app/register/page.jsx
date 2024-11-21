@@ -27,6 +27,7 @@ export default function Home() {
   const [phoneNumber, setPhonenumber] = useState(null);
   const [schoolCode, setSchoolCode] = useState(null);
   const [password, setPassword] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
 
   useEffect(() => {
     const fetchSubjects = async () => {
@@ -77,6 +78,10 @@ export default function Home() {
 
   const updatePassword = (event) => {
     setPassword(event.target.value);
+  };
+
+  const updatePasswordCheck = (event) => {
+    setPasswordCheck(event.target.value);
   };
 
   const createPressed = async () => {
@@ -139,8 +144,8 @@ export default function Home() {
               updatePassword={updatePassword}
             />
             <PasswordField
-              password={password}
-              updatePassword={updatePassword}
+              password={passwordCheck}
+              updatePassword={updatePasswordCheck}
             />
           </div>
           <div className="bg-green-500 rounded-md hover:bg-green-900">

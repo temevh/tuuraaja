@@ -9,6 +9,7 @@ const PasswordField = ({ password, updatePassword }) => {
         variant="outlined"
         onChange={updatePassword}
         value={password}
+        type="password"
       />
     </div>
   );
