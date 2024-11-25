@@ -31,7 +31,7 @@ export default function Home() {
       <div className="flex flex-col gap-6">
         <EmailField email={email} updateEmail={updateEmail} />
         <PasswordField password={password} updatePassword={updatePassword} />
-        <button>
+        <button onClick={checkCrendtials}>
           <div className="bg-green-600 rounded-lg">
             <p className="text-black text-2xl font-bold">Kirjaudu sisään</p>
           </div>

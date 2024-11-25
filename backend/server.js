@@ -110,6 +110,8 @@ app.post("/api/addsubject", async (req, res) => {
   }
 });
 
+app.get("/getcredentials", async (req, res) => {});
+
 app.listen(port, () => {
   console.log("server running on http://localhost:" + port);
 });
