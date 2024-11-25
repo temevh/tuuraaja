@@ -110,7 +110,30 @@ app.post("/api/addsubject", async (req, res) => {
   }
 });
 
-app.get("/getcredentials", async (req, res) => {});
+app.get("/getcredentials", async (req, res) => {
+  try {
+    const { email, password } = req.query;
+    console.log("Checkind db for:", email, password);
+    const collection = database.collection("substitutes");
+
+    const exists = await collection.findOne({
+      email: email,
+      password: password,
+    });
+    if (exists) {
+      return res
+        .status(201)
+        .json({ message: "User found from database", found: true });
+    }
+    const result = await collection.insertOne(subject);
+    res.status(201).json({ message: "Credentials found", result });
+  } catch (err) {
+    console.error("Error getting credentials:", err);
+    res
+      .status(500)
+      .json({ error: "An error occurred while getting the credentials" });
+  }
+});
 
 app.listen(port, () => {
   console.log("server running on http://localhost:" + port);

@@ -6,6 +6,8 @@ import PasswordField from "../register/components/PasswordField";
 import { EmailField } from "../mobile/components";
 import { useState } from "react";
 
+import axios from "axios";
+
 export default function Home() {
   const router = useRouter();
 
@@ -20,10 +22,25 @@ export default function Home() {
     setPassword(event.target.value);
   };
 
-  const checkCrendtials = () => {};
+  const checkDb = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/getcredentials", {
+        params: {
+          email: email,
+          password: password,
+        },
+      });
+      const wasFound = response.data.found;
+      if (wasFound === true) {
+        router.push("/mobile");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  const loginClicked = () => {
-    router.push("/mobile");
+  const checkCrendtials = () => {
+    checkDb();
   };
 
   return (
