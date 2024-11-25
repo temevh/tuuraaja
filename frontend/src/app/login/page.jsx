@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 
 import PasswordField from "../register/components/PasswordField";
@@ -13,6 +12,8 @@ export default function Home() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [wasFound, setWasFound] = useState(false);
 
   const updateEmail = (event) => {
     setEmail(event.target.value);
@@ -30,9 +31,17 @@ export default function Home() {
           password: password,
         },
       });
-      const wasFound = response.data.found;
+      //const wasFound = response.data.found;
+      if (response.data.found === true) {
+        setWasFound(true);
+      }
       if (wasFound === true) {
         router.push("/mobile");
+      } else {
+        alert("Salasana tai sähköposti väärin");
+        setEmail("");
+        setPassword("");
+        return;
       }
     } catch (error) {
       console.log(error);

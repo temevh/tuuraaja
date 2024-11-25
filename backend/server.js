@@ -131,7 +131,10 @@ app.get("/getcredentials", async (req, res) => {
     console.error("Error getting credentials:", err);
     res
       .status(500)
-      .json({ error: "An error occurred while getting the credentials" });
+      .json({
+        error: "An error occurred while getting the credentials",
+        found: false,
+      });
   }
 });
 
