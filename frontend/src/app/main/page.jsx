@@ -18,6 +18,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [subjects, setSubjects] = useState([]);
   const [enableButtons, setEnableButtons] = useState(false);
+  const [selectedSubstitutes, setSelectedSubstitutes] = useState([]);
 
   useEffect(() => {
     const fetchSubjects = async () => {
@@ -74,6 +75,10 @@ export default function Home() {
     setSelectedDate(date);
   };
 
+  const handleSubstituteSelected = (newSubs) => {
+    setSelectedSubstitutes(newSubs);
+  };
+
   useEffect(() => {}, [selectedDate]);
 
   const sendSms = () => {
@@ -81,7 +86,7 @@ export default function Home() {
   };
 
   const sendEmail = () => {
-    alert("Lähetettiin sähköposti");
+    alert("Lähetettiin sähköposti valituille henkilöille");
   };
 
   return (
@@ -110,7 +115,10 @@ export default function Home() {
             sendEmail={sendEmail}
             buttonState={!enableButtons}
           />
-          <SubList substitutes={substitutes} />
+          <SubList
+            substitutes={substitutes}
+            substituteSelected={handleSubstituteSelected}
+          />
         </div>
       )}
     </div>

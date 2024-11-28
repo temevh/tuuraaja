@@ -58,7 +58,8 @@ const sendEmail = (email) => {
 const sendSms = (phoneNumber) => {
   console.log("sms to", phoneNumber);
 };
-const SubList = ({ substitutes }) => {
+
+const SubList = ({ substitutes, substituteSelected }) => {
   const rows = substitutes.map((substitute, index) => ({
     id: substitute._id,
     firstName: substitute.firstName,
@@ -67,6 +68,13 @@ const SubList = ({ substitutes }) => {
     email: substitute.email,
     subjects: substitute.subjects,
   }));
+
+  const handleSelectionChange = (selectionModel) => {
+    const selectedEmails = selectionModel.map(
+      (id) => rows.find((row) => row.id === id).email
+    );
+    substituteSelected(selectedEmails);
+  };
 
   return (
     <Box sx={{ height: 400, width: "100%" }}>
@@ -83,6 +91,7 @@ const SubList = ({ substitutes }) => {
         pageSizeOptions={[10]}
         checkboxSelection
         disableRowSelectionOnClick
+        onRowSelectionModelChange={handleSelectionChange}
         sx={{
           "& .MuiDataGrid-cell": {
             color: "white",
