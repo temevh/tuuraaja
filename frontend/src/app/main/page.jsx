@@ -88,7 +88,7 @@ export default function Home() {
   };
 
   const emailPressed = () => {
-    sendEmail(selectedSubstitutes);
+    sendEmail(selectedSubstitutes, selectedSubject, selectedDate);
     alert("Lähetettiin sähköposti valituille henkilöille");
   };
 
