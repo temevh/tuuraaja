@@ -11,6 +11,8 @@ import {
   Buttons,
 } from "./components/index";
 
+import sendEmail from "../utils/functions/sendEmail";
+
 export default function Home() {
   const [substitutes, setSubstitutes] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -85,7 +87,8 @@ export default function Home() {
     alert("Lähetettiin tekstiviesti (ei oikeesti)");
   };
 
-  const sendEmail = () => {
+  const emailPressed = () => {
+    sendEmail(selectedSubstitutes);
     alert("Lähetettiin sähköposti valituille henkilöille");
   };
 
@@ -112,7 +115,7 @@ export default function Home() {
           <Buttons
             fetchSubs={fetchSubs}
             sendSms={sendSms}
-            sendEmail={sendEmail}
+            sendEmail={emailPressed}
             buttonState={!enableButtons}
           />
           <SubList
