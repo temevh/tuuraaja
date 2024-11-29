@@ -111,11 +111,13 @@ export default function Home() {
           phoneNumber: phoneNumber,
           email: email,
           subjects: selectedSubjects,
+          password: password,
           dates: [],
           school: schoolCode,
         });
         console.log(response.data);
-        router.push("/mobile");
+        const userEmail = email;
+        router.push(`/mobile/${userEmail}`);
       } catch (error) {
         console.error("Error sending info:", error);
       }

@@ -31,12 +31,12 @@ export default function Home() {
           password: password,
         },
       });
-      //const wasFound = response.data.found;
       if (response.data.found === true) {
         setWasFound(true);
       }
       if (wasFound === true) {
-        router.push("/mobile");
+        const userEmail = email;
+        router.push(`/mobile/${userEmail}`);
       } else {
         alert("Salasana tai sähköposti väärin");
         setEmail("");
