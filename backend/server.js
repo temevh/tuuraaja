@@ -58,6 +58,26 @@ app.get("/api/getsub", async (req, res) => {
   }
 });
 
+app.get("/api/getsubinfo", async (req, res) => {
+  try {
+    const { email } = req.query;
+    console.log("email", email);
+    const collection = database.collection("substitutes");
+
+    const result = await collection.findOne({ email: email });
+    console.log("found info of substitute", result);
+
+    if (!result) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(result);
+  } catch (err) {
+    console.error("Error retrieving data:", err);
+    res.status(500).json({ error: "An error occurred while retrieving data" });
+  }
+});
+
 app.get("/api/getsubjects", async (req, res) => {
   console.log("getcourses get request");
   try {

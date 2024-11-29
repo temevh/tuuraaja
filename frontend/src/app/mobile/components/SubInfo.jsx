@@ -35,7 +35,9 @@ const SubInfo = ({ updateDates }) => {
           />
         </div>
         <div className="bg-purple-500 mt-8 text-center">
-          <button onClick={() => updateDates(selectedDates)}>Press me</button>
+          <button onClick={() => updateDates(selectedDates)}>
+            Päivitä tiedot
+          </button>
         </div>
       </div>
     </div>

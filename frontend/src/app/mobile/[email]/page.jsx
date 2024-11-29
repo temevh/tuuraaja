@@ -4,6 +4,7 @@ import SubInfo from "../components/SubInfo";
 import axios from "axios";
 
 import { formatDates } from "@/app/utils/functions";
+import { useEffect } from "react";
 
 const userPage = () => {
   const { email } = useParams();
@@ -24,11 +25,23 @@ const userPage = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchSubInfo = async () => {
+      const response = await axios.get("http://localhost:5000/api/getsubinfo", {
+        params: {
+          email: formattedEmail,
+        },
+      });
+      console.log(response.data);
+    };
+    fetchSubInfo();
+  }, []);
+
   return (
     <div className="min-h-screen w-full bg-green-700 flex justify-center items-center p-6">
       <div className="grid grid-cols-1 gap-y-6">
+        <p>{formattedEmail}</p>
         <SubInfo updateDates={updateDates} />
-        <p>Tervetuloa {formattedEmail}</p>
       </div>
     </div>
   );
