@@ -17,6 +17,7 @@ const SubCalendar = ({ selectedDates, onDateChange }) => {
 
   const dayClicked = (date) => {
     onDateChange(date);
+    setValue(date);
   };
 
   return (
@@ -26,8 +27,12 @@ const SubCalendar = ({ selectedDates, onDateChange }) => {
         value={value}
         onClickDay={dayClicked}
         tileClassName={({ date, view }) => {
-          if (view === "month" && isHighlighted(date)) {
-            return "selected-day";
+          if (view === "month") {
+            if (isHighlighted(date)) {
+              return date.getTime() === value.getTime()
+                ? "active-day"
+                : "highlighted-day";
+            }
           }
         }}
         tileDisabled={({ date }) => [0, 6].includes(date.getDay())}
@@ -129,6 +134,20 @@ const CalendarContainer = styled.div`
     background: #15803d !important;
     border-radius: 10% !important;
     color: black !important;
+  }
+
+  /* ~~~ highlighted day styles ~~~ */
+  .highlighted-day {
+    background: #15803d !important;
+    border-radius: 10% !important;
+    color: black !important;
+  }
+
+  /* ~~~ active day styles ~~~ */
+  .active-day {
+    background: #ff6347 !important; /* Different color for active day */
+    border-radius: 10% !important;
+    color: white !important;
   }
 
   /* ~~~ other view styles ~~~ */

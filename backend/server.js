@@ -117,7 +117,7 @@ app.post("/api/adddates", async (req, res) => {
     const collection = database.collection("substitutes");
     const result = await collection.updateOne(
       { email: email },
-      { $push: { dates: { $each: dates } } }
+      { $addToSet: { dates: { $each: dates } } }
     );
 
     if (result.modifiedCount === 0) {

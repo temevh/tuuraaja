@@ -7,10 +7,9 @@ import FormatDates from "@/app/utils/functions/FormatDates";
 
 const userPage = () => {
   const { email } = useParams();
+  const formattedEmail = email.replace("%40", "@");
 
   const updateDates = async (dates) => {
-    const formattedEmail = email.replace("%40", "@");
-
     try {
       const formattedDates = FormatDates(dates);
       console.log("formattedDates", formattedDates);
@@ -29,7 +28,7 @@ const userPage = () => {
     <div className="min-h-screen w-full bg-green-700 flex justify-center items-center p-6">
       <div className="grid grid-cols-1 gap-y-6">
         <SubInfo updateDates={updateDates} />
-        <p>Tervetuloa {email}</p>
+        <p>Tervetuloa {formattedEmail}</p>
       </div>
     </div>
   );
