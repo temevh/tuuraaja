@@ -3,7 +3,7 @@ import { useParams } from "next/navigation";
 import SubInfo from "../components/SubInfo";
 import axios from "axios";
 
-import FormatDates from "@/app/utils/functions/FormatDates";
+import { formatDates } from "@/app/utils/functions";
 
 const userPage = () => {
   const { email } = useParams();
@@ -11,7 +11,7 @@ const userPage = () => {
 
   const updateDates = async (dates) => {
     try {
-      const formattedDates = FormatDates(dates);
+      const formattedDates = formatDates(dates);
       console.log("formattedDates", formattedDates);
 
       const response = await axios.post("http://localhost:5000/api/adddates", {
