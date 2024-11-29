@@ -9,12 +9,14 @@ const userPage = () => {
   const { email } = useParams();
 
   const updateDates = async (dates) => {
+    const formattedEmail = email.replace("%40", "@");
+
     try {
       const formattedDates = FormatDates(dates);
       console.log("formattedDates", formattedDates);
 
       const response = await axios.post("http://localhost:5000/api/adddates", {
-        email: email,
+        email: formattedEmail,
         dates: formattedDates,
       });
       console.log(response.data);

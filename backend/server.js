@@ -110,6 +110,27 @@ app.post("/api/addsubject", async (req, res) => {
   }
 });
 
+app.post("/api/adddates", async (req, res) => {
+  try {
+    const { email, dates } = req.body;
+    console.log("Attempting to update dates for", email);
+    const collection = database.collection("substitutes");
+    const result = await collection.updateOne(
+      { email: email },
+      { $push: { dates: { $each: dates } } }
+    );
+
+    if (result.modifiedCount === 0) {
+      return res.status(404).json({ message: "User was not found" });
+    }
+
+    res.status(200).json({ message: "Dates updates succesfully" });
+  } catch (error) {
+    console.error("Error updating dates;");
+    res.status(500).json({ error: "An error occured while updating dates" });
+  }
+});
+
 app.get("/getcredentials", async (req, res) => {
   try {
     const { email, password } = req.query;
@@ -129,12 +150,10 @@ app.get("/getcredentials", async (req, res) => {
     res.status(201).json({ message: "Credentials found", result });
   } catch (err) {
     console.error("Error getting credentials:", err);
-    res
-      .status(500)
-      .json({
-        error: "An error occurred while getting the credentials",
-        found: false,
-      });
+    res.status(500).json({
+      error: "An error occurred while getting the credentials",
+      found: false,
+    });
   }
 });
 
