@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 
 import PasswordField from "../register/components/PasswordField";
-import { EmailField } from "../mobile/components";
+import { EmailField } from "../sub/components";
 import { useState } from "react";
 
 import axios from "axios";

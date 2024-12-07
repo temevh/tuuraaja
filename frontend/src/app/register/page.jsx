@@ -10,7 +10,7 @@ import {
   LastNameField,
   EmailField,
   PhoneNumberField,
-} from "../mobile/components";
+} from "../sub/components";
 import CodeField from "./components/CodeField";
 import { useRouter } from "next/navigation";
 import PasswordField from "./components/PasswordField";

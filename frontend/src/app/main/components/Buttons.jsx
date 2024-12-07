@@ -17,14 +17,14 @@ const Buttons = ({ fetchSubs, sendSms, sendEmail, buttonState }) => {
           },
         }}
       >
-        <p className="text-black font-bold text-md">Etsi sijainen</p>
+        <p className="text-black font-bold text-md">Hae sijaisia</p>
       </Button>
       <Button
         onClick={sendEmail}
         disabled={buttonState}
         sx={{
           backgroundColor: "#b069db",
-          width: "15%",
+          width: "20%",
           "&:hover": {
             backgroundColor: "lightgray",
           },
@@ -43,7 +43,7 @@ const Buttons = ({ fetchSubs, sendSms, sendEmail, buttonState }) => {
         disabled={buttonState}
         sx={{
           backgroundColor: "#b069db",
-          width: "15%",
+          width: "20%",
           "&:hover": {
             backgroundColor: "lightgray",
           },

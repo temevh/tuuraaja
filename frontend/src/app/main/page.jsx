@@ -93,35 +93,37 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-green-700 flex justify-center items-center p-6">
+    <div className="min-h-screen w-full bg-gray-700 flex justify-center items-center p-6">
       {loading ? (
-        <p className="text-black font-bold font-3xl">Ladataan...</p>
+        <p className="text-black font-bold text-3xl">Ladataan...</p>
       ) : (
-        <div className="w-1/2 grid grid-cols-1 gap-y-6">
-          <div className="flex flex-row gap-6">
-            <SubjectDropdown
-              selectedSubject={selectedSubject}
-              onSubjectChange={setSelectedSubject}
-              subjects={subjects}
+        <div className="w-full max-w-4xl bg-gray-500 rounded-lg shadow-lg p-8">
+          <div className="flex flex-col gap-6">
+            <div className="flex flex-row gap-6">
+              <SubjectDropdown
+                selectedSubject={selectedSubject}
+                onSubjectChange={setSelectedSubject}
+                subjects={subjects}
+              />
+              <AddSubjectButton />
+            </div>
+            <div>
+              <CalendarComponent
+                onDateChange={handleDateChange}
+                selectedDate={selectedDate}
+              />
+            </div>
+            <Buttons
+              fetchSubs={fetchSubs}
+              sendSms={sendSms}
+              sendEmail={emailPressed}
+              buttonState={!enableButtons}
             />
-            <AddSubjectButton />
-          </div>
-          <div>
-            <CalendarComponent
-              onDateChange={handleDateChange}
-              selectedDate={selectedDate}
+            <SubList
+              substitutes={substitutes}
+              onSubstituteSelected={handleSubstituteSelected}
             />
           </div>
-          <Buttons
-            fetchSubs={fetchSubs}
-            sendSms={sendSms}
-            sendEmail={emailPressed}
-            buttonState={!enableButtons}
-          />
-          <SubList
-            substitutes={substitutes}
-            substituteSelected={handleSubstituteSelected}
-          />
         </div>
       )}
     </div>
