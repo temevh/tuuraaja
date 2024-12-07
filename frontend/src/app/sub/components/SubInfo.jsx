@@ -25,7 +25,7 @@ const SubInfo = ({ updateDates }) => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-green-700 flex justify-center items-center p-6">
+    <div className="min-h-screen w-full bg-gray-700 flex justify-center items-center p-6 rounded-lg">
       <div>
         <div className="flex flex-col gap-6 pb-6">
           <p className="text-5xl">Valitse sopivat päivämäärät</p>
