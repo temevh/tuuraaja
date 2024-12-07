@@ -127,52 +127,52 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen gap-6 bg-gray-300">
+    <div className="min-h-screen w-full bg-gray-700 flex justify-center items-center p-6">
       {loading ? (
         <p className="text-black font-bold text-3xl">Ladataan...</p>
       ) : (
-        <div className="flex flex-col items-center gap-6">
-          <div className="flex gap-6 items-center rounded-md">
-            <FirstNameField
-              firstName={firstname}
-              updateFirstName={updateFirstname}
-            />
-            <LastNameField
-              lastName={lastname}
-              updateLastName={updateLastname}
-            />
-          </div>
-          <div className="flex gap-6 items-center rounded-md">
-            <EmailField email={email} updateEmail={updateEmail} />
-            <PhoneNumberField
-              phoneNumber={phoneNumber}
-              updateNumber={updateNumber}
-            />
-          </div>
-          <div className="flex gap-6 items-center rounded-md">
-            <SubjectsField
-              subjectList={subjectList}
-              selectedSubjects={selectedSubjects}
-              updateSelectedSubjects={updateSubjects}
-            />
-            <CodeField code={schoolCode} updateCode={updateSchoolCode} />
-          </div>
-          <div className="flex gap-6 items-center rounded-md">
-            <PasswordField
-              password={password}
-              updatePassword={updatePassword}
-            />
-            <PasswordField
-              password={passwordCheck}
-              updatePassword={updatePasswordCheck}
-            />
-          </div>
-          <div className="bg-green-500 rounded-md hover:bg-green-900">
-            <Button onClick={createPressed}>
-              <p className="text-white font-bold text-xl hover:text-black">
-                Luo profiili
-              </p>
-            </Button>
+        <div className="w-full max-w-4xl bg-gray-200 rounded-lg shadow-lg p-10 ">
+          <div className="flex flex-col gap-6 items-center">
+            <div className="flex flex-row gap-6">
+              <FirstNameField
+                firstName={firstname}
+                updateFirstName={updateFirstname}
+              />
+              <LastNameField
+                lastName={lastname}
+                updateLastName={updateLastname}
+              />
+            </div>
+            <div className="flex flex-row gap-6">
+              <EmailField email={email} updateEmail={updateEmail} />
+              <PhoneNumberField
+                phoneNumber={phoneNumber}
+                updateNumber={updateNumber}
+              />
+            </div>
+            <div className="flex flex-row gap-6">
+              <SubjectsField
+                subjectList={subjectList}
+                selectedSubjects={selectedSubjects}
+                updateSelectedSubjects={updateSubjects}
+              />
+              <CodeField code={schoolCode} updateCode={updateSchoolCode} />
+            </div>
+            <div className="flex flex-row gap-6">
+              <PasswordField
+                password={password}
+                updatePassword={updatePassword}
+              />
+              <PasswordField
+                password={passwordCheck}
+                updatePassword={updatePasswordCheck}
+              />
+            </div>
+            <div className="bg-green-600 rounded-lg p-4 hover:bg-green-500 transition duration-300 ease-in-out transform hover:scale-105">
+              <Button onClick={createPressed}>
+                <p className="text-white font-bold text-xl">Luo profiili</p>
+              </Button>
+            </div>
           </div>
         </div>
       )}
