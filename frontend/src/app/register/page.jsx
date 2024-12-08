@@ -117,7 +117,7 @@ export default function Home() {
         });
         console.log(response.data);
         const userEmail = email;
-        router.push(`/mobile/${userEmail}`);
+        router.push(`/sub/${userEmail}`);
       } catch (error) {
         console.error("Error sending info:", error);
       }

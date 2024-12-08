@@ -32,7 +32,7 @@ export default function Home() {
       }
       if (wasFound === true) {
         const userEmail = email;
-        router.push(`/mobile/${userEmail}`);
+        router.push(`/sub/${userEmail}`);
       } else {
         alert("Salasana tai sähköposti väärin");
         setEmail("");

@@ -37,6 +37,7 @@ const userPage = () => {
             },
           }
         );
+        console.log(response.data);
         setSubInfo(response.data);
       } catch (error) {
         console.error("Error fetching sub info", error);
