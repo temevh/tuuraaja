@@ -6,13 +6,17 @@ import styled from "styled-components";
 const SubCalendar = ({ selectedDates, onDateChange }) => {
   const [value, setValue] = useState(new Date());
 
-  const isHighlighted = (date) => {
-    return selectedDates.some(
-      (highlightedDate) =>
-        date.getFullYear() === highlightedDate.getFullYear() &&
-        date.getMonth() === highlightedDate.getMonth() &&
-        date.getDate() === highlightedDate.getDate()
-    );
+  const formatDate = (date) => {
+    const pad = (number) => (number < 10 ? `0${number}` : number);
+    const year = date.getFullYear();
+    const month = pad(date.getMonth() + 1);
+    const day = pad(date.getDate());
+    return `${year}-${month}-${day}`;
+  };
+
+  const isHighlighted = (currentDate) => {
+    const formattedCurrentDate = formatDate(currentDate);
+    return selectedDates.includes(formattedCurrentDate);
   };
 
   const dayClicked = (date) => {

@@ -1,10 +1,18 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { SubCalendar } from "./index";
 
-const SubInfo = ({ updateDates }) => {
+const SubInfo = ({ updateDates, previousSubDates }) => {
   const [selectedDates, setSelectedDates] = useState([]);
+
+  useEffect(() => {
+    console.log("selected dates:");
+    console.log(selectedDates);
+    console.log("dates from database");
+    console.log(previousSubDates);
+    setSelectedDates(previousSubDates);
+  }, []);
 
   const handleDateChange = (date) => {
     const dateString = date.toDateString();
