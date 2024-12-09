@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 
 import Calendar from "./fields/Calendar";
 
-const SubInfo = ({ updateDates, previousSubDates }) => {
+const SubInfo = ({ userInfo }) => {
   const [selectedDates, setSelectedDates] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (previousSubDates) {
-      const formattedDates = previousSubDates.map((day) => new Date(day));
+    if (userInfo.dates) {
+      const formattedDates = userInfo.dates.map((day) => new Date(day));
       setSelectedDates(formattedDates);
     }
     setLoading(false);

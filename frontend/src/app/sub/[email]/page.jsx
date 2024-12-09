@@ -9,24 +9,8 @@ import { useEffect, useState } from "react";
 const userPage = () => {
   const { email } = useParams();
   const formattedEmail = email.replace("%40", "@");
-  //const [subInfo, setSubInfo] = useState(null);
-  const [previousSubDates, setPreviousSubDates] = useState([]);
+  const [userInfo, setUserInfo] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const updateDates = async (dates) => {
-    try {
-      const formattedDates = formatDates(dates);
-      console.log("formattedDates", formattedDates);
-
-      const response = await axios.post("http://localhost:5000/api/adddates", {
-        email: formattedEmail,
-        dates: formattedDates,
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error adding dates", error);
-    }
-  };
 
   useEffect(() => {
     const fetchSubInfo = async () => {
@@ -39,9 +23,7 @@ const userPage = () => {
             },
           }
         );
-        console.log(response.data);
-        //setSubInfo(response.data);
-        setPreviousSubDates(response.data.dates);
+        setUserInfo(response.data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching sub info", error);
@@ -58,10 +40,7 @@ const userPage = () => {
         <div className="w-full max-w-4xl bg-gray-300 rounded-lg shadow-lg p-8">
           <div className="flex flex-col items-center gap-6">
             <p className="text-2xl font-bold text-gray-700">{formattedEmail}</p>
-            <SubInfo
-              updateDates={updateDates}
-              previousSubDates={previousSubDates}
-            />
+            <SubInfo userInfo={userInfo} />
           </div>
         </div>
       )}
