@@ -2,21 +2,31 @@ import { useState, useEffect } from "react";
 import { DayPicker, getDefaultClassNames } from "react-day-picker";
 import "react-day-picker/style.css";
 
-const Calendar = ({ selectedDates, updateDates }) => {
+const Calendar = ({ dbDays }) => {
   const defaultClassNames = getDefaultClassNames();
   const [selected, setSelected] = useState([]);
+  const [allDays, setAllDays] = useState([]);
+  const [toBeAdded, setToBeAdded] = useState([]);
+  const [toBeDeleted, setToBeDeleted] = useState([]);
 
   useEffect(() => {
-    console.log("selectedDates:", selectedDates);
-    setSelected(selectedDates);
-  }, []);
+    console.log("dbDays:", dbDays);
+    const formatted = dbDays.map((day) => new Date(day));
+    setSelected(formatted);
+    setAllDays(formatted);
+  }, [dbDays]);
 
-  const daySelected = (day) => {
-    console.log("selected", day);
-  };
+  useEffect(() => {
+    console.log("all days:", allDays);
+    if (allDays.includes(selected)) {
+      console.log("Day already selected");
+    } else {
+      console.log("Day not yet selected");
+    }
+  }, [selected]);
 
-  //Hae databasesta jo valitut päivät
-  //Lisää ne kalenteriin alustaessas
+  //Hae databasesta jo valitut päivät check
+  //Lisää ne kalenteriin alustaessa check
   //Käyttäjän klikatessa päivää
   //Jos jo valittu (haettu db) -> lisää poistoarrayhin
   //Jos ei valittu -> lissää lisäysarrayhin
@@ -30,7 +40,7 @@ const Calendar = ({ selectedDates, updateDates }) => {
       <DayPicker
         mode="multiple"
         selected={selected}
-        onSelect={daySelected}
+        onSelect={setSelected}
         showOutsideDays
         showWeekNumber
         classNames={{

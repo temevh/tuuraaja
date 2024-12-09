@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import Calendar from "./fields/Calendar";
 
 const SubInfo = ({ userInfo }) => {
-  const [selectedDates, setSelectedDates] = useState([]);
+  const [dbDays, setDbDays] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (userInfo.dates) {
       const formattedDates = userInfo.dates.map((day) => new Date(day));
-      setSelectedDates(formattedDates);
+      setDbDays(formattedDates);
     }
     setLoading(false);
   }, []);
@@ -22,7 +22,7 @@ const SubInfo = ({ userInfo }) => {
       ) : (
         <div>
           <div className="flex flex-col gap-6 pb-6">
-            <Calendar selectedDates={selectedDates} />
+            <Calendar dbDays={dbDays} />
           </div>
           <div className="bg-purple-500 mt-8 text-center">
             <button onClick={() => updateDates(selectedDates)}>
