@@ -5,34 +5,53 @@ import "react-day-picker/style.css";
 const Calendar = ({ dbDays }) => {
   const defaultClassNames = getDefaultClassNames();
   const [selected, setSelected] = useState([]);
-  const [allDays, setAllDays] = useState([]);
   const [toBeAdded, setToBeAdded] = useState([]);
   const [toBeDeleted, setToBeDeleted] = useState([]);
 
   useEffect(() => {
-    console.log("dbDays:", dbDays);
+    // Format dbDays and set them as the initially selected dates
     const formatted = dbDays.map((day) => new Date(day));
     setSelected(formatted);
-    setAllDays(formatted);
   }, [dbDays]);
 
-  useEffect(() => {
-    console.log("all days:", allDays);
-    if (allDays.includes(selected)) {
-      console.log("Day already selected");
-    } else {
-      console.log("Day not yet selected");
-    }
-  }, [selected]);
+  const handleSelect = (day) => {
+    let updatedSelected = [...selected];
+    let updatedToBeAdded = [...toBeAdded];
+    let updatedToBeDeleted = [...toBeDeleted];
 
-  //Hae databasesta jo valitut päivät check
-  //Lisää ne kalenteriin alustaessa check
-  //Käyttäjän klikatessa päivää
-  //Jos jo valittu (haettu db) -> lisää poistoarrayhin
-  //Jos ei valittu -> lissää lisäysarrayhin
-  //Nappia painaessa poista ensin poistettavat
-  //Lisää uudet
-  //Ilmoita käyttäjälle muutoksista
+    if (selected.includes(day)) {
+      // If the day was already selected, remove it from the selected array
+      updatedSelected = updatedSelected.filter((d) => d !== day);
+
+      // If it was part of the initial dbDays, add it to the toBeDeleted array
+      if (dbDays.some((d) => new Date(d) === day)) {
+        updatedToBeDeleted.push(day);
+      } else {
+        // If it was part of toBeAdded, remove it from toBeAdded
+        updatedToBeAdded = updatedToBeAdded.filter((d) => d !== day);
+      }
+    } else {
+      // If the day was not selected, add it to the selected array
+      updatedSelected.push(day);
+
+      // If it's not part of the initial dbDays, add it to toBeAdded
+      if (!dbDays.some((d) => new Date(d) === day)) {
+        updatedToBeAdded.push(day);
+      } else {
+        // If it was part of toBeDeleted, remove it from toBeDeleted
+        updatedToBeDeleted = updatedToBeDeleted.filter((d) => d !== day);
+      }
+    }
+
+    setSelected(updatedSelected);
+    setToBeAdded(updatedToBeAdded);
+    setToBeDeleted(updatedToBeDeleted);
+  };
+
+  useEffect(() => {
+    console.log("To be added:", toBeAdded);
+    console.log("To be deleted:", toBeDeleted);
+  }, [toBeAdded, toBeDeleted]);
 
   return (
     <div>
@@ -40,7 +59,7 @@ const Calendar = ({ dbDays }) => {
       <DayPicker
         mode="multiple"
         selected={selected}
-        onSelect={setSelected}
+        onSelect={handleSelect}
         showOutsideDays
         showWeekNumber
         classNames={{
