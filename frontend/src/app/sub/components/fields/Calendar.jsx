@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-import { DayPicker, getDefaultClassNames } from "react-day-picker";
+import { DayPicker, getDefaultClassNames, DateUtils } from "react-day-picker";
 import "react-day-picker/style.css";
 
 const Calendar = ({ dbDays }) => {
   const defaultClassNames = getDefaultClassNames();
+  //const [selectedDayss, setSelectedDays] = useState([]);
   const [selected, setSelected] = useState([]);
-  const [toBeAdded, setToBeAdded] = useState([]);
-  const [toBeDeleted, setToBeDeleted] = useState([]);
 
   useEffect(() => {
     // Format dbDays and set them as the initially selected dates
@@ -14,44 +13,9 @@ const Calendar = ({ dbDays }) => {
     setSelected(formatted);
   }, [dbDays]);
 
-  const handleSelect = (day) => {
-    let updatedSelected = [...selected];
-    let updatedToBeAdded = [...toBeAdded];
-    let updatedToBeDeleted = [...toBeDeleted];
-
-    if (selected.includes(day)) {
-      // If the day was already selected, remove it from the selected array
-      updatedSelected = updatedSelected.filter((d) => d !== day);
-
-      // If it was part of the initial dbDays, add it to the toBeDeleted array
-      if (dbDays.some((d) => new Date(d) === day)) {
-        updatedToBeDeleted.push(day);
-      } else {
-        // If it was part of toBeAdded, remove it from toBeAdded
-        updatedToBeAdded = updatedToBeAdded.filter((d) => d !== day);
-      }
-    } else {
-      // If the day was not selected, add it to the selected array
-      updatedSelected.push(day);
-
-      // If it's not part of the initial dbDays, add it to toBeAdded
-      if (!dbDays.some((d) => new Date(d) === day)) {
-        updatedToBeAdded.push(day);
-      } else {
-        // If it was part of toBeDeleted, remove it from toBeDeleted
-        updatedToBeDeleted = updatedToBeDeleted.filter((d) => d !== day);
-      }
-    }
-
-    setSelected(updatedSelected);
-    setToBeAdded(updatedToBeAdded);
-    setToBeDeleted(updatedToBeDeleted);
+  const buttonClicked = () => {
+    console.log("selected days:", selected);
   };
-
-  useEffect(() => {
-    console.log("To be added:", toBeAdded);
-    console.log("To be deleted:", toBeDeleted);
-  }, [toBeAdded, toBeDeleted]);
 
   return (
     <div>
@@ -59,8 +23,9 @@ const Calendar = ({ dbDays }) => {
       <DayPicker
         mode="multiple"
         selected={selected}
-        onSelect={handleSelect}
+        onSelect={setSelected}
         showOutsideDays
+        locale={"Fi"}
         showWeekNumber
         classNames={{
           today: `border-amber-300`,
@@ -69,6 +34,7 @@ const Calendar = ({ dbDays }) => {
           chevron: `${defaultClassNames.chevron} fill-green-500`,
         }}
       />
+      <button onClick={buttonClicked}>PRESS ME</button>
     </div>
   );
 };
