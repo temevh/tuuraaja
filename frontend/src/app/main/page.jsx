@@ -45,18 +45,14 @@ export default function Home() {
   }, []);
 
   const fetchSubs = async () => {
-    console.log("Selected date:", selectedDate);
     try {
-      const formattedDate = formatDates(selectedDate);
-      console.log("formattedDate", formattedDate);
       const response = await axios.get("http://localhost:5000/api/getsub", {
         params: {
           subject: selectedSubject,
-          date: formattedDate,
+          date: selectedDate,
         },
       });
       setSubstitutes(response.data);
-      console.log(response);
       setEnableButtons(true);
     } catch (error) {
       console.error("Error fetching subs", error);
