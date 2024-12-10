@@ -108,6 +108,29 @@ app.post("/api/addsub", async (req, res) => {
   }
 });
 
+app.post("/api/updatedates", async (req, res) => {
+  try {
+    const { email, dates } = req.body;
+    console.log("update info for", email);
+    console.log("new dates", dates);
+    const collection = database.collection("substitutes");
+
+    const result = await collection.updateOne(
+      { email: email },
+      { $set: { dates: dates } }
+    );
+
+    if (result.modifiedCount === 0) {
+      return res.status(404).json({ message: "Virhe päivien päivittämisessä" });
+    }
+    console.log("done");
+    res.status(200).json({ message: "Tiedot päivitetty onnistuneesti" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "An error occurred while updating info" });
+  }
+});
+
 app.post("/api/addsubject", async (req, res) => {
   try {
     const subject = req.body;

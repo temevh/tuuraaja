@@ -2,19 +2,18 @@ import { useState, useEffect } from "react";
 import { DayPicker, getDefaultClassNames, DateUtils } from "react-day-picker";
 import "react-day-picker/style.css";
 
-const Calendar = ({ dbDays }) => {
+const Calendar = ({ dbDays, setSelectedDates }) => {
   const defaultClassNames = getDefaultClassNames();
-  //const [selectedDayss, setSelectedDays] = useState([]);
   const [selected, setSelected] = useState([]);
 
   useEffect(() => {
-    // Format dbDays and set them as the initially selected dates
     const formatted = dbDays.map((day) => new Date(day));
     setSelected(formatted);
   }, [dbDays]);
 
-  const buttonClicked = () => {
-    console.log("selected days:", selected);
+  const handleSelect = (selectedDates) => {
+    setSelected(selectedDates);
+    setSelectedDates(selectedDates);
   };
 
   return (
@@ -23,7 +22,7 @@ const Calendar = ({ dbDays }) => {
       <DayPicker
         mode="multiple"
         selected={selected}
-        onSelect={setSelected}
+        onSelect={handleSelect}
         showOutsideDays
         locale={"Fi"}
         showWeekNumber
@@ -34,7 +33,6 @@ const Calendar = ({ dbDays }) => {
           chevron: `${defaultClassNames.chevron} fill-green-500`,
         }}
       />
-      <button onClick={buttonClicked}>PRESS ME</button>
     </div>
   );
 };
