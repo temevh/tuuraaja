@@ -58,6 +58,16 @@ app.get("/api/getsub", async (req, res) => {
   }
 });
 
+app.post("/api/addpost", async (req, res) => {
+  try {
+    const { date, subject } = req.body;
+    console.log(subject, date);
+    res.status(200).json({ message: "Ilmoitus lisätty onnistuneesti" });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 app.get("/api/getsubinfo", async (req, res) => {
   try {
     const { email } = req.query;

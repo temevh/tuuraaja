@@ -60,13 +60,26 @@ export default function Home() {
     setSelectedSubstitutes(newSubs);
   };
 
+  const createPost = async () => {
+    try {
+      const response = await axios.post("http://localhost:5000/api/addpost", {
+        date: selectedDate,
+        subject: selectedSubject,
+      });
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const sendSms = () => {
     alert("Lähetettiin tekstiviesti (ei oikeesti)");
   };
 
   const emailPressed = () => {
-    sendEmail(selectedSubstitutes, selectedSubject, selectedDate);
-    alert("Lähetettiin sähköposti valituille henkilöille");
+    createPost();
+    //sendEmail(selectedSubstitutes, selectedSubject, selectedDate);
+    //alert("Lähetettiin sähköposti valituille henkilöille");
   };
 
   return (
