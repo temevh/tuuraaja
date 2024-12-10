@@ -1,0 +1,24 @@
+.custom-day {
+  border-radius: 10%;
+  transition: background-color;
+}
+
+.custom-day:hover {
+  background-color: #25d159;
+}
+
+.custom-day.selected {
+  background-color: #4caf50;
+}
+
+.custom-month {
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.custom-selected {
+  background-color: green;
+}
+
+.custom-arrow {
+}

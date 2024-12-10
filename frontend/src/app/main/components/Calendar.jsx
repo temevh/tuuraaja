@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { DayPicker, getDefaultClassNames } from "react-day-picker";
 import "react-day-picker/style.css";
 import { fi } from "react-day-picker/locale";
+import "./calendar.css";
 
 const Calendar = ({ selectedDate, setSelectedDate }) => {
   const defaultClassNames = getDefaultClassNames();
@@ -25,10 +26,14 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
         locale={fi}
         showWeekNumber
         classNames={{
-          today: `border-amber-300`,
-          selected: `bg-amber-500 border-amber-500 text-white`,
           root: `${defaultClassNames.root} shadow-lg p-5`,
           chevron: `${defaultClassNames.chevron} fill-green-500`,
+          day: `custom-day`,
+          week: `custom-week`,
+          month: `custom-month`,
+          selected: `custom-selected`,
+          button_next: `custom-arrow`,
+          button_previous: `custom-arrow`,
         }}
       />
     </div>

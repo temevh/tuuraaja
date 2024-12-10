@@ -84,7 +84,7 @@ export default function Home() {
               />
               <AddSubjectButton />
             </div>
-            <div>
+            <div className="w-fulls">
               <Calendar
                 selectedDate={selectedDate}
                 setSelectedDate={setSelectedDate}
