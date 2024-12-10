@@ -18,23 +18,26 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
   };
 
   return (
-    <DayPicker
-      mode="single"
-      selected={selected}
-      onSelect={handleSelect}
-      locale={fi}
-      showWeekNumber
-      classNames={{
-        root: `${defaultClassNames.root} shadow-lg p-5`,
-        chevron: `${defaultClassNames.chevron} fill-green-500`,
-        day: `custom-day`,
-        week: `custom-week`,
-        month: `custom-month`,
-        selected: `custom-selected`,
-        button_next: `custom-arrow`,
-        button_previous: `custom-arrow`,
-      }}
-    />
+    <div>
+      <p className="text-3xl text-center pb-4">Kalenteri</p>
+      <DayPicker
+        mode="single"
+        selected={selected}
+        onSelect={handleSelect}
+        locale={fi}
+        showWeekNumber
+        classNames={{
+          root: `${defaultClassNames.root} shadow-lg p-5`,
+          chevron: `${defaultClassNames.chevron} fill-green-500`,
+          day: `custom-day`,
+          week: `custom-week`,
+          month: `custom-month`,
+          selected: `custom-selected`,
+          button_next: `custom-arrow`,
+          button_previous: `custom-arrow`,
+        }}
+      />
+    </div>
   );
 };
 

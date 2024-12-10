@@ -7,7 +7,7 @@ const PostCard = ({ post }) => {
     .padStart(2, "0")}.${date.getFullYear()}`;
 
   const secondarySubs = post.secondarySubs;
-  const bgColor = post.isFilled ? "green" : "red";
+  const bgColor = post.isFilled ? "#90EE90" : "#f69697";
 
   return (
     <div
@@ -19,18 +19,20 @@ const PostCard = ({ post }) => {
         <p className="text-lg text-black">{formattedDate}</p>
       </div>
       <div className="pl-6">
-        <div className="flex flex-rowss">
-          <p className="text-black text-xl pr-2">Ensisijainen:</p>
-          <p className="text-black text-xl underline">{post.primarySub}</p>
-        </div>
+        {post.primarySub !== "" ? (
+          <div className="flex flex-row">
+            <p className="text-black text-xl pr-2">Ensisijainen:</p>
+            <p className="text-black text-xl underline">{post.primarySub}</p>
+          </div>
+        ) : (
+          <div className="flex justify-center items-center h-full">
+            <p className="text-2xl text-black">Ei vielä sijaista</p>
+          </div>
+        )}
         <div className="flex flex-row gap-2">
-          <p className="text-black">Varalla: {secondarySubs.length}</p>
-          {/*
-
-          {secondarySubs.map((sub) => {
-            return <p className="text-gray-600">{sub}</p>;
-          })}
-              */}
+          {secondarySubs.length !== 0 ? (
+            <p className="text-black">Varalla: {secondarySubs.length}</p>
+          ) : null}
         </div>
       </div>
     </div>
