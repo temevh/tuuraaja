@@ -68,6 +68,12 @@ app.post("/api/addpost", async (req, res) => {
   }
 });
 
+app.get("/api/getposts", async (req, res) => {
+  const collection = database.collection("posts");
+  const result = await collection.find({}).toArray();
+  res.status(200).json(result);
+});
+
 app.get("/api/getsubinfo", async (req, res) => {
   try {
     const { email } = req.query;

@@ -10,6 +10,7 @@ import {
   Calendar,
 } from "./components/index";
 import sendEmail from "../utils/functions/sendEmail";
+import PostList from "./components/PostsList";
 
 export default function Home() {
   const [substitutes, setSubstitutes] = useState([]);
@@ -97,11 +98,16 @@ export default function Home() {
               />
               <AddSubjectButton />
             </div>
-            <div className="w-fulls">
-              <Calendar
-                selectedDate={selectedDate}
-                setSelectedDate={setSelectedDate}
-              />
+            <div className="flex flex-row gap-4 w-full">
+              <div className="w-1/2">
+                <Calendar
+                  selectedDate={selectedDate}
+                  setSelectedDate={setSelectedDate}
+                />
+              </div>
+              <div className="w-1/2 ">
+                <PostList />
+              </div>
             </div>
             <Buttons
               fetchSubs={fetchSubs}
