@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import { useState, useEffect } from "react";
-
 import {
   AddSubjectButton,
   SubList,
@@ -10,7 +9,6 @@ import {
   Buttons,
   Calendar,
 } from "./components/index";
-
 import sendEmail from "../utils/functions/sendEmail";
 
 export default function Home() {
@@ -24,7 +22,6 @@ export default function Home() {
 
   useEffect(() => {
     const fetchSubjects = async () => {
-      console.log("loaded site");
       try {
         const response = await axios.get(
           "http://localhost:5000/api/getsubjects"
@@ -63,8 +60,6 @@ export default function Home() {
     setSelectedSubstitutes(newSubs);
   };
 
-  useEffect(() => {}, [selectedDate]);
-
   const sendSms = () => {
     alert("Lähetettiin tekstiviesti (ei oikeesti)");
   };
@@ -73,10 +68,6 @@ export default function Home() {
     sendEmail(selectedSubstitutes, selectedSubject, selectedDate);
     alert("Lähetettiin sähköposti valituille henkilöille");
   };
-
-  useEffect(() => {
-    console.log("Selected date is", selectedDate);
-  }, [selectedDate]);
 
   return (
     <div className="min-h-screen w-full bg-gray-700 flex justify-center items-center p-6">

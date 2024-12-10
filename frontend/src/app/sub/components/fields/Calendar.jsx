@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { DayPicker, getDefaultClassNames, DateUtils } from "react-day-picker";
+import { DayPicker, getDefaultClassNames } from "react-day-picker";
+import { fi } from "react-day-picker/locale";
 import "react-day-picker/style.css";
 
 const Calendar = ({ dbDays, setSelectedDates }) => {
@@ -24,7 +25,7 @@ const Calendar = ({ dbDays, setSelectedDates }) => {
         selected={selected}
         onSelect={handleSelect}
         showOutsideDays
-        locale={"Fi"}
+        locale={fi}
         showWeekNumber
         classNames={{
           today: `border-amber-300`,
