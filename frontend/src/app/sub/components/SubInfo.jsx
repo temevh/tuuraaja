@@ -27,7 +27,7 @@ const SubInfo = ({ userInfo }) => {
 
     const response = await axios.post("http://localhost:5000/api/updatedates", {
       email: userInfo.email,
-      dates: selectedDates.map((date) => date.toISOString().split("T")[0]), // Format dates as YYYY-MM-DD
+      dates: selectedDates,
     });
     console.log(response);
   };

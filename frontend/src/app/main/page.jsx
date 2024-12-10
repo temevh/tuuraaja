@@ -6,9 +6,9 @@ import { useState, useEffect } from "react";
 import {
   AddSubjectButton,
   SubList,
-  CalendarComponent,
   SubjectDropdown,
   Buttons,
+  Calendar,
 } from "./components/index";
 
 import sendEmail from "../utils/functions/sendEmail";
@@ -44,16 +44,6 @@ export default function Home() {
     fetchSubjects();
   }, []);
 
-  const formatDates = (selectedDates) => {
-    const pad = (number) => (number < 10 ? `0${number}` : number);
-
-    const year = selectedDates.getFullYear();
-    const month = pad(selectedDates.getMonth() + 1);
-    const day = pad(selectedDates.getDate());
-
-    return `${year}-${month}-${day}`;
-  };
-
   const fetchSubs = async () => {
     console.log("Selected date:", selectedDate);
     try {
@@ -73,10 +63,6 @@ export default function Home() {
     }
   };
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
-
   const handleSubstituteSelected = (newSubs) => {
     setSelectedSubstitutes(newSubs);
   };
@@ -91,6 +77,10 @@ export default function Home() {
     sendEmail(selectedSubstitutes, selectedSubject, selectedDate);
     alert("Lähetettiin sähköposti valituille henkilöille");
   };
+
+  useEffect(() => {
+    console.log("Selected date is", selectedDate);
+  }, [selectedDate]);
 
   return (
     <div className="min-h-screen w-full bg-gray-700 flex justify-center items-center p-6">
@@ -108,9 +98,9 @@ export default function Home() {
               <AddSubjectButton />
             </div>
             <div>
-              <CalendarComponent
-                onDateChange={handleDateChange}
+              <Calendar
                 selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
               />
             </div>
             <Buttons
