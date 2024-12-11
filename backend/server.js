@@ -69,9 +69,28 @@ app.post("/api/addpost", async (req, res) => {
 });
 
 app.get("/api/getposts", async (req, res) => {
-  const collection = database.collection("posts");
-  const result = await collection.find({}).toArray();
-  res.status(200).json(result);
+  try {
+    const { code } = req.query;
+
+    const collection = database.collection("posts");
+    let query = {};
+
+    if (code) {
+      query = { code: code };
+      console.log(query);
+    }
+
+    const result = await collection.find(query).toArray();
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: "No posts found" });
+    }
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Error retrieving posts:", error);
+    res.status(500).json({ error: "An error occurred while retrieving posts" });
+  }
 });
 
 app.get("/api/getsubinfo", async (req, res) => {
