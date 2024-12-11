@@ -1,5 +1,4 @@
 const TakeButton = ({ isFilled }) => {
-  isFilled = false;
   return (
     <div className="rounded-md text-center mt-4 p-4">
       <button
@@ -7,7 +6,7 @@ const TakeButton = ({ isFilled }) => {
         className={`w-full p-4 rounded-md text-2xl ${
           isFilled
             ? "bg-gray-400 cursor-not-allowed"
-            : "bg-green-500 hover:bg-green-700"
+            : "bg-green-400 hover:bg-green-600"
         }`}
       >
         <p className={`text-white ${isFilled ? "opacity-50" : "opacity-100"}`}>

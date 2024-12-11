@@ -54,7 +54,7 @@ const PostPage = () => {
     .toString()
     .padStart(2, "0")}.${date.getFullYear()}`;
 
-  const bgColor = post.isFilled ? "bg-red-400" : "bg-green-500";
+  const bgColor = post.isFilled ? "bg-red-400" : "bg-green-800";
 
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -62,7 +62,7 @@ const PostPage = () => {
         <h1 className="text-2xl font-bold text-white mb-4">{post.subject}</h1>
         <p className="text-lg text-white mb-2">Date: {formattedDate}</p>
         <p className="text-lg text-white">
-          Status: {post.isFilled ? "Filled" : "Not Filled"}
+          Status: {post.isFilled ? "Varattu" : "Vapaana"}
         </p>
         <TakeButton isFilled={post.isFilled} />
       </div>
