@@ -49,7 +49,7 @@ export default function Home() {
     const month = selectedDate.getMonth();
     const day = selectedDate.getDate();
 
-    const hour = parseInt(selectedTime[0], 10);
+    const hour = parseInt(selectedTime[0], 10) + 2;
     const minute = parseInt(selectedTime[1], 10);
     const date = new Date(year, month, day, hour, minute);
     console.log("date:", date);
