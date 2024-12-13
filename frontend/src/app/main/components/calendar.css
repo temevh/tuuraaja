@@ -19,3 +19,17 @@
 .custom-selected {
   background-color: green;
 }
+
+.custom-arrow {
+  background-color: lightgray;
+  border-radius: 20%;
+  margin-left: 1rem;
+  height: 2rem;
+  width: 3rem;
+  color: black; 
+}
+
+.custom-arrow:hover {
+  background-color: darkgray; 
+  color: white
+}
