@@ -3,7 +3,7 @@ import { useParams } from "next/navigation";
 import SubInfo from "../components/SubInfo";
 import axios from "axios";
 
-import { formatDates } from "@/app/utils/functions";
+//import { formatDates } from "@/app/utils/functions";
 import { useEffect, useState } from "react";
 
 const userPage = () => {

@@ -9,7 +9,7 @@ import {
   Buttons,
   Calendar,
 } from "./components/index";
-import sendEmail from "../utils/functions/sendEmail";
+//import sendEmail from "../utils/functions/sendEmail";
 import PostList from "./components/PostsList";
 
 export default function Home() {
