@@ -49,13 +49,13 @@ const AddSubjectButton = () => {
 
   return (
     <div>
-      <Button
+      <button
         variant="contained"
-        sx={{ backgroundColor: "#739173", height: 55, color: "black" }}
+        className="bg-gradientpurple rounded-lg p-2 hover:bg-gradientpink transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
         onClick={handleClickOpen}
       >
         Lisää oppiaine
-      </Button>
+      </button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Lisää uusi oppiaine</DialogTitle>
         <DialogContent>

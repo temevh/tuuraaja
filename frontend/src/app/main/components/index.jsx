@@ -5,6 +5,7 @@ import SubjectDropdown from "./SubjectDropdown";
 import SubList from "./SubList";
 import Calendar from "./Calendar";
 import TimeSelect from "./TimeSelect";
+import LevelCheckboxes from "./LevelCheckboxes";
 
 export {
   AddSubjectButton,
@@ -14,4 +15,5 @@ export {
   SubList,
   Calendar,
   TimeSelect,
+  LevelCheckboxes,
 };

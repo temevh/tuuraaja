@@ -19,8 +19,8 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
 
   return (
     <div>
-      <p className="text-3xl text-center pb-4">Kalenteri</p>
-      <div className="bg-gray-700 rounded-md">
+      <p className="text-3xl text-black text-center pb-4">Kalenteri</p>
+      <div className="bg-gray-400 rounded-md">
         <DayPicker
           mode="single"
           selected={selected}
