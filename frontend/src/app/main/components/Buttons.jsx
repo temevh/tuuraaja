@@ -3,60 +3,15 @@ import { Button } from "@mui/material";
 const Buttons = ({ fetchSubs, sendSms, sendEmail, buttonState }) => {
   return (
     <div className="flex flex-row">
-      <Button
-        onClick={fetchSubs}
-        sx={{
-          backgroundColor: "#6eb087",
-          width: "25%",
-          "&:hover": {
-            backgroundColor: "lightgray",
-          },
-          "&.Mui-disabled": {
-            backgroundColor: "gray",
-            color: "white",
-          },
-        }}
-      >
+      <button onClick={fetchSubs}>
         <p className="text-black font-bold text-md">Hae sijaisia</p>
-      </Button>
-      <Button
-        onClick={sendEmail}
-        disabled={buttonState}
-        sx={{
-          backgroundColor: "#b069db",
-          width: "20%",
-          "&:hover": {
-            backgroundColor: "lightgray",
-          },
-          "&.Mui-disabled": {
-            backgroundColor: "gray",
-            color: "white",
-            opacity: 0.3,
-          },
-          marginLeft: 52,
-        }}
-      >
+      </button>
+      <button onClick={sendEmail} disabled={buttonState}>
         <p className="text-black font-bold text-md">sähköposti</p>
-      </Button>
-      <Button
-        onClick={sendSms}
-        disabled={buttonState}
-        sx={{
-          backgroundColor: "#b069db",
-          width: "20%",
-          "&:hover": {
-            backgroundColor: "lightgray",
-          },
-          "&.Mui-disabled": {
-            backgroundColor: "gray",
-            color: "white",
-            opacity: 0.3,
-          },
-          marginLeft: 4,
-        }}
-      >
+      </button>
+      <button onClick={sendSms} disabled={buttonState}>
         <p className="text-black font-bold text-md">tekstiviesti</p>
-      </Button>
+      </button>
     </div>
   );
 };

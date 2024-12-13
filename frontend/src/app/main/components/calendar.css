@@ -1,14 +1,14 @@
 .custom-day {
-  border-radius: 10%;
+  border-radius: 30%;
   transition: background-color;
 }
 
 .custom-day:hover {
-  background-color: #25d159;
+  background-color: #0077b6;
 }
 
 .custom-day.selected {
-  background-color: #4caf50;
+  background-color: #0077b6;
 }
 
 .custom-month {
@@ -17,7 +17,7 @@
 }
 
 .custom-selected {
-  background-color: green;
+  background-color: #0077b6;
 }
 
 .custom-arrow {
@@ -32,4 +32,8 @@
 .custom-arrow:hover {
   background-color: darkgray; 
   color: white
+}
+
+.custom-today{
+  color: red
 }

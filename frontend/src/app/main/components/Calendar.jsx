@@ -20,7 +20,7 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
   return (
     <div>
       <p className="text-3xl text-black text-center pb-4">Kalenteri</p>
-      <div className="bg-gray-400 rounded-md">
+      <div className="bg-blue-300 rounded-md">
         <DayPicker
           mode="single"
           selected={selected}
@@ -29,7 +29,8 @@ const Calendar = ({ selectedDate, setSelectedDate }) => {
           showWeekNumber
           classNames={{
             root: `${defaultClassNames.root}`,
-            chevron: `${defaultClassNames.chevron} fill-green-500`,
+            chevron: `${defaultClassNames.chevron} fill-blue-500`,
+            today: `custom-today`,
             day: `custom-day`,
             week: `custom-week`,
             month: `custom-month`,
