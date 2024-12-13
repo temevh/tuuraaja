@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 
-const TimeSelect = () => {
+const TimeSelect = ({ setSelectedTime }) => {
   const minutes = [0, 15, 30, 45];
   const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
   const [selectedHour, setSelectedHour] = useState("");
+  const [selectedMinute, setSelectedMinute] = useState("");
 
   useEffect(() => {
     console.log("selected hour:", selectedHour);
@@ -11,6 +12,11 @@ const TimeSelect = () => {
 
   const changeHour = (hour) => {
     setSelectedHour(hour);
+    setSelectedTime([hour, selectedMinute]);
+  };
+
+  const changeMinute = (minute) => {
+    setSelectedTime([selectedHour, minute]);
   };
 
   return (
@@ -27,7 +33,10 @@ const TimeSelect = () => {
             </option>
           ))}
         </select>
-        <select className="p-2 rounded-lg bg-gray-400">
+        <select
+          className="p-2 rounded-lg bg-gray-400"
+          onChange={(e) => changeMinute(e.target.value)}
+        >
           {minutes.map((minute) => (
             <option key={minute} value={minute}>
               {minute}

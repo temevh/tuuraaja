@@ -16,6 +16,7 @@ import PostList from "./components/PostsList";
 export default function Home() {
   const [substitutes, setSubstitutes] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState("");
   const [loading, setLoading] = useState(true);
   const [subjects, setSubjects] = useState([]);
@@ -44,11 +45,19 @@ export default function Home() {
   }, []);
 
   const fetchSubs = async () => {
+    const year = selectedDate.getFullYear();
+    const month = selectedDate.getMonth();
+    const day = selectedDate.getDate();
+
+    const hour = parseInt(selectedTime[0], 10);
+    const minute = parseInt(selectedTime[1], 10);
+    const date = new Date(year, month, day, hour, minute);
+    console.log("date:", date);
     try {
-      const response = await axios.get("http://localhost:5000/api/getsub", {
+      const response = await axios.get("http://localhost:5000/api/getsubs", {
         params: {
           subject: selectedSubject,
-          date: selectedDate,
+          date: date,
         },
       });
       setSubstitutes(response.data);
@@ -105,7 +114,7 @@ export default function Home() {
                   selectedDate={selectedDate}
                   setSelectedDate={setSelectedDate}
                 />
-                <TimeSelect />
+                <TimeSelect setSelectedTime={setSelectedTime} />
               </div>
               <div className="w-1/2 ">
                 <PostList />

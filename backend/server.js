@@ -37,7 +37,7 @@ let collection;
 app.use(cors());
 app.use(express.json());
 
-app.get("/api/getsub", async (req, res) => {
+app.get("/api/getsubs", async (req, res) => {
   try {
     const { subject, date } = req.query;
     console.log("subject:", subject, "date:", date);
