@@ -127,12 +127,19 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gray-700 flex justify-center items-center p-6">
+    <div>
       {loading ? (
-        <p className="text-black font-bold text-3xl">Ladataan...</p>
+        <div className="flex items-center justify-center h-screen bg-gradient-to-tl from-gradientpurple to-gradientpink">
+          <p className="text-black font-bold text-6xl bg-white rounded-md p-12">
+            Ladataan...
+          </p>
+        </div>
       ) : (
-        <div className="w-full max-w-4xl bg-gray-200 rounded-lg shadow-lg p-10 ">
-          <div className="flex flex-col gap-6 items-center">
+        <div className="flex items-center justify-center h-screen bg-gradient-to-tl from-gradientpurple to-gradientpink">
+          <div className="w-full flex flex-col gap-6 items-center max-w-md bg-white rounded-lg shadow-2xl p-8 transform transition duration-500 hover:scale-105">
+            <p className="text-center text-black text-xl">
+              Täytä alla olevat kentät
+            </p>
             <div className="flex flex-row gap-6">
               <FirstNameField
                 firstName={firstname}
@@ -168,11 +175,12 @@ export default function Home() {
                 updatePassword={updatePasswordCheck}
               />
             </div>
-            <div className="bg-green-600 rounded-lg p-4 hover:bg-green-500 transition duration-300 ease-in-out transform hover:scale-105">
-              <Button onClick={createPressed}>
-                <p className="text-white font-bold text-xl">Luo profiili</p>
-              </Button>
-            </div>
+            <button
+              onClick={createPressed}
+              className="bg-gradientpurple rounded-lg p-4 hover:bg-gradientpink transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
+            >
+              <p className="text-white text-2xl font-bold">Luo profiili</p>
+            </button>{" "}
           </div>
         </div>
       )}
