@@ -8,6 +8,7 @@ import {
   SubjectDropdown,
   Buttons,
   Calendar,
+  TimeSelect,
 } from "./components/index";
 //import sendEmail from "../utils/functions/sendEmail";
 import PostList from "./components/PostsList";
@@ -104,6 +105,7 @@ export default function Home() {
                   selectedDate={selectedDate}
                   setSelectedDate={setSelectedDate}
                 />
+                <TimeSelect />
               </div>
               <div className="w-1/2 ">
                 <PostList />

@@ -4,6 +4,7 @@ import CalendarComponent from "./CalendarComponent";
 import SubjectDropdown from "./SubjectDropdown";
 import SubList from "./SubList";
 import Calendar from "./Calendar";
+import TimeSelect from "./TimeSelect";
 
 export {
   AddSubjectButton,
@@ -12,4 +13,5 @@ export {
   SubjectDropdown,
   SubList,
   Calendar,
+  TimeSelect,
 };
