@@ -23,6 +23,8 @@ export default function Home() {
   const [subjects, setSubjects] = useState([]);
   const [enableButtons, setEnableButtons] = useState(false);
   const [selectedSubstitutes, setSelectedSubstitutes] = useState([]);
+  const [lukioChecked, setLukioChecked] = useState(false);
+  const [ylakouluChecked, setYlakouluChecked] = useState(false);
 
   useEffect(() => {
     const fetchSubjects = async () => {
@@ -54,11 +56,21 @@ export default function Home() {
     const minute = parseInt(selectedTime[1], 10);
     const date = new Date(year, month, day, hour, minute);
     console.log("date:", date);
+    let level = "molemmat";
+    if (lukioChecked === false && ylakouluChecked === true) {
+      level = "ylakoulu";
+    } else if (lukioChecked === true && ylakouluChecked === false) {
+      level = "lukio";
+    } else {
+      level = "molemmat";
+    }
+
     try {
       const response = await axios.get("http://localhost:5000/api/getsubs", {
         params: {
           subject: selectedSubject,
           date: date,
+          level: level,
         },
       });
       setSubstitutes(response.data);
@@ -117,7 +129,12 @@ export default function Home() {
                 />
                 <div className="flex flex-row gap-4">
                   <TimeSelect setSelectedTime={setSelectedTime} />
-                  <LevelCheckboxes />
+                  <LevelCheckboxes
+                    setLukioCheck={() => setLukioChecked(!lukioChecked)}
+                    setYlakouluCheck={() =>
+                      setYlakouluChecked(!ylakouluChecked)
+                    }
+                  />
                 </div>
               </div>
               <div className="w-1/2 ">

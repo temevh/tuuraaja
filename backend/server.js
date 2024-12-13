@@ -39,8 +39,8 @@ app.use(express.json());
 
 app.get("/api/getsubs", async (req, res) => {
   try {
-    const { subject, date } = req.query;
-    console.log("subject:", subject, "date:", date);
+    const { subject, date, level } = req.query;
+    console.log("subject:", subject, "date:", date, "level:", level);
 
     let query = {};
 

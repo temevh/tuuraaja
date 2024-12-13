@@ -21,16 +21,16 @@
 }
 
 .custom-arrow {
-  background-color: lightgray;
+  background-color: #15648e;
   border-radius: 20%;
   margin-left: 1rem;
   height: 2rem;
-  width: 3rem;
+  width: 3rem;  
   color: black; 
 }
 
 .custom-arrow:hover {
-  background-color: darkgray; 
+  background-color: #0077b6; 
   color: white
 }
 
