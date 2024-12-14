@@ -4,6 +4,7 @@ import LastNameField from "./fields/LastNameField";
 import PhoneNumberField from "./fields/PhoneNumberField";
 import SubCalendar from "./fields/SubCalendar";
 import SubjectsField from "./fields/SubjectsField";
+import TimeSelect from "./fields/TimeSelect";
 
 export {
   EmailField,
@@ -12,4 +13,5 @@ export {
   PhoneNumberField,
   SubCalendar,
   SubjectsField,
+  TimeSelect,
 };

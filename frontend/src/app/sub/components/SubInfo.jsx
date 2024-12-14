@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import Calendar from "./fields/Calendar";
+import { TimeSelect } from ".";
 
 const SubInfo = ({ userInfo }) => {
   const [dbDays, setDbDays] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedTime, setSelectedTime] = useState([""]);
   const [selectedDates, setSelectedDates] = useState([]);
 
   useEffect(() => {
@@ -40,6 +42,7 @@ const SubInfo = ({ userInfo }) => {
         <div>
           <div className="flex flex-col gap-6 pb-6">
             <Calendar dbDays={dbDays} setSelectedDates={setSelectedDates} />
+            <TimeSelect setSelectedTime={setSelectedTime} />
           </div>
           <div className="bg-purple-500 mt-8 text-center">
             <button onClick={updateDates}>Päivitä tiedot</button>
