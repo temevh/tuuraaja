@@ -180,7 +180,7 @@ export default function Home() {
               className="bg-gradientpurple rounded-lg p-4 hover:bg-gradientpink transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
             >
               <p className="text-white text-2xl font-bold">Luo profiili</p>
-            </button>{" "}
+            </button>
           </div>
         </div>
       )}
