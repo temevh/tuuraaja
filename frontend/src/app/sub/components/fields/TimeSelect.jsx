@@ -21,7 +21,6 @@ const TimeSelect = ({ setSelectedTime }) => {
 
   return (
     <div className="pb-2 rounded-lg">
-      <p className="text-lg font-bold">Aika</p>
       <div className="flex flex-row gap-1">
         <select
           className="p-2 rounded-lg bg-gray-400"

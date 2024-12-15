@@ -51,7 +51,10 @@ const SubInfo = ({ userInfo }) => {
         <div>
           <div className="flex flex-col gap-6 pb-6">
             <Calendar dbDays={dbDays} setSelectedDates={setSelectedDates} />
-            <TimeSelect setSelectedTime={setSelectedTime} />
+            <div className="flex flex-row gap-4">
+              <p className="text-lg">Valitse sopiva aikaväli</p>
+              <TimeSelect setSelectedTime={setSelectedTime} />
+            </div>
           </div>
           <div className="bg-purple-500 mt-8 text-center">
             <button onClick={updateDates}>Päivitä tiedot</button>
