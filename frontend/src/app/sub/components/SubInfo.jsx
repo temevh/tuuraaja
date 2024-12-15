@@ -23,7 +23,7 @@ const SubInfo = ({ userInfo }) => {
     console.log("selected dates:", selectedDates);
 
     if (!Array.isArray(selectedDates)) {
-      console.error("selectedDates is not an array");
+      console.error("selectedDates is not an array!");
       return;
     }
 
