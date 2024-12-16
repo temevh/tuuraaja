@@ -1,8 +1,15 @@
 const TakeButton = ({ isFilled }) => {
+  const handleFillPost = () => {
+    if (isFilled !== true) {
+      alert("Ilmoittautuminen hyväksytty");
+    }
+  };
+
   return (
     <div className="rounded-md text-center mt-4 p-4">
       <button
         disabled={isFilled}
+        onClick={handleFillPost}
         className={`w-full p-4 rounded-md text-2xl ${
           isFilled
             ? "bg-gray-400 cursor-not-allowed"
