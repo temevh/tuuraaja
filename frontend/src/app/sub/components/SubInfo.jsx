@@ -31,7 +31,7 @@ const SubInfo = ({ userInfo }) => {
       const year = date.getFullYear();
       const month = date.getMonth();
       const day = date.getDate();
-      const hour = parseInt(selectedTime[0], 10) + 2;
+      const hour = parseInt(selectedTime[0], 10);
       const minute = parseInt(selectedTime[1], 10);
       return new Date(year, month, day, hour, minute);
     });

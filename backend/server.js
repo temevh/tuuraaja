@@ -188,9 +188,16 @@ app.post("/api/updatedates", async (req, res) => {
     console.log("new dates", dates);
     const collection = database.collection("substitutes");
 
+    // Adjust dates to the desired timezone (e.g., GMT+2)
+    const dateObjects = dates.map(date => {
+      const originalDate = new Date(date);
+      const adjustedDate = new Date(originalDate.getTime() + 2 * 60 * 60 * 1000); // Adjust by 2 hours
+      return adjustedDate;
+    });
+
     const result = await collection.updateOne(
       { email: email },
-      { $set: { dates: dates } }
+      { $set: { dates: dateObjects } }
     );
 
     if (result.modifiedCount === 0) {
