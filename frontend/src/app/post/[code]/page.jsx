@@ -9,6 +9,7 @@ import { TakeButton } from "./components";
 const PostPage = () => {
   const [loading, setLoading] = useState(true);
   const [post, setPost] = useState(null);
+  const [isFilled, setIsFilled] = useState(null);
 
   const params = useParams();
   const postCode = params.code;
@@ -21,6 +22,7 @@ const PostPage = () => {
         });
         console.log(response.data);
         setPost(response.data[0]);
+        setIsFilled(response.data[0].isFilled);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching post:", error);
@@ -54,7 +56,7 @@ const PostPage = () => {
     .toString()
     .padStart(2, "0")}.${date.getFullYear()}`;
 
-  const bgColor = post.isFilled ? "bg-red-400" : "bg-green-800";
+  const bgColor = isFilled ? "bg-red-400" : "bg-green-800";
 
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -62,9 +64,9 @@ const PostPage = () => {
         <h1 className="text-2xl font-bold text-white mb-4">{post.subject}</h1>
         <p className="text-lg text-white mb-2">Date: {formattedDate}</p>
         <p className="text-lg text-white">
-          Status: {post.isFilled ? "Varattu" : "Vapaana"}
+          Status: {isFilled ? "Varattu" : "Vapaana"}
         </p>
-        <TakeButton isFilled={post.isFilled} />
+        <TakeButton isFilled={isFilled} setIsFilled={setIsFilled} />
       </div>
     </div>
   );

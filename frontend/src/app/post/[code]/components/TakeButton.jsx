@@ -1,7 +1,8 @@
-const TakeButton = ({ isFilled }) => {
+const TakeButton = ({ isFilled, setIsFilled }) => {
   const handleFillPost = () => {
     if (isFilled !== true) {
       alert("Ilmoittautuminen hyväksytty");
+      setIsFilled(true);
     }
   };
 
