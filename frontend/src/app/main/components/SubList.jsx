@@ -94,7 +94,7 @@ const SubList = ({ substitutes, substituteSelected }) => {
         onRowSelectionModelChange={handleSelectionChange}
         sx={{
           "& .MuiDataGrid-cell": {
-            color: "white",
+            color: "black",
           },
           "& .MuiDataGrid-checkboxInput .Mui-checked": {
             color: "green",
