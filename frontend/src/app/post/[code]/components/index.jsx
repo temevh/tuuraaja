@@ -1,3 +1,4 @@
 import TakeButton from "./TakeButton";
+import SecondaryButton from "./SecondaryButton";
 
-export { TakeButton };
+export { TakeButton, SecondaryButton };

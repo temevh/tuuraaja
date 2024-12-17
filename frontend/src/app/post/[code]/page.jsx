@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import { TakeButton } from "./components";
+import { TakeButton, SecondaryButton } from "./components";
 
 const PostPage = () => {
   const [loading, setLoading] = useState(true);
@@ -64,7 +64,7 @@ const PostPage = () => {
         const response = await axios.post(
           "http://localhost:5000/api/handlepost",
           {
-            user: "testitimo@mail.com",
+            user: "Timo Testimies",
             postCode: postCode,
           }
         );
@@ -97,6 +97,7 @@ const PostPage = () => {
           setIsFilled={setIsFilled}
           buttonPressed={buttonPressed}
         />
+        {isFilled && <SecondaryButton />}
       </div>
     </div>
   );
