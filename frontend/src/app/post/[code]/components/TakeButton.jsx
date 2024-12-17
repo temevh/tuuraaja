@@ -1,16 +1,9 @@
-const TakeButton = ({ isFilled, setIsFilled }) => {
-  const handleFillPost = () => {
-    if (isFilled !== true) {
-      alert("Ilmoittautuminen hyväksytty");
-      setIsFilled(true);
-    }
-  };
-
+const TakeButton = ({ isFilled, buttonPressed }) => {
   return (
     <div className="rounded-md text-center mt-4 p-4">
       <button
         disabled={isFilled}
-        onClick={handleFillPost}
+        onClick={buttonPressed}
         className={`w-full p-4 rounded-md text-2xl ${
           isFilled
             ? "bg-gray-400 cursor-not-allowed"
@@ -18,7 +11,7 @@ const TakeButton = ({ isFilled, setIsFilled }) => {
         }`}
       >
         <p className={`text-white ${isFilled ? "opacity-50" : "opacity-100"}`}>
-          Ilmoittaudu
+          {isFilled ? "Paikka varattu" : "Ilmoittaudu"}
         </p>
       </button>
     </div>

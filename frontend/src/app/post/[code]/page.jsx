@@ -58,15 +58,45 @@ const PostPage = () => {
 
   const bgColor = isFilled ? "bg-red-400" : "bg-green-800";
 
+  const buttonPressed = async () => {
+    if (isFilled !== true) {
+      try {
+        const response = await axios.post(
+          "http://localhost:5000/api/handlepost",
+          {
+            user: "testitimo@mail.com",
+            postCode: postCode,
+          }
+        );
+        console.log(response);
+        if (response.status === 200) {
+          setIsFilled(true);
+        }
+        alert(response.data.message);
+      } catch (error) {
+        console.error("Error making the API call:", error);
+      }
+    }
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className={`w-full max-w-md p-8 rounded-lg shadow-lg ${bgColor}`}>
-        <h1 className="text-2xl font-bold text-white mb-4">{post.subject}</h1>
-        <p className="text-lg text-white mb-2">Date: {formattedDate}</p>
+        <h1 className="text-3xl underline font-bold text-white mb-4">
+          {post.subject}
+        </h1>
+        <h1 className="text-xl font-bold text-white mb-4">
+          Jyväskylän Normaalikoulu
+        </h1>
+        <p className="text-lg text-white mb-2">Aika: {formattedDate}</p>
         <p className="text-lg text-white">
           Status: {isFilled ? "Varattu" : "Vapaana"}
         </p>
-        <TakeButton isFilled={isFilled} setIsFilled={setIsFilled} />
+        <TakeButton
+          isFilled={isFilled}
+          setIsFilled={setIsFilled}
+          buttonPressed={buttonPressed}
+        />
       </div>
     </div>
   );

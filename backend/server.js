@@ -58,6 +58,28 @@ app.get("/api/getsubs", async (req, res) => {
   }
 });
 
+app.post("/api/handlepost", async (req, res) => {
+  try {
+    const { user, postCode } = req.body;
+    console.log("User:", user);
+    const collection = database.collection("posts");
+
+    const result = await collection.updateOne(
+      { code: postCode },
+      { $set: { primarySub: user, isFilled: true } }
+    );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ message: "Ilmoittautuminen epäonnistui" });
+    }
+
+    res.status(200).json({ message: "Ilmoittautuminen vahvistettu" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 app.post("/api/addpost", async (req, res) => {
   try {
     const { date, subject } = req.body;
