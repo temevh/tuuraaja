@@ -37,18 +37,36 @@ let collection;
 app.use(cors());
 app.use(express.json());
 
+const { ObjectId } = require("mongodb");
+
 app.get("/api/getsubs", async (req, res) => {
   try {
     const { subject, date, level } = req.query;
     console.log("subject:", subject, "date:", date, "level:", level);
 
+    // Parse the input date
+    const inputDate = new Date(date);
+    const inputYear = inputDate.getFullYear();
+    const inputMonth = inputDate.getMonth();
+    const inputDay = inputDate.getDate();
+    const inputTime = inputDate.toISOString().split("T")[1];
+
     let query = {};
 
     if (subject) {
-      query = { subjects: subject, dates: date };
+      query = {
+        subjects: subject,
+        dates: {
+          $elemMatch: {
+            $gte: new Date(`${inputYear}-${inputMonth + 1}-${inputDay}T${inputTime}`),
+            $lt: new Date(`${inputYear}-${inputMonth + 1}-${inputDay + 1}T00:00:00Z`)
+          }
+        }
+      };
       console.log(query);
     }
-    collection = database.collection("substitutes");
+
+    const collection = database.collection("substitutes");
 
     const substitutes = await collection.find(query).toArray();
     console.log(substitutes);
