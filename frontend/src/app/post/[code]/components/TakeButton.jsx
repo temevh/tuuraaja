@@ -1,9 +1,9 @@
-const TakeButton = ({ isFilled, buttonPressed }) => {
+const TakeButton = ({ isFilled, primaryPressed }) => {
   return (
     <div className="rounded-md text-center mt-4 p-4">
       <button
         disabled={isFilled}
-        onClick={buttonPressed}
+        onClick={primaryPressed}
         className={`w-full p-4 rounded-md text-2xl ${
           isFilled
             ? "bg-gray-400 cursor-not-allowed"

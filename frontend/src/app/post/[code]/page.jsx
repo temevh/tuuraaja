@@ -58,7 +58,7 @@ const PostPage = () => {
 
   const bgColor = isFilled ? "bg-red-400" : "bg-green-800";
 
-  const buttonPressed = async () => {
+  const primaryPressed = async () => {
     if (isFilled !== true) {
       try {
         const response = await axios.post(
@@ -66,9 +66,30 @@ const PostPage = () => {
           {
             user: "Timo Testimies",
             postCode: postCode,
+            primary: true,
           }
         );
-        console.log(response);
+        if (response.status === 200) {
+          setIsFilled(true);
+        }
+        alert(response.data.message);
+      } catch (error) {
+        console.error("Error making the API call:", error);
+      }
+    }
+  };
+
+  const secondaryPressed = async () => {
+    if (isFilled === true) {
+      try {
+        const response = await axios.post(
+          "http://localhost:5000/api/handlepost",
+          {
+            user: "Venla Varalla",
+            postCode: postCode,
+            primary: false,
+          }
+        );
         if (response.status === 200) {
           setIsFilled(true);
         }
@@ -95,9 +116,9 @@ const PostPage = () => {
         <TakeButton
           isFilled={isFilled}
           setIsFilled={setIsFilled}
-          buttonPressed={buttonPressed}
+          primaryPressed={primaryPressed}
         />
-        {isFilled && <SecondaryButton />}
+        {isFilled && <SecondaryButton secondaryPressed={secondaryPressed} />}
       </div>
     </div>
   );

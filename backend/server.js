@@ -60,13 +60,21 @@ app.get("/api/getsubs", async (req, res) => {
 
 app.post("/api/handlepost", async (req, res) => {
   try {
-    const { user, postCode } = req.body;
+    const { user, postCode, primary } = req.body;
     console.log("User:", user);
     const collection = database.collection("posts");
 
+    let updateQuery;
+
+    if (primary === true) {
+      updateQuery = { $set: { primarySub: user, isFilled: true } };
+    } else {
+      updateQuery = { $push: { secondarySubs: user }, $set: { isFilled: true } };
+    }
+
     const result = await collection.updateOne(
       { code: postCode },
-      { $set: { primarySub: user, isFilled: true } }
+      updateQuery
     );
 
     if (result.matchedCount === 0) {
@@ -77,16 +85,6 @@ app.post("/api/handlepost", async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Internal Server Error" });
-  }
-});
-
-app.post("/api/addpost", async (req, res) => {
-  try {
-    const { date, subject } = req.body;
-    console.log(subject, date);
-    res.status(200).json({ message: "Ilmoitus lisätty onnistuneesti" });
-  } catch (err) {
-    console.log(err);
   }
 });
 
