@@ -37,8 +37,6 @@ let collection;
 app.use(cors());
 app.use(express.json());
 
-const { ObjectId } = require("mongodb");
-
 app.get("/api/getsubs", async (req, res) => {
   try {
     const { subject, date, level } = req.query;
@@ -63,7 +61,7 @@ app.get("/api/getsubs", async (req, res) => {
           }
         }
       };
-      console.log(query);
+      console.log("query",query);
     }
 
     const collection = database.collection("substitutes");
@@ -203,7 +201,6 @@ app.post("/api/updatedates", async (req, res) => {
     if (result.modifiedCount === 0) {
       return res.status(404).json({ message: "Virhe päivien päivittämisessä" });
     }
-    console.log("done");
     res.status(200).json({ message: "Tiedot päivitetty onnistuneesti" });
   } catch (err) {
     console.log(err);

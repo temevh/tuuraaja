@@ -16,7 +16,7 @@ import PostList from "./components/PostsList";
 
 export default function Home() {
   const [substitutes, setSubstitutes] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState([""]);
   const [selectedSubject, setSelectedSubject] = useState("");
   const [loading, setLoading] = useState(true);
@@ -33,10 +33,8 @@ export default function Home() {
           "http://localhost:5000/api/getsubjects"
         );
         const tempSub = response.data;
-        console.log("tempSub", tempSub);
         const subjectNames = tempSub.map((subject) => subject.name);
         setSubjects(subjectNames);
-        console.log("subjects", subjectNames);
         setLoading(false);
       } catch (error) {
         console.log("error loading courses", error);
@@ -55,7 +53,6 @@ export default function Home() {
     const hour = parseInt(selectedTime[0], 10);
     const minute = parseInt(selectedTime[1], 10);
     const date = new Date(year, month, day, hour, minute);
-    console.log("date:", date);
     let level = "molemmat";
     if (lukioChecked === false && ylakouluChecked === true) {
       level = "ylakoulu";
@@ -69,7 +66,7 @@ export default function Home() {
       const response = await axios.get("http://localhost:5000/api/getsubs", {
         params: {
           subject: selectedSubject,
-          date: date,
+          date: date.toISOString,
           level: level,
         },
       });
