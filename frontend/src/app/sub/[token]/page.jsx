@@ -7,19 +7,19 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const userPage = () => {
-  const { email } = useParams();
-  const formattedEmail = email.replace("%40", "@");
+  //const { token } = useParams();
   const [userInfo, setUserInfo] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
     const fetchSubInfo = async () => {
       try {
         const response = await axios.get(
           "http://localhost:5000/api/getsubinfo",
           {
             params: {
-              email: formattedEmail,
+              token: token,
             },
           }
         );
@@ -30,7 +30,7 @@ const userPage = () => {
       }
     };
     fetchSubInfo();
-  }, [formattedEmail]);
+  }, []);
 
   return (
     <div className="min-h-screen w-full bg-gray-700 flex justify-center items-center p-6">
@@ -39,7 +39,6 @@ const userPage = () => {
       ) : (
         <div className="w-full max-w-4xl bg-gray-300 rounded-lg shadow-lg p-8">
           <div className="flex flex-col items-center gap-6">
-            <p className="text-2xl font-bold text-gray-700">{formattedEmail}</p>
             <SubInfo userInfo={userInfo} />
           </div>
         </div>

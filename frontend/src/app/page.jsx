@@ -33,40 +33,11 @@ export default function Home() {
       localStorage.setItem("token", token);
       const user = jwtDecode(token);
       console.log("Logged in user:", user);
-      router.push(`/sub/${user.email}`);
+      router.push(`/sub/${token}`);
     } catch (error) {
       console.error("Error logging in:", error);
       alert("Invalid email or password");
     }
-  };
-
-  const checkDb = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/getcredentials", {
-        params: {
-          email: email,
-          password: password,
-        },
-      });
-      if (response.data.found === true) {
-        setWasFound(true);
-      }
-      if (wasFound === true) {
-        const userEmail = email;
-        router.push(`/sub/${userEmail}`);
-      } else {
-        alert("Salasana tai sähköposti väärin");
-        setEmail("");
-        setPassword("");
-        return;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const checkCrendtials = () => {
-    checkDb();
   };
 
   const registerClicked = () => {

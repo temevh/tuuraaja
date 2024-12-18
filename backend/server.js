@@ -60,20 +60,25 @@ app.post("/api/login", async (req, res) => {
   const collection = database.collection("substitutes");
 
   try {
-    console.log("aa")
     const user = await collection.findOne({ email });
     if (!user) {
-      console.log("flag 1");
       return res.status(401).json({ error: "Invalid email or password" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      console.log("flag 2");
       return res.status(401).json({ error: "Invalid email or password" });
     }
 
-    const token = jwt.sign({ email: user.email }, JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign({ email: user.email }, JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    await collection.updateOne(
+      { email: user.email },
+      { $set: { token: token } }
+    );
+
     res.status(200).json({ token });
   } catch (err) {
     res.status(500).json({ error: "Error logging in" });
@@ -114,12 +119,16 @@ app.get("/api/getsubs", async (req, res) => {
         subjects: subject,
         dates: {
           $elemMatch: {
-            $gte: new Date(`${inputYear}-${inputMonth + 1}-${inputDay}T${inputTime}`),
-            $lt: new Date(`${inputYear}-${inputMonth + 1}-${inputDay + 1}T00:00:00Z`)
-          }
-        }
+            $gte: new Date(
+              `${inputYear}-${inputMonth + 1}-${inputDay}T${inputTime}`
+            ),
+            $lt: new Date(
+              `${inputYear}-${inputMonth + 1}-${inputDay + 1}T00:00:00Z`
+            ),
+          },
+        },
       };
-      console.log("query",query);
+      console.log("query", query);
     }
 
     const collection = database.collection("substitutes");
@@ -143,13 +152,13 @@ app.post("/api/handlepost", async (req, res) => {
     if (primary === true) {
       updateQuery = { $set: { primarySub: user, isFilled: true } };
     } else {
-      updateQuery = { $push: { secondarySubs: user }, $set: { isFilled: true } };
+      updateQuery = {
+        $push: { secondarySubs: user },
+        $set: { isFilled: true },
+      };
     }
 
-    const result = await collection.updateOne(
-      { code: postCode },
-      updateQuery
-    );
+    const result = await collection.updateOne({ code: postCode }, updateQuery);
 
     if (result.matchedCount === 0) {
       return res.status(404).json({ message: "Ilmoittautuminen epäonnistui" });
@@ -189,11 +198,10 @@ app.get("/api/getposts", async (req, res) => {
 
 app.get("/api/getsubinfo", async (req, res) => {
   try {
-    const { email } = req.query;
-    console.log("email", email);
+    const { token } = req.query;
     const collection = database.collection("substitutes");
 
-    const result = await collection.findOne({ email: email });
+    const result = await collection.findOne({ token: token });
     console.log("found info of substitute", result);
 
     if (!result) {
@@ -245,9 +253,11 @@ app.post("/api/updatedates", async (req, res) => {
     const collection = database.collection("substitutes");
 
     // Adjust dates to the desired timezone (e.g., GMT+2)
-    const dateObjects = dates.map(date => {
+    const dateObjects = dates.map((date) => {
       const originalDate = new Date(date);
-      const adjustedDate = new Date(originalDate.getTime() + 2 * 60 * 60 * 1000); // Adjust by 2 hours
+      const adjustedDate = new Date(
+        originalDate.getTime() + 2 * 60 * 60 * 1000
+      ); // Adjust by 2 hours
       return adjustedDate;
     });
 
