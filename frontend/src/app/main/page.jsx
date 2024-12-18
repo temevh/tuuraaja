@@ -66,7 +66,7 @@ export default function Home() {
       const response = await axios.get("http://localhost:5000/api/getsubs", {
         params: {
           subject: selectedSubject,
-          date: date.toISOString,
+          date: date,
           level: level,
         },
       });

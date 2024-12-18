@@ -33,14 +33,14 @@ const TimeSelect = ({ setSelectedTime }) => {
             </option>
           ))}
         </select>
-        <p className="text-2xl">:</p>
+        <p className="text-2xl text-black">:</p>
         <select
           className="p-2 rounded-lg bg-gray-400"
           onChange={(e) => changeMinute(e.target.value)}
         >
           {minutes.map((minute) => (
             <option key={minute} value={minute}>
-              {minute}
+              {minute.toString().padStart(2, "0")}
             </option>
           ))}
         </select>
