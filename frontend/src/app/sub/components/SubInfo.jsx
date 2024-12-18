@@ -20,8 +20,6 @@ const SubInfo = ({ userInfo }) => {
   }, [userInfo.dates]);
 
   const updateDates = async () => {
-    console.log("selected dates:", selectedDates);
-
     if (!Array.isArray(selectedDates)) {
       console.error("selectedDates is not an array!");
       return;
@@ -41,6 +39,11 @@ const SubInfo = ({ userInfo }) => {
       dates: datesWithTime,
     });
     console.log(response);
+    if (response.status === 200) {
+      alert(response.data.message);
+    } else {
+      alert(response.data.error);
+    }
   };
 
   return (
@@ -51,10 +54,7 @@ const SubInfo = ({ userInfo }) => {
         <div>
           <div className="flex flex-col gap-6 pb-6">
             <Calendar dbDays={dbDays} setSelectedDates={setSelectedDates} />
-            <div className="flex flex-row gap-4">
-              <p className="text-lg">Valitse sopiva aikaväli</p>
-              <TimeSelect setSelectedTime={setSelectedTime} />
-            </div>
+            <TimeSelect setSelectedTime={setSelectedTime} />
           </div>
           <div className="bg-purple-500 mt-8 text-center">
             <button onClick={updateDates}>Päivitä tiedot</button>
