@@ -46,7 +46,7 @@ app.post("/api/register", async (req, res) => {
   const user = { email, password: hashedPassword, ...otherDetails };
 
   try {
-    const collection = database.collection("users");
+    const collection = database.collection("substitutes");
     await collection.insertOne(user);
     res.status(201).json({ message: "User registered successfully" });
   } catch (err) {
