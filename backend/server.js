@@ -1,9 +1,10 @@
 const express = require("express");
 const { MongoClient, ServerApiVersion } = require("mongodb");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const app = express();
 const cors = require("cors");
 require("dotenv").config();
-
 const port = 5000;
 
 const uri = process.env.DB_URI;
@@ -36,6 +37,63 @@ let collection;
 
 app.use(cors());
 app.use(express.json());
+
+const JWT_SECRET = process.env.JWT_SECRET;
+
+app.post("/api/register", async (req, res) => {
+  const { email, password, ...otherDetails } = req.body;
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const user = { email, password: hashedPassword, ...otherDetails };
+
+  try {
+    const collection = database.collection("users");
+    await collection.insertOne(user);
+    res.status(201).json({ message: "User registered successfully" });
+  } catch (err) {
+    res.status(500).json({ error: "Error registering user" });
+  }
+});
+
+app.post("/api/login", async (req, res) => {
+  const { email, password } = req.body;
+  console.log("email:", email, "password:", password);
+  const collection = database.collection("substitutes");
+
+  try {
+    console.log("aa")
+    const user = await collection.findOne({ email });
+    if (!user) {
+      console.log("flag 1");
+      return res.status(401).json({ error: "Invalid email or password" });
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      console.log("flag 2");
+      return res.status(401).json({ error: "Invalid email or password" });
+    }
+
+    const token = jwt.sign({ email: user.email }, JWT_SECRET, { expiresIn: "1h" });
+    res.status(200).json({ token });
+  } catch (err) {
+    res.status(500).json({ error: "Error logging in" });
+  }
+});
+
+const authenticateToken = (req, res, next) => {
+  const token = req.headers["authorization"];
+  if (!token) return res.status(401).json({ error: "Access denied" });
+
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) return res.status(403).json({ error: "Invalid token" });
+    req.user = user;
+    next();
+  });
+};
+
+app.get("/api/protected", authenticateToken, (req, res) => {
+  res.status(200).json({ message: "This is a protected route" });
+});
 
 app.get("/api/getsubs", async (req, res) => {
   try {

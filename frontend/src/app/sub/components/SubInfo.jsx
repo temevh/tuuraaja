@@ -56,9 +56,12 @@ const SubInfo = ({ userInfo }) => {
             <Calendar dbDays={dbDays} setSelectedDates={setSelectedDates} />
             <TimeSelect setSelectedTime={setSelectedTime} />
           </div>
-          <div className="bg-purple-500 mt-8 text-center">
-            <button onClick={updateDates}>Päivitä tiedot</button>
-          </div>
+          <button
+            onClick={updateDates}
+            className="bg-gradientpurple rounded-lg p-4 hover:bg-gradientpink transition duration-300 ease-in-out transform hover:scale-105 shadow-lg mx-auto w-1/2"
+          >
+            <p className="text-center">Päivitä tiedot</p>
+          </button>
         </div>
       )}
     </div>
