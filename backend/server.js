@@ -62,12 +62,12 @@ app.post("/api/login", async (req, res) => {
   try {
     const user = await collection.findOne({ email });
     if (!user) {
-      return res.status(401).json({ error: "Invalid email or password" });
+      return res.status(401).json({ error: "Väärä sähköposti tai salasana" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({ error: "Invalid email or password" });
+      return res.status(401).json({ error: "Väärä sähköposti tai salasana" });
     }
 
     const token = jwt.sign({ email: user.email }, JWT_SECRET, {
