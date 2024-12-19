@@ -10,6 +10,7 @@ const PostPage = () => {
   const [loading, setLoading] = useState(true);
   const [post, setPost] = useState(null);
   const [isFilled, setIsFilled] = useState(null);
+  const [userdata, setUserdata] = useState(null);
 
   const params = useParams();
   const postCode = params.code;
@@ -26,11 +27,33 @@ const PostPage = () => {
         setLoading(false);
       } catch (error) {
         console.error("Error fetching post:", error);
+      }
+    };
+
+    const fetchUser = async () => {
+      let userToken = "";
+      if (localStorage.getItem("token")) {
+        userToken = localStorage.getItem("token");
+      }
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/getsubinfo",
+          {
+            params: {
+              token: userToken,
+            },
+          }
+        );
+        console.log("user", response.data);
+        setUserdata(response.data);
         setLoading(false);
+      } catch (error) {
+        console.log(error);
       }
     };
 
     fetchPosts();
+    fetchUser();
   }, [postCode]);
 
   if (loading) {
@@ -61,10 +84,17 @@ const PostPage = () => {
   const primaryPressed = async () => {
     if (isFilled !== true) {
       try {
+        const userData = {
+          firstname: userdata.firstName,
+          lastname: userdata.lastName,
+          email: userdata.email,
+          phoneNumber: userdata.phoneNumber,
+        };
+        console.log("userdata:", userdata);
         const response = await axios.post(
           "http://localhost:5000/api/handlepost",
           {
-            user: "Timo Testimies",
+            user: userData,
             postCode: postCode,
             primary: true,
           }
@@ -72,9 +102,8 @@ const PostPage = () => {
         if (response.status === 200) {
           setIsFilled(true);
         }
-        alert(response.data.message);
       } catch (error) {
-        console.error("Error making the API call:", error);
+        console.error("Error handling post:", error);
       }
     }
   };
@@ -85,7 +114,7 @@ const PostPage = () => {
         const response = await axios.post(
           "http://localhost:5000/api/handlepost",
           {
-            user: "Venla Varalla",
+            user: userdata,
             postCode: postCode,
             primary: false,
           }

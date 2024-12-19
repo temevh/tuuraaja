@@ -216,11 +216,9 @@ app.get("/api/getsubinfo", async (req, res) => {
 });
 
 app.get("/api/getsubjects", async (req, res) => {
-  console.log("getcourses get request");
   try {
     const collection = database.collection("subjects");
     const courses = await collection.find({}).toArray();
-    console.log("Courses:", JSON.stringify(courses, null, 2));
     res.status(200).json(courses);
   } catch (err) {
     console.error("Error retrieving courses:", err);
@@ -233,8 +231,6 @@ app.get("/api/getsubjects", async (req, res) => {
 app.post("/api/addsub", async (req, res) => {
   try {
     const newSub = req.body;
-    console.log("addsub new info", newSub);
-    console.log("new sub data", newSub);
     collection = database.collection("substitutes");
 
     const result = await collection.insertOne(newSub);
@@ -252,12 +248,11 @@ app.post("/api/updatedates", async (req, res) => {
     console.log("new dates", dates);
     const collection = database.collection("substitutes");
 
-    // Adjust dates to the desired timezone (e.g., GMT+2)
     const dateObjects = dates.map((date) => {
       const originalDate = new Date(date);
       const adjustedDate = new Date(
         originalDate.getTime() + 2 * 60 * 60 * 1000
-      ); // Adjust by 2 hours
+      );
       return adjustedDate;
     });
 
@@ -295,53 +290,6 @@ app.post("/api/addsubject", async (req, res) => {
     res
       .status(500)
       .json({ error: "An error occurred while adding the subject" });
-  }
-});
-
-app.post("/api/adddates", async (req, res) => {
-  try {
-    const { email, dates } = req.body;
-    console.log("Attempting to update dates for", email);
-    const collection = database.collection("substitutes");
-    const result = await collection.updateOne(
-      { email: email },
-      { $addToSet: { dates: { $each: dates } } }
-    );
-
-    if (result.modifiedCount === 0) {
-      return res.status(404).json({ message: "User was not found" });
-    }
-
-    res.status(200).json({ message: "Dates updates succesfully" });
-  } catch (error) {
-    console.error("Error updating dates;");
-    res.status(500).json({ error: "An error occured while updating dates" });
-  }
-});
-
-app.get("/getcredentials", async (req, res) => {
-  try {
-    const { email, password } = req.query;
-    console.log("Checkind db for:", email, password);
-    const collection = database.collection("substitutes");
-
-    const exists = await collection.findOne({
-      email: email,
-      password: password,
-    });
-    if (exists) {
-      return res
-        .status(201)
-        .json({ message: "User found from database", found: true });
-    }
-    const result = await collection.insertOne(subject);
-    res.status(201).json({ message: "Credentials found", result });
-  } catch (err) {
-    console.error("Error getting credentials:", err);
-    res.status(500).json({
-      error: "An error occurred while getting the credentials",
-      found: false,
-    });
   }
 });
 
