@@ -215,6 +215,19 @@ app.get("/api/getsubinfo", async (req, res) => {
   }
 });
 
+app.get("/api/checkprimary", async (req, res) => {
+  const { postCode, email } = req.query;
+  const collection = database.collection("posts");
+
+  const result = await collection.findOne({ code: postCode });
+
+  if (result && result.primarySub.email === email) {
+    return res.status(200).json({ isPrimary: true });
+  }
+
+  res.status(200).json({ isPrimary: false });
+});
+
 app.get("/api/getsubjects", async (req, res) => {
   try {
     const collection = database.collection("subjects");

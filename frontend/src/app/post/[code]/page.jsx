@@ -21,7 +21,6 @@ const PostPage = () => {
         const response = await axios.get("http://localhost:5000/api/getposts", {
           params: { code: postCode },
         });
-        console.log(response.data);
         setPost(response.data[0]);
         setIsFilled(response.data[0].isFilled);
         setLoading(false);
@@ -44,7 +43,6 @@ const PostPage = () => {
             },
           }
         );
-        console.log("user", response.data);
         setUserdata(response.data);
         setLoading(false);
       } catch (error) {
@@ -55,6 +53,13 @@ const PostPage = () => {
     fetchPosts();
     fetchUser();
   }, [postCode]);
+
+  const checkPrimary = async () => {
+    const response = await axios.get("http://localhost:5000/api/getposts", {
+      params: { code: postCode },
+    });
+    console.log(response.data);
+  };
 
   if (loading) {
     return (
@@ -99,8 +104,24 @@ const PostPage = () => {
             primary: true,
           }
         );
+
         if (response.status === 200) {
-          setIsFilled(true);
+          const confirmResponse = await axios.get(
+            "http://localhost:5000/api/checkprimary",
+            {
+              params: {
+                postCode: postCode,
+                email: userdata.email,
+              },
+            }
+          );
+
+          if (confirmResponse.data.isPrimary) {
+            setIsFilled(true);
+            alert("Ilmoittautuminen onnistui");
+          } else {
+            alert("Ilmoittautuminen epäonnistui");
+          }
         }
       } catch (error) {
         console.error("Error handling post:", error);
