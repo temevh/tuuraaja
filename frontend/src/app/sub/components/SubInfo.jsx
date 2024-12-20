@@ -59,7 +59,7 @@ const SubInfo = ({ userInfo, userPosts }) => {
               <Calendar dbDays={dbDays} setSelectedDates={setSelectedDates} />
               <TimeSelect setSelectedTime={setSelectedTime} />
             </div>
-            <div>
+            <div className="w-1/2">
               <SubPostList userPosts={userPosts} />
             </div>
           </div>

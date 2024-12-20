@@ -1,9 +1,12 @@
-const SubPostList = ({ subPosts }) => {
+import SubPostCard from "./SubPostCard";
+
+const SubPostList = ({ userPosts }) => {
+  console.log(userPosts);
   return (
-    <div>
-      {subPosts ? (
-        subPosts.map((post) => {
-          return <p key={post.id}>{post.date}</p>;
+    <div className="w-full">
+      {userPosts ? (
+        userPosts.map((post) => {
+          return <SubPostCard post={post} key={post.id} />;
         })
       ) : (
         <p>No sub posts</p>
