@@ -3,15 +3,17 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import Calendar from "./fields/Calendar";
+import { SubPostList } from "./index";
 import { TimeSelect } from ".";
 
-const SubInfo = ({ userInfo }) => {
+const SubInfo = ({ userInfo, userPosts }) => {
   const [dbDays, setDbDays] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedTime, setSelectedTime] = useState([""]);
   const [selectedDates, setSelectedDates] = useState([]);
 
   useEffect(() => {
+    console.log(userInfo);
     if (userInfo.dates) {
       const formattedDates = userInfo.dates.map((day) => new Date(day));
       setDbDays(formattedDates);
@@ -58,7 +60,7 @@ const SubInfo = ({ userInfo }) => {
               <TimeSelect setSelectedTime={setSelectedTime} />
             </div>
             <div>
-              <p>Sub post list</p>
+              <SubPostList userPosts={userPosts} />
             </div>
           </div>
           <button

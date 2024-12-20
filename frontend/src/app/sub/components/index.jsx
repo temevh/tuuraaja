@@ -5,6 +5,7 @@ import PhoneNumberField from "./fields/PhoneNumberField";
 import SubCalendar from "./fields/SubCalendar";
 import SubjectsField from "./fields/SubjectsField";
 import TimeSelect from "./fields/TimeSelect";
+import SubPostList from "./SubPostList";
 
 export {
   EmailField,
@@ -14,4 +15,5 @@ export {
   SubCalendar,
   SubjectsField,
   TimeSelect,
+  SubPostList,
 };

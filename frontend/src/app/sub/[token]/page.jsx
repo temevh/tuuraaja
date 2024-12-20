@@ -1,14 +1,12 @@
 "use client";
-import { useParams } from "next/navigation";
 import SubInfo from "../components/SubInfo";
 import axios from "axios";
 
-//import { formatDates } from "@/app/utils/functions";
 import { useEffect, useState } from "react";
 
 const userPage = () => {
-  //const { token } = useParams();
   const [userInfo, setUserInfo] = useState([]);
+  const [userPosts, setUserPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -29,7 +27,16 @@ const userPage = () => {
         console.error("Error fetching sub info", error);
       }
     };
-    fetchSubInfo();
+
+    const fetchUserPosts = async () => {
+      try {
+        console.log(userInfo.posts);
+      } catch (error) {
+        console.error("Error fetching sub posts", error);
+      }
+    };
+
+    fetchSubInfo().then(fetchUserPosts());
   }, []);
 
   return (
