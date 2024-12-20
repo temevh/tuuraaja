@@ -27,17 +27,35 @@ const userPage = () => {
         console.error("Error fetching sub info", error);
       }
     };
+    fetchSubInfo();
+  }, []);
 
+  useEffect(() => {
     const fetchUserPosts = async () => {
       try {
-        console.log(userInfo.posts);
+        const postRequests = userInfo.posts.map(async (post) => {
+          const response = await axios.get(
+            "http://localhost:5000/api/getposts",
+            {
+              params: {
+                code: post,
+              },
+            }
+          );
+          return response.data;
+        });
+
+        const posts = await Promise.all(postRequests);
+        setUserPosts(posts);
       } catch (error) {
         console.error("Error fetching sub posts", error);
       }
     };
 
-    fetchSubInfo().then(fetchUserPosts());
-  }, []);
+    if (userInfo && userInfo.posts) {
+      fetchUserPosts();
+    }
+  }, [userInfo]);
 
   return (
     <div className="min-h-screen w-full bg-gray-700 flex justify-center items-center p-6 bg-gradient-to-tl from-gradientpurple to-gradientpink">
@@ -45,7 +63,7 @@ const userPage = () => {
         <p>Ladataan...</p>
       ) : (
         <div className="flex flex-col items-center gap-6">
-          <SubInfo userInfo={userInfo} />
+          <SubInfo userInfo={userInfo} userPosts={userPosts} />
         </div>
       )}
     </div>
