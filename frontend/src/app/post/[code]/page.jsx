@@ -54,38 +54,6 @@ const PostPage = () => {
     fetchUser();
   }, [postCode]);
 
-  const checkPrimary = async () => {
-    const response = await axios.get("http://localhost:5000/api/getposts", {
-      params: { code: postCode },
-    });
-    console.log(response.data);
-  };
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p className="text-black font-bold text-3xl">Ladataan...</p>
-      </div>
-    );
-  }
-
-  if (!post) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p className="text-black font-bold text-3xl">No post found</p>
-      </div>
-    );
-  }
-
-  const date = new Date(post.date);
-  const formattedDate = `${date.getDate().toString().padStart(2, "0")}.${(
-    date.getMonth() + 1
-  )
-    .toString()
-    .padStart(2, "0")}.${date.getFullYear()}`;
-
-  const bgColor = isFilled ? "bg-red-400" : "bg-green-800";
-
   const primaryPressed = async () => {
     if (isFilled !== true) {
       try {
@@ -150,6 +118,34 @@ const PostPage = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-black font-bold text-3xl">Ladataan...</p>
+      </div>
+    );
+  }
+
+  if (!post) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-black font-bold text-3xl">No post found</p>
+      </div>
+    );
+  }
+
+  const date = new Date(post.date);
+  const formattedDate = `${date.getDate().toString().padStart(2, "0")}.${(
+    date.getMonth() + 1
+  )
+    .toString()
+    .padStart(2, "0")}.${date.getFullYear()}`;
+
+  const bgColor = isFilled ? "bg-red-400" : "bg-green-800";
+
+  const isPrimaryUser =
+    userdata && post.primarySub && post.primarySub.email === userdata.email;
+
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className={`w-full max-w-md p-8 rounded-lg shadow-lg ${bgColor}`}>
@@ -163,6 +159,9 @@ const PostPage = () => {
         <p className="text-lg text-white">
           Status: {isFilled ? "Varattu" : "Vapaana"}
         </p>
+        {isPrimaryUser && (
+          <p className="text-lg text-white mt-2">Paikka varattu sinulle</p>
+        )}
         <TakeButton
           isFilled={isFilled}
           setIsFilled={setIsFilled}

@@ -52,9 +52,14 @@ const SubInfo = ({ userInfo }) => {
         <p>Ladataan...</p>
       ) : (
         <div>
-          <div className="flex flex-col gap-6 pb-6">
-            <Calendar dbDays={dbDays} setSelectedDates={setSelectedDates} />
-            <TimeSelect setSelectedTime={setSelectedTime} />
+          <div className="flex flex-row gap-6 pb-6">
+            <div>
+              <Calendar dbDays={dbDays} setSelectedDates={setSelectedDates} />
+              <TimeSelect setSelectedTime={setSelectedTime} />
+            </div>
+            <div>
+              <p>Sub post list</p>
+            </div>
           </div>
           <button
             onClick={updateDates}

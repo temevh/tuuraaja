@@ -33,14 +33,12 @@ const userPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen w-full bg-gray-700 flex justify-center items-center p-6">
+    <div className="min-h-screen w-full bg-gray-700 flex justify-center items-center p-6 bg-gradient-to-tl from-gradientpurple to-gradientpink">
       {loading ? (
         <p>Ladataan...</p>
       ) : (
-        <div className="w-full max-w-4xl bg-gray-300 rounded-lg shadow-lg p-8">
-          <div className="flex flex-col items-center gap-6">
-            <SubInfo userInfo={userInfo} />
-          </div>
+        <div className="flex flex-col items-center gap-6">
+          <SubInfo userInfo={userInfo} />
         </div>
       )}
     </div>

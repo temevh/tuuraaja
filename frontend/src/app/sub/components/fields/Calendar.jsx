@@ -19,7 +19,6 @@ const Calendar = ({ dbDays, setSelectedDates }) => {
 
   return (
     <div>
-      <p className="text-3xl">Valitse sopivat päivämäärät</p>
       <DayPicker
         mode="multiple"
         selected={selected}
