@@ -52,21 +52,20 @@ export default function Home() {
 
     const hour = parseInt(selectedTime[0], 10);
     const minute = parseInt(selectedTime[1], 10);
-    const date = new Date(year, month, day, hour, minute);
+
+    const date = new Date(Date.UTC(year, month, day, hour, minute));
     let level = "molemmat";
     if (lukioChecked === false && ylakouluChecked === true) {
       level = "ylakoulu";
     } else if (lukioChecked === true && ylakouluChecked === false) {
       level = "lukio";
-    } else {
-      level = "molemmat";
     }
 
     try {
       const response = await axios.get("http://localhost:5000/api/getsubs", {
         params: {
           subject: selectedSubject,
-          date: date,
+          date: date.toISOString(),
           level: level,
         },
       });

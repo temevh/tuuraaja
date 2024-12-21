@@ -9,7 +9,6 @@ const PostList = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await axios.get("http://localhost:5000/api/getposts");
-      console.log("posts", response.data);
       setPosts(response.data);
       setLoading(false);
     };

@@ -58,7 +58,7 @@ const userPage = () => {
   }, [userInfo]);
 
   return (
-    <div className="min-h-screen w-full flex justify-center items-center p-6 bg-gradient-to-tl from-gradientpurple to-gradientpink">
+    <div className="min-h-screen w-full flex justify-center items-center p-2 bg-gradient-to-tl from-gradientpurple to-gradientpink">
       {loading ? (
         <p>Ladataan...</p>
       ) : (

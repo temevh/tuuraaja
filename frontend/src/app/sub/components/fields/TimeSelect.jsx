@@ -6,9 +6,7 @@ const TimeSelect = ({ setSelectedTime }) => {
   const [selectedHour, setSelectedHour] = useState("");
   const [selectedMinute, setSelectedMinute] = useState("");
 
-  useEffect(() => {
-    console.log("selected hour:", selectedHour);
-  }, [selectedHour]);
+  useEffect(() => {}, [selectedHour]);
 
   const changeHour = (hour) => {
     setSelectedHour(hour);

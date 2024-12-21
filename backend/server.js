@@ -103,14 +103,16 @@ app.get("/api/protected", authenticateToken, (req, res) => {
 app.get("/api/getsubs", async (req, res) => {
   try {
     const { subject, date, level } = req.query;
-    console.log("subject:", subject, "date:", date, "level:", level);
-
-    // Parse the input date
     const inputDate = new Date(date);
-    const inputYear = inputDate.getFullYear();
-    const inputMonth = inputDate.getMonth();
-    const inputDay = inputDate.getDate();
+
+    const inputYear = inputDate.getUTCFullYear();
+    const inputMonth = inputDate.getUTCMonth();
+    const inputDay = inputDate.getUTCDate();
     const inputTime = inputDate.toISOString().split("T")[1];
+
+    const startOfDay = new Date(Date.UTC(inputYear, inputMonth, inputDay));
+    const endOfDay = new Date(Date.UTC(inputYear, inputMonth, inputDay + 1));
+    const inputDateTime = new Date(date);
 
     let query = {};
 
@@ -119,22 +121,15 @@ app.get("/api/getsubs", async (req, res) => {
         subjects: subject,
         dates: {
           $elemMatch: {
-            $gte: new Date(
-              `${inputYear}-${inputMonth + 1}-${inputDay}T${inputTime}`
-            ),
-            $lt: new Date(
-              `${inputYear}-${inputMonth + 1}-${inputDay + 1}T00:00:00Z`
-            ),
+            $gte: inputDateTime,
+            $lt: endOfDay,
           },
         },
       };
-      console.log("query", query);
     }
 
     const collection = database.collection("substitutes");
-
     const substitutes = await collection.find(query).toArray();
-    console.log(substitutes);
     res.status(200).json(substitutes);
   } catch (err) {
     res.status(500).json({ error: "An error occurred while retrieving data" });

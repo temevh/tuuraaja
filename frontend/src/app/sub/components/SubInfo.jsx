@@ -52,7 +52,7 @@ const SubInfo = ({ userInfo, userPosts }) => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-blue-300 flex justify-center items-center p-6 rounded-lg">
+    <div className=" w-full bg-blue-300 flex justify-center items-center p-4 rounded-lg">
       {loading ? (
         <p>Ladataan...</p>
       ) : (

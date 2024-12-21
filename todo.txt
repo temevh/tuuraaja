@@ -1,7 +1,10 @@
 Kellonajat matchaamaan 2/5
-/sub postlist 1/5
 /post toimivuus (varasijaisuus, sijaisuuden peruminen) 3/5
 email lähetys 4/5
-/sub näkymästä nätimpi 2/5
 rekisteröintiin muutoksia? 2/5
+responsiivisuus 2/5
+Teema/väri kuntoon 2/5
+/main statet 2/5
 
+/sub näkymästä nätimpi 2/5 X
+/sub postlist 1/5 X
