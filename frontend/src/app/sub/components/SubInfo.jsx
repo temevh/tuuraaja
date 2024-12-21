@@ -13,7 +13,6 @@ const SubInfo = ({ userInfo, userPosts }) => {
   const [selectedDates, setSelectedDates] = useState([]);
 
   useEffect(() => {
-    console.log(userInfo);
     if (userInfo.dates) {
       const formattedDates = userInfo.dates.map((day) => new Date(day));
       setDbDays(formattedDates);
@@ -40,7 +39,6 @@ const SubInfo = ({ userInfo, userPosts }) => {
       email: userInfo.email,
       dates: datesWithTime,
     });
-    console.log(response);
     if (response.status === 200) {
       alert(response.data.message);
     } else {
@@ -49,12 +47,15 @@ const SubInfo = ({ userInfo, userPosts }) => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gray-700 flex justify-center items-center p-6 rounded-lg">
+    <div className="min-h-screen w-full bg-blue-300 flex justify-center items-center p-6 rounded-lg">
       {loading ? (
         <p>Ladataan...</p>
       ) : (
         <div>
-          <div className="flex flex-row gap-6 pb-6">
+          <p className="text-2xl text-white font-bold pb-2">
+            {userInfo.firstName} {userInfo.lastName}
+          </p>
+          <div className="flex flex-row gap-6 pb-2">
             <div>
               <Calendar dbDays={dbDays} setSelectedDates={setSelectedDates} />
               <TimeSelect setSelectedTime={setSelectedTime} />
@@ -67,7 +68,7 @@ const SubInfo = ({ userInfo, userPosts }) => {
             onClick={updateDates}
             className="bg-gradientpurple rounded-lg p-4 hover:bg-gradientpink transition duration-300 ease-in-out transform hover:scale-105 shadow-lg mx-auto w-1/2"
           >
-            <p className="text-center">Päivitä tiedot</p>
+            <p className="text-center">Tallenna muutokset</p>
           </button>
         </div>
       )}

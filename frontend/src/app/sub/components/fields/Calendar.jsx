@@ -27,8 +27,9 @@ const Calendar = ({ dbDays, setSelectedDates }) => {
         locale={fi}
         showWeekNumber
         classNames={{
-          today: `border-amber-300`,
-          selected: `bg-amber-500 border-amber-500 text-white`,
+          today: `border-blue-600`,
+          day: `hover:bg-blue-100 focus:bg-blue-100 transition duration-200 ease-in-out rounded-md`,
+          selected: `bg-blue-500 border-blue-500 text-white`,
           root: `${defaultClassNames.root} shadow-lg p-5`,
           chevron: `${defaultClassNames.chevron} fill-green-500`,
         }}

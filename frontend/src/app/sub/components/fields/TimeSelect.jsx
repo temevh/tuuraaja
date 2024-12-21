@@ -20,7 +20,7 @@ const TimeSelect = ({ setSelectedTime }) => {
   };
 
   return (
-    <div className="flex flex-row gap-4">
+    <div className="flex flex-row gap-4 mt-4">
       <p className="text-lg">Aloitusaika</p>
 
       <div className="pb-2 rounded-lg">

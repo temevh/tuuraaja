@@ -58,11 +58,11 @@ const userPage = () => {
   }, [userInfo]);
 
   return (
-    <div className="min-h-screen w-full bg-gray-700 flex justify-center items-center p-6 bg-gradient-to-tl from-gradientpurple to-gradientpink">
+    <div className="min-h-screen w-full flex justify-center items-center p-6 bg-gradient-to-tl from-gradientpurple to-gradientpink">
       {loading ? (
         <p>Ladataan...</p>
       ) : (
-        <div className="flex flex-col items-center gap-6">
+        <div>
           <SubInfo userInfo={userInfo} userPosts={userPosts} />
         </div>
       )}
