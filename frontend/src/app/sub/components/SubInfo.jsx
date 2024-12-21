@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 import Calendar from "./fields/Calendar";
 import { SubPostList } from "./index";
@@ -46,15 +47,26 @@ const SubInfo = ({ userInfo, userPosts }) => {
     }
   };
 
+  const settingsClicked = () => {
+    alert("Open settings");
+  };
+
   return (
     <div className="min-h-screen w-full bg-blue-300 flex justify-center items-center p-6 rounded-lg">
       {loading ? (
         <p>Ladataan...</p>
       ) : (
         <div>
-          <p className="text-2xl text-white font-bold pb-2">
-            {userInfo.firstName} {userInfo.lastName}
-          </p>
+          <div className="flex flex-row justify-between items-center">
+            <p className="text-2xl text-white font-bold pb-2">
+              {userInfo.firstName} {userInfo.lastName}
+            </p>
+            <button onClick={settingsClicked}>
+              <div className="bg-pink-400 rounded-lg hover:bg-blue-400 hover:scale-125">
+                <SettingsIcon sx={{ fontSize: 40 }} />
+              </div>
+            </button>
+          </div>
           <div className="flex flex-row gap-6 pb-2">
             <div>
               <Calendar dbDays={dbDays} setSelectedDates={setSelectedDates} />
