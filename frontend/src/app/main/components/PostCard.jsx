@@ -22,7 +22,9 @@ const PostCard = ({ post }) => {
         {post.primarySub !== "" ? (
           <div className="flex flex-row">
             <p className="text-black text-xl pr-2">Ensisijainen:</p>
-            <p className="text-black text-xl underline">{post.primarySub}</p>
+            <p className="text-black text-xl underline">
+              {post.primarySub.firstname} {post.primarySub.lastname}
+            </p>
           </div>
         ) : (
           <div className="flex justify-center items-center h-full">

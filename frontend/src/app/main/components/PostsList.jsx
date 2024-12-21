@@ -3,18 +3,19 @@ import PostCard from "./PostCard";
 import axios from "axios";
 
 const PostList = () => {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await axios.get("http://localhost:5000/api/getposts");
+      console.log("posts", response.data);
       setPosts(response.data);
       setLoading(false);
     };
 
     fetchPosts();
-  });
+  }, []);
 
   return (
     <div>
@@ -26,7 +27,7 @@ const PostList = () => {
             Sijaisuusilmoitukset
           </p>
           {posts.map((post) => {
-            return <PostCard post={post} />;
+            return <PostCard post={post} key={post.id} />;
           })}
         </div>
       )}

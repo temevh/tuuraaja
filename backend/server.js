@@ -172,6 +172,7 @@ app.post("/api/handlepost", async (req, res) => {
 });
 
 app.get("/api/getposts", async (req, res) => {
+  console.log("Getting posts...");
   try {
     const { code } = req.query;
 
