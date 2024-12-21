@@ -7,10 +7,13 @@ const SubPostCard = ({ post }) => {
     .padStart(2, "0")}.${date.getFullYear()}`;
 
   return (
-    <div className="bg-green-300 rounded-md pl-2 flex flex-cols-3 mb-4 w-full">
+    <div className="bg-green-300 rounded-md pl-2 flex flex-cols-3 mb-4 w-full p-2">
       <div>
-        <p className="text-xl font-bold text-black">{post[0].subject}</p>
-        <p className="text-lg text-black">{formattedDate}</p>
+        <div className="flex flex-row gap-2">
+          <p className="text-xl font-bold text-black">{post[0].subject}</p>
+          <p className="text-md text-black mt-1">{formattedDate}</p>
+        </div>
+        <p className="text-black">Jyväskylän normaalikoulu lukio</p>
       </div>
     </div>
   );
