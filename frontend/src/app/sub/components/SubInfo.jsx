@@ -62,7 +62,7 @@ const SubInfo = ({ userInfo, userPosts }) => {
               {userInfo.firstName} {userInfo.lastName}
             </p>
             <button onClick={settingsClicked}>
-              <div className="bg-pink-400 rounded-lg hover:bg-blue-400 hover:scale-125">
+              <div className="bg-pink-300 rounded-lg hover:bg-blue-500 hover:scale-125">
                 <SettingsIcon sx={{ fontSize: 40 }} />
               </div>
             </button>

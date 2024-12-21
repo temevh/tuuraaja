@@ -18,7 +18,7 @@ const Calendar = ({ dbDays, setSelectedDates }) => {
   };
 
   return (
-    <div>
+    <div className="rounded-lg">
       <DayPicker
         mode="multiple"
         selected={selected}
@@ -30,7 +30,7 @@ const Calendar = ({ dbDays, setSelectedDates }) => {
           today: `border-blue-600`,
           day: `hover:bg-blue-100 focus:bg-blue-100 transition duration-200 ease-in-out rounded-md`,
           selected: `bg-blue-500 border-blue-500 text-white`,
-          root: `${defaultClassNames.root} shadow-lg p-5`,
+          root: `${defaultClassNames.root} bg-pink-300 rounded-lg shadow-lg p-5`,
           chevron: `${defaultClassNames.chevron} fill-green-500`,
         }}
       />
