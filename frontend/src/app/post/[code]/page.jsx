@@ -4,13 +4,13 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import { TakeButton, SecondaryButton } from "./components";
-
 const PostPage = () => {
   const [loading, setLoading] = useState(true);
   const [post, setPost] = useState(null);
   const [isFilled, setIsFilled] = useState(null);
   const [userdata, setUserdata] = useState(null);
+  const [isPrimary, setIsPrimary] = useState(false);
+  const [isSecondary, setIsSecondary] = useState(false);
 
   const params = useParams();
   const postCode = params.code;
@@ -54,6 +54,19 @@ const PostPage = () => {
     fetchUser();
   }, [postCode]);
 
+  useEffect(() => {
+    if (userdata && post) {
+      const isPrimaryUser =
+        post.primarySub && post.primarySub.email === userdata.email;
+      const isSecondaryUser =
+        post.secondarySubs &&
+        post.secondarySubs.some((sub) => sub.email === userdata.email);
+
+      setIsPrimary(isPrimaryUser);
+      setIsSecondary(isSecondaryUser);
+    }
+  }, [userdata, post]);
+
   const primaryPressed = async () => {
     if (isFilled !== true) {
       try {
@@ -87,6 +100,7 @@ const PostPage = () => {
           if (confirmResponse.data.isPrimary) {
             setIsFilled(true);
             alert("Ilmoittautuminen onnistui");
+            setIsPrimary(true);
           } else {
             alert("Ilmoittautuminen epäonnistui");
           }
@@ -110,6 +124,7 @@ const PostPage = () => {
         );
         if (response.status === 200) {
           setIsFilled(true);
+          setIsSecondary(true);
         }
         alert(response.data.message);
       } catch (error) {
@@ -117,6 +132,8 @@ const PostPage = () => {
       }
     }
   };
+
+  const cancelPrimary = () => {};
 
   if (loading) {
     return (
@@ -141,33 +158,56 @@ const PostPage = () => {
     .toString()
     .padStart(2, "0")}.${date.getFullYear()}`;
 
-  const bgColor = isFilled ? "bg-red-400" : "bg-green-800";
-
-  const isPrimaryUser =
-    userdata && post.primarySub && post.primarySub.email === userdata.email;
+  let bgColor = "bg-green-800";
+  if (isPrimary) {
+    bgColor = "bg-green-400";
+  } else if (isSecondary) {
+    bgColor = "bg-yellow-400";
+  }
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex items-center justify-center min-h-screen text-center">
       <div className={`w-full max-w-md p-8 rounded-lg shadow-lg ${bgColor}`}>
-        <h1 className="text-3xl underline font-bold text-white mb-4">
+        <h1 className="text-3xl underline font-bold text-black mb-4">
           {post.subject}
         </h1>
-        <h1 className="text-xl font-bold text-white mb-4">
+        <h1 className="text-xl font-bold text-black mb-4">
           Jyväskylän Normaalikoulu
         </h1>
-        <p className="text-lg text-white mb-2">Aika: {formattedDate}</p>
-        <p className="text-lg text-white">
-          Status: {isFilled ? "Varattu" : "Vapaana"}
-        </p>
-        {isPrimaryUser && (
-          <p className="text-lg text-white mt-2">Paikka varattu sinulle</p>
+        <p className="text-lg text-black mb-2">{formattedDate} klo 14:15</p>
+        {isPrimary && (
+          <p className="text-2xl text-black underline">Ensisijainen </p>
         )}
-        <TakeButton
-          isFilled={isFilled}
-          setIsFilled={setIsFilled}
-          primaryPressed={primaryPressed}
-        />
-        {isFilled && <SecondaryButton secondaryPressed={secondaryPressed} />}
+        {isPrimary && (
+          <button onClick={cancelPrimary}>
+            <div className="bg-buttonprimary hover:bg-buttonsecondary rounded-lg p-2 mt-6">
+              <p className="text-2xl">Peru ilmoittautuminen</p>
+            </div>
+          </button>
+        )}
+        {isSecondary && (
+          <p className="text-lg text-black mt-2">Varasijalla: [nro]</p>
+        )}
+        {!isPrimary && !isSecondary && (
+          <>
+            {!isFilled && (
+              <button
+                className="bg-blue-500 text-black p-2 rounded"
+                onClick={primaryPressed}
+              >
+                Ilmoittaudu ensisijaiseksi
+              </button>
+            )}
+            {isFilled && (
+              <button
+                className="bg-blue-500 text-black p-2 rounded"
+                onClick={secondaryPressed}
+              >
+                Ilmoittaudu toissijaiseksi
+              </button>
+            )}
+          </>
+        )}
       </div>
     </div>
   );

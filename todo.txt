@@ -1,12 +1,12 @@
 TODO
-/post toimivuus (varasijaisuus, sijaisuuden peruminen) 3/5
 email lähetys 4/5
-rekisteröintiin muutoksia? 2/5
+koulukoodit 2/5
 
 DOING
-Teema/väri kuntoon 2/5
+/post toimivuus (varasijaisuus, sijaisuuden peruminen) 3/5
 
 DONE
+Teema/väri kuntoon 2/5
 /register token reroute 1/5 x
 level valinta /sub 1/5 x
 /main statet 2/5 X
@@ -14,5 +14,6 @@ level valinta /sub 1/5 x
 /sub postlist 1/5 X
 
 FOR FINAL
+Asetukset sivu 2/5
 Kellonajat matchaamaan 2/5 TODO
 responsiivisuus 2/5
