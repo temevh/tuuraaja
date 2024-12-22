@@ -112,13 +112,13 @@ export default function Home() {
   return (
     <div>
       {loading ? (
-        <div className="flex items-center justify-center h-screen bg-gradient-to-tl from-gradientpurple to-gradientpink">
+        <div className="flex items-center justify-center h-screen bg-gradient-to-tl from-gradientend to-gradientstart">
           <p className="text-black font-bold text-6xl bg-white rounded-md p-12">
             Ladataan...
           </p>
         </div>
       ) : (
-        <div className="flex items-center justify-center h-screen bg-gradient-to-tl from-gradientpurple to-gradientpink">
+        <div className="flex items-center justify-center h-screen bg-gradient-to-tl from-gradientend to-gradientstart">
           <div className="w-full flex flex-col gap-6 items-center max-w-md bg-white rounded-lg shadow-2xl p-8 transform transition duration-500 hover:scale-105">
             <p className="text-center text-black text-xl">
               Täytä alla olevat kentät
@@ -160,7 +160,7 @@ export default function Home() {
             </div>
             <button
               onClick={createPressed}
-              className="bg-gradientpurple rounded-lg p-4 hover:bg-gradientpink transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
+              className="bg-buttonprimary rounded-lg p-4 hover:bg-buttonsecondary transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
             >
               <p className="text-white text-2xl font-bold">Luo profiili</p>
             </button>

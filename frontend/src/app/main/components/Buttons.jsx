@@ -3,7 +3,7 @@ const Buttons = ({ fetchSubs, sendSms, sendEmail, buttonState }) => {
     <div className="flex flex-row gap-4">
       <button
         onClick={fetchSubs}
-        className="bg-gradientpurple rounded-lg p-4 hover:bg-gradientpink transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
+        className="bg-buttonprimary rounded-lg p-4 hover:bg-buttonsecondary transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
       >
         <p className="text-black font-bold text-md">Hae sijaisia</p>
       </button>
@@ -12,7 +12,7 @@ const Buttons = ({ fetchSubs, sendSms, sendEmail, buttonState }) => {
         disabled={!buttonState}
         className={`ml-80 rounded-lg p-4 transition duration-300 ease-in-out transform hover:scale-105 shadow-lg ${
           !buttonState
-            ? "bg-gradientpurple hover:bg-gradientpink"
+            ? "bg-buttonprimary hover:bg-buttonsecondary"
             : "bg-gray-400 cursor-not-allowed"
         }`}
       >
@@ -23,7 +23,7 @@ const Buttons = ({ fetchSubs, sendSms, sendEmail, buttonState }) => {
         disabled={!buttonState}
         className={`ml-16 rounded-lg p-4 transition duration-300 ease-in-out transform hover:scale-105 shadow-lg ${
           !buttonState
-            ? "bg-gradientpurple hover:bg-gradientpink"
+            ? "bg-buttonprimary hover:bg-buttonsecondary"
             : "bg-gray-400 cursor-not-allowed"
         }`}
       >

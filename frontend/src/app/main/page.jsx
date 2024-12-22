@@ -105,7 +105,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex items-center justify-center p-6 min-h-screen bg-gradient-to-tl from-gradientpurple to-gradientpink">
+    <div className="flex items-center justify-center p-6 min-h-screen bg-gradient-to-tl from-gradientend to-gradientstart">
       {loading ? (
         <p className="text-black font-bold text-3xl">Ladataan...</p>
       ) : (
