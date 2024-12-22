@@ -1,6 +1,4 @@
 const LevelCheckboxes = ({ setLukioCheck, setYlakouluCheck }) => {
-  const updateLukio = () => {};
-
   return (
     <div className="flex flex-row gap-4 ml-10 justify-center">
       <div className="flex flex-row gap-4">

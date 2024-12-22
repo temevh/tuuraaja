@@ -4,10 +4,11 @@ email lähetys 4/5
 rekisteröintiin muutoksia? 2/5
 responsiivisuus 2/5
 Teema/väri kuntoon 2/5
-level valinta /sub
+/register token reroute
 
-/main statet 2/5
-
+level valinta /sub 1/5 x
+/main statet 2/5 X
 /sub näkymästä nätimpi 2/5 X
 /sub postlist 1/5 X
+
 Kellonajat matchaamaan 2/5 TODO

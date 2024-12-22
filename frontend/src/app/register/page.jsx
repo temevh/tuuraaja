@@ -1,56 +1,4 @@
 "use client";
-/*
-import { useState } from "react";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-const Register = () => {
-  const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const updateEmail = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const updatePassword = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const register = async () => {
-    try {
-      await axios.post("http://localhost:5000/api/register", {
-        email,
-        password,
-      });
-      alert("Registration successful");
-      router.push("/");
-    } catch (error) {
-      console.error("Error registering:", error);
-      alert("Registration failed");
-    }
-  };
-
-  return (
-    <div>
-      <input
-        type="email"
-        value={email}
-        onChange={updateEmail}
-        placeholder="Email"
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={updatePassword}
-        placeholder="Password"
-      />
-      <button onClick={register}>Register</button>
-    </div>
-  );
-};
-
-export default Register;
-*/
 
 import axios from "axios";
 
@@ -65,6 +13,7 @@ import {
 import CodeField from "./components/CodeField";
 import { useRouter } from "next/navigation";
 import PasswordField from "./components/PasswordField";
+import { LevelCheckboxes } from "../main/components";
 
 export default function Home() {
   const router = useRouter();
@@ -78,6 +27,8 @@ export default function Home() {
   const [phoneNumber, setPhonenumber] = useState(null);
   const [schoolCode, setSchoolCode] = useState(null);
   const [password, setPassword] = useState("");
+  const [lukioChecked, setLukioChecked] = useState(false);
+  const [ylakouluChecked, setYlakouluChecked] = useState(false);
 
   useEffect(() => {
     const fetchSubjects = async () => {
@@ -131,13 +82,15 @@ export default function Home() {
   };
 
   const createPressed = async () => {
-    console.log("name ", firstname, lastname);
-    console.log("email", email);
-    console.log("number", phoneNumber);
-    console.log("subjects", selectedSubjects);
-    console.log("code", schoolCode);
+    let level = "molemmat";
+    if (lukioChecked === false && ylakouluChecked === true) {
+      level = "ylakoulu";
+    } else if (lukioChecked === true && ylakouluChecked === false) {
+      level = "lukio";
+    }
+
     try {
-      const response = await axios.post("http://localhost:5000/api/register", {
+      await axios.post("http://localhost:5000/api/register", {
         firstName: firstname,
         lastName: lastname,
         phoneNumber: phoneNumber,
@@ -146,11 +99,12 @@ export default function Home() {
         password: password,
         dates: [],
         school: schoolCode,
+        level: level,
       });
-      console.log(response.data);
-      const userEmail = email;
-      router.push(`/sub/${userEmail}`);
+      alert("Rekisteröinti onnistui");
+      router.push("/");
     } catch (error) {
+      alert("Virhe rekisteröinnissä");
       console.error("Error sending info:", error);
     }
   };
@@ -194,6 +148,10 @@ export default function Home() {
               />
               <CodeField code={schoolCode} updateCode={updateSchoolCode} />
             </div>
+            <LevelCheckboxes
+              setLukioCheck={() => setLukioChecked(!lukioChecked)}
+              setYlakouluCheck={() => setYlakouluChecked(!ylakouluChecked)}
+            />
             <div className="flex flex-row gap-6">
               <PasswordField
                 password={password}
