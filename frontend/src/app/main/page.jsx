@@ -125,7 +125,7 @@ export default function Home() {
                   selectedDate={selectedDate}
                   setSelectedDate={setSelectedDate}
                 />
-                <div className="flex flex-row gap-4">
+                <div className="flex flex-row gap-4 items-center">
                   <TimeSelect setSelectedTime={setSelectedTime} />
                   <LevelCheckboxes
                     setLukioCheck={() => setLukioChecked(!lukioChecked)}

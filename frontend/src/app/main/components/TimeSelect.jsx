@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const TimeSelect = ({ setSelectedTime }) => {
   const minutes = [0, 15, 30, 45];
-  const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
+  const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16];
   const [selectedHour, setSelectedHour] = useState("");
   const [selectedMinute, setSelectedMinute] = useState("");
 
@@ -21,11 +21,11 @@ const TimeSelect = ({ setSelectedTime }) => {
   };
 
   return (
-    <div className="pb-2 rounded-lg">
-      <p className="text-lg font-bold">Aika</p>
-      <div className="flex flex-row gap-1">
+    <div className="pb-2 rounded-lg pt-2">
+      <div className="flex flex-row gap-1 items-center">
+        <p className="text-lg font-bold text-black text-center mr-2">Aika</p>
         <select
-          className="p-2 rounded-lg bg-gray-400"
+          className="p-2 rounded-lg bg-blue-400"
           value={selectedHour}
           onChange={(e) => changeHour(e.target.value)}
         >
@@ -38,7 +38,7 @@ const TimeSelect = ({ setSelectedTime }) => {
         </select>
         <p className="text-2xl text-black">:</p>
         <select
-          className="p-2 rounded-lg bg-gray-400"
+          className="p-2 rounded-lg bg-blue-400"
           value={selectedMinute}
           onChange={(e) => changeMinute(e.target.value)}
         >
