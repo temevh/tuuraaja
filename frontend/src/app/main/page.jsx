@@ -54,6 +54,8 @@ export default function Home() {
     const minute = parseInt(selectedTime[1], 10);
 
     const date = new Date(Date.UTC(year, month, day, hour, minute));
+    console.log("date", date);
+
     let level = "molemmat";
     if (lukioChecked === false && ylakouluChecked === true) {
       level = "ylakoulu";

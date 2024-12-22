@@ -108,11 +108,8 @@ app.get("/api/getsubs", async (req, res) => {
     const inputYear = inputDate.getUTCFullYear();
     const inputMonth = inputDate.getUTCMonth();
     const inputDay = inputDate.getUTCDate();
-    const inputTime = inputDate.toISOString().split("T")[1];
-
     const startOfDay = new Date(Date.UTC(inputYear, inputMonth, inputDay));
     const endOfDay = new Date(Date.UTC(inputYear, inputMonth, inputDay + 1));
-    const inputDateTime = new Date(date);
 
     let query = {};
 
@@ -121,7 +118,7 @@ app.get("/api/getsubs", async (req, res) => {
         subjects: subject,
         dates: {
           $elemMatch: {
-            $gte: inputDateTime,
+            $gte: inputDate,
             $lt: endOfDay,
           },
         },
