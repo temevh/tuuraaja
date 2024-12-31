@@ -252,6 +252,16 @@ app.post("/api/addpost", async (req, res) => {
     const { date, subject } = req.body;
     collection = database.collection("posts");
 
+    var rand = function () {
+      return Math.random().toString(36).substr(2);
+    };
+
+    var token = function () {
+      return rand() + rand();
+    };
+
+    const postCode = token();
+
     const newPost = {
       date: date,
       subject,
@@ -259,7 +269,7 @@ app.post("/api/addpost", async (req, res) => {
       isFilled: false,
       primarySub: "",
       secondarySubs: [],
-      code: "testi123",
+      code: postCode,
     };
 
     const result = await collection.insertOne(newPost);
@@ -268,7 +278,7 @@ app.post("/api/addpost", async (req, res) => {
         .status(404)
         .json({ message: "Virhe ilmoituksen lisäämisessä" });
     }
-    res.status(200).json({ message: "Tiedot päivitetty onnistuneesti" });
+    res.status(200).json({ message: "Ilmoitus luotu onnistuneesti" });
   } catch (error) {
     console.log(error);
     res.status(400).json({ message: "Virhe ilmoituksen lisäämisessä" });
