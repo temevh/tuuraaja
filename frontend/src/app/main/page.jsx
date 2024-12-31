@@ -94,6 +94,7 @@ export default function Home() {
         subject: selectedSubject,
       });
       console.log(response);
+      alert(response.data.message);
     } catch (err) {
       console.log(err);
     }
@@ -104,7 +105,6 @@ export default function Home() {
   };
 
   const emailPressed = () => {
-    alert("Post created");
     createPost();
     //sendEmail(selectedSubstitutes, selectedSubject, selectedDate);
     //alert("Lähetettiin sähköposti valituille henkilöille");

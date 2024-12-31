@@ -247,6 +247,34 @@ app.post("/api/addsub", async (req, res) => {
   }
 });
 
+app.post("/api/addpost", async (req, res) => {
+  try {
+    const { date, subject } = req.body;
+    collection = database.collection("posts");
+
+    const newPost = {
+      date: date,
+      subject,
+      subject,
+      isFilled: false,
+      primarySub: "",
+      secondarySubs: [],
+      code: "testi123",
+    };
+
+    const result = await collection.insertOne(newPost);
+    if (result.modifiedCount === 0) {
+      return res
+        .status(404)
+        .json({ message: "Virhe ilmoituksen lisäämisessä" });
+    }
+    res.status(200).json({ message: "Tiedot päivitetty onnistuneesti" });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: "Virhe ilmoituksen lisäämisessä" });
+  }
+});
+
 app.post("/api/updatedates", async (req, res) => {
   try {
     const { email, dates } = req.body;
