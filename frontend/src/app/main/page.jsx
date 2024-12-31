@@ -10,9 +10,9 @@ import {
   LevelCheckboxes,
 } from "./components/index";
 import {
-  SendEmailButton,
-  SendSmsButton,
+  CreatePostButton,
   FetchSubsButton,
+  SendSmsButton,
 } from "./components/Buttons";
 //import sendEmail from "../utils/functions/sendEmail";
 import PostList from "./components/PostsList";
@@ -24,7 +24,7 @@ export default function Home() {
   const [selectedSubject, setSelectedSubject] = useState("");
   const [loading, setLoading] = useState(true);
   const [subjects, setSubjects] = useState([]);
-  const [enableButtons, setEnableButtons] = useState(false);
+  const [buttonState, setButtonState] = useState(true);
   const [selectedSubstitutes, setSelectedSubstitutes] = useState([]);
   const [lukioChecked, setLukioChecked] = useState(false);
   const [ylakouluChecked, setYlakouluChecked] = useState(false);
@@ -74,8 +74,10 @@ export default function Home() {
           level: level,
         },
       });
-      setSubstitutes(response.data);
-      setEnableButtons(true);
+      if (response.data.length > 0) {
+        setSubstitutes(response.data);
+        setButtonState(false);
+      }
     } catch (error) {
       console.error("Error fetching subs", error);
     }
@@ -143,12 +145,11 @@ export default function Home() {
                 <PostList />
               </div>
             </div>
-            <div className="flex flex-row gap-4">
+            <div className="flex flex-row justify-between">
               <FetchSubsButton fetchSubs={fetchSubs} />
-              <SendEmailButton sendSms={sendSms} buttonState={enableButtons} />
-              <SendSmsButton
+              <CreatePostButton
                 sendEmail={emailPressed}
-                buttonState={enableButtons}
+                buttonState={buttonState}
               />
             </div>
             <SubList

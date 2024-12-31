@@ -1,5 +1,5 @@
 import FetchSubsButton from "./FetchSubsButton";
 import SendSmsButton from "./SendSmsButton";
-import SendEmailButton from "./SendEmailButton";
+import CreatePostButton from "./CreatePostButton";
 
-export { FetchSubsButton, SendSmsButton, SendEmailButton };
+export { FetchSubsButton, SendSmsButton, CreatePostButton };
