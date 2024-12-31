@@ -1,16 +1,19 @@
 "use client";
-
 import axios from "axios";
 import { useState, useEffect } from "react";
 import {
   AddSubjectButton,
   SubList,
   SubjectDropdown,
-  Buttons,
   Calendar,
   TimeSelect,
   LevelCheckboxes,
 } from "./components/index";
+import {
+  SendEmailButton,
+  SendSmsButton,
+  FetchSubsButton,
+} from "./components/Buttons";
 //import sendEmail from "../utils/functions/sendEmail";
 import PostList from "./components/PostsList";
 
@@ -99,6 +102,7 @@ export default function Home() {
   };
 
   const emailPressed = () => {
+    alert("Post created");
     createPost();
     //sendEmail(selectedSubstitutes, selectedSubject, selectedDate);
     //alert("Lähetettiin sähköposti valituille henkilöille");
@@ -139,12 +143,14 @@ export default function Home() {
                 <PostList />
               </div>
             </div>
-            <Buttons
-              fetchSubs={fetchSubs}
-              sendSms={sendSms}
-              sendEmail={emailPressed}
-              buttonState={!enableButtons}
-            />
+            <div className="flex flex-row gap-4">
+              <FetchSubsButton fetchSubs={fetchSubs} />
+              <SendEmailButton sendSms={sendSms} buttonState={enableButtons} />
+              <SendSmsButton
+                sendEmail={emailPressed}
+                buttonState={enableButtons}
+              />
+            </div>
             <SubList
               substitutes={substitutes}
               onSubstituteSelected={handleSubstituteSelected}

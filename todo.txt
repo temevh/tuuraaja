@@ -1,9 +1,9 @@
 DO
 Peru ilmoittautuminen 2/4
 Facelift 3/5
-
-DOING
 send email 5/5
 
+DOING
+buttons to own components 2/5
 
 DONE
