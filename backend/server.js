@@ -252,15 +252,17 @@ app.post("/api/addpost", async (req, res) => {
     const { date, subject } = req.body;
     collection = database.collection("posts");
 
-    var rand = function () {
-      return Math.random().toString(36).substr(2);
-    };
+    function generateToken(n) {
+      var chars =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      var token = "";
+      for (var i = 0; i < n; i++) {
+        token += chars[Math.floor(Math.random() * chars.length)];
+      }
+      return token;
+    }
 
-    var token = function () {
-      return rand() + rand();
-    };
-
-    const postCode = token();
+    const postCode = generateToken(16);
 
     const newPost = {
       date: date,
