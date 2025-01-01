@@ -15,6 +15,8 @@ const PostPage = () => {
   const params = useParams();
   const postCode = params.code;
 
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -30,16 +32,12 @@ const PostPage = () => {
     };
 
     const fetchUser = async () => {
-      let userToken = "";
-      if (localStorage.getItem("token")) {
-        userToken = localStorage.getItem("token");
-      }
       try {
         const response = await axios.get(
           "http://localhost:5000/api/getsubinfo",
           {
             params: {
-              token: userToken,
+              token: token,
             },
           }
         );
@@ -146,7 +144,14 @@ const PostPage = () => {
     }
   };
 
-  const cancelPrimary = () => {};
+  const cancelPrimary = async () => {
+    const response = await axios.post("http://localhost:5000/api/", {
+      action: "cancelPrimary",
+      email: userdata.email,
+    });
+    alert(response.data.message);
+    setIsPrimary(false);
+  };
 
   if (loading) {
     return (

@@ -270,6 +270,25 @@ app.post("/api/addsub", async (req, res) => {
   }
 });
 
+app.post("api/editpost", async (req, res) => {
+  try{
+    const collection = database.collection("posts");
+    const {action, email} = req.body;
+    if (action === "cancelPrimary"){
+      const result = collection.deleteOne({
+        {}
+      })
+      //Poista db:stä emailin omaava substitute primarySubista
+      //Poista käyttäjän posts listauksesta kys. posts
+    }
+
+
+
+  }
+
+
+})
+
 app.post("/api/addpost", async (req, res) => {
   try {
     const { date, subject } = req.body;

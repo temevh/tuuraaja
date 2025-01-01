@@ -1,10 +1,10 @@
 DO
 Facelift 3/5
 send email 5/5
-Peru ilmoittautuminen 2/5
 
 DOING
-sijaisen omat vuorot näkyviin 3/5
+Peru ilmoittautuminen 2/5
 
 DONE
+sijaisen omat vuorot näkyviin 3/5
 buttons to own components 2/5
