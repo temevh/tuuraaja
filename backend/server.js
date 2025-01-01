@@ -219,6 +219,8 @@ app.post("/api/editsubinfo", async (req, res) => {
       { $push: { posts: post } }
     );
 
+    console.log(result);
+
     if (result.modifiedCount === 0) {
       return res
         .status(400)
