@@ -28,6 +28,16 @@ export default function Home() {
   const [selectedSubstitutes, setSelectedSubstitutes] = useState([]);
   const [lukioChecked, setLukioChecked] = useState(false);
   const [ylakouluChecked, setYlakouluChecked] = useState(false);
+  const [posts, setPosts] = useState(null);
+
+  const fetchPosts = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/getposts");
+      setPosts(response.data);
+    } catch (error) {
+      console.error("Error fetching posts", error);
+    }
+  };
 
   useEffect(() => {
     const fetchSubjects = async () => {
@@ -38,14 +48,18 @@ export default function Home() {
         const tempSub = response.data;
         const subjectNames = tempSub.map((subject) => subject.name);
         setSubjects(subjectNames);
-        setLoading(false);
       } catch (error) {
         console.log("error loading courses", error);
-        setLoading(false);
       }
     };
 
-    fetchSubjects();
+    const fetchData = async () => {
+      await fetchSubjects();
+      await fetchPosts();
+      setLoading(false);
+    };
+
+    fetchData();
   }, []);
 
   const fetchSubs = async () => {
@@ -95,6 +109,7 @@ export default function Home() {
       });
       console.log(response);
       alert(response.data.message);
+      fetchPosts();
     } catch (err) {
       console.log(err);
     }
@@ -142,7 +157,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="w-1/2 ">
-                <PostList />
+                <PostList posts={posts} />
               </div>
             </div>
             <div className="flex flex-row justify-between">
