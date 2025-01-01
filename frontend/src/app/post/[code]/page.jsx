@@ -145,9 +145,10 @@ const PostPage = () => {
   };
 
   const cancelPrimary = async () => {
-    const response = await axios.post("http://localhost:5000/api/", {
+    const response = await axios.post("http://localhost:5000/api/editpost", {
       action: "cancelPrimary",
       email: userdata.email,
+      code: postCode,
     });
     alert(response.data.message);
     setIsPrimary(false);

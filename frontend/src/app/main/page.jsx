@@ -28,7 +28,7 @@ export default function Home() {
   const [selectedSubstitutes, setSelectedSubstitutes] = useState([]);
   const [lukioChecked, setLukioChecked] = useState(false);
   const [ylakouluChecked, setYlakouluChecked] = useState(false);
-  const [posts, setPosts] = useState(null);
+  const [posts, setPosts] = useState([]);
 
   const fetchPosts = async () => {
     try {

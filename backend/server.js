@@ -270,24 +270,38 @@ app.post("/api/addsub", async (req, res) => {
   }
 });
 
-app.post("api/editpost", async (req, res) => {
-  try{
-    const collection = database.collection("posts");
-    const {action, email} = req.body;
-    if (action === "cancelPrimary"){
-      const result = collection.deleteOne({
-        {}
-      })
-      //Poista db:stä emailin omaava substitute primarySubista
-      //Poista käyttäjän posts listauksesta kys. posts
+app.post("/api/editpost", async (req, res) => {
+  try {
+    const postsCollection = database.collection("posts");
+    const subsCollection = database.collection("substitutes");
+    const { action, email, code } = req.body;
+
+    if (action === "cancelPrimary") {
+      const post = await postsCollection.findOne({ code: code });
+
+      if (post && post.primarySub && post.primarySub.email === email) {
+        await postsCollection.updateOne(
+          { code: code },
+          { $unset: { primarySub: "" } }
+        );
+
+        await subsCollection.updateOne(
+          { email: email },
+          { $pull: { posts: code } }
+        );
+
+        res.status(200).json({ message: "Ilmoitus peruttu onnistuneesti" });
+      } else {
+        res.status(404).json({ message: "Virhe ilmoittautumisen perumisessa" });
+      }
+    } else {
+      res.status(400).json({ message: "Virheellinen toiminto" });
     }
-
-
-
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "An error occurred" });
   }
-
-
-})
+});
 
 app.post("/api/addpost", async (req, res) => {
   try {
