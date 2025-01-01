@@ -208,6 +208,29 @@ app.get("/api/getsubinfo", async (req, res) => {
   }
 });
 
+app.post("/api/editsubinfo", async (req, res) => {
+  try {
+    const collection = database.collection("substitutes");
+
+    const { post, subCode } = req.body;
+
+    const result = await collection.updateOne(
+      { token: subCode },
+      { $push: { posts: post } }
+    );
+
+    if (result.modifiedCount === 0) {
+      return res
+        .status(400)
+        .json({ message: "Virhe tietojen päivittämisessä" });
+    }
+    res.status(200).json({ message: "Tietoja muutettu onnistuneesti" });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ message: "Virhe tietojen päivittämisessä" });
+  }
+});
+
 app.get("/api/checkprimary", async (req, res) => {
   const { postCode, email } = req.query;
   const collection = database.collection("posts");

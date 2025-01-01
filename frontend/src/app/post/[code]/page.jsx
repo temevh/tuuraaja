@@ -99,7 +99,14 @@ const PostPage = () => {
 
           if (confirmResponse.data.isPrimary) {
             setIsFilled(true);
-            alert("Ilmoittautuminen onnistui");
+            const token = localStorage.getItem("token");
+            const response = await axios.post(
+              "http://localhost:5000/api/editsubinfo",
+              { token: token, post: postCode }
+            );
+            if (response) {
+              alert(response.data.message);
+            }
             setIsPrimary(true);
           } else {
             alert("Ilmoittautuminen epäonnistui");
