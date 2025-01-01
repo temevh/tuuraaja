@@ -100,14 +100,20 @@ const PostPage = () => {
           if (confirmResponse.data.isPrimary) {
             setIsFilled(true);
             const token = localStorage.getItem("token");
-            const response = await axios.post(
-              "http://localhost:5000/api/editsubinfo",
-              { token: token, post: postCode }
-            );
-            if (response) {
-              alert(response.data.message);
+            try {
+              const editResponse = await axios.post(
+                "http://localhost:5000/api/editsubinfo",
+                { post: postCode, subCode: token }
+              );
+              if (editResponse.status === 200) {
+                alert(editResponse.data.message);
+                setIsPrimary(true);
+              } else {
+                alert("Failed to update substitute info");
+              }
+            } catch (editError) {
+              console.error("Error updating substitute info:", editError);
             }
-            setIsPrimary(true);
           } else {
             alert("Ilmoittautuminen epäonnistui");
           }
