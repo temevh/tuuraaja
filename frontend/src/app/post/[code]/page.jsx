@@ -3,6 +3,7 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const PostPage = () => {
   const [loading, setLoading] = useState(true);
@@ -14,6 +15,9 @@ const PostPage = () => {
 
   const params = useParams();
   const postCode = params.code;
+
+  const router = useRouter();
+
   let token = "";
 
   if (localStorage.getItem("token")) {
@@ -103,7 +107,6 @@ const PostPage = () => {
           );
 
           if (confirmResponse.data.isPrimary) {
-            setIsFilled(true);
             const token = localStorage.getItem("token");
             try {
               const editResponse = await axios.post(
@@ -113,6 +116,7 @@ const PostPage = () => {
               if (editResponse.status === 200) {
                 alert(editResponse.data.message);
                 setIsPrimary(true);
+                setIsFilled(true);
               } else {
                 alert("Failed to update substitute info");
               }
@@ -229,7 +233,7 @@ const PostPage = () => {
                 className="bg-blue-500 text-black p-2 rounded"
                 onClick={secondaryPressed}
               >
-                Ilmoittaudu toissijaiseksi
+                Ilmoittaudu varasijalle
               </button>
             )}
           </>

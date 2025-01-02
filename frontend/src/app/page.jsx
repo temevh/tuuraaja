@@ -1,6 +1,4 @@
 "use client";
-import { Button } from "@mui/material";
-
 import { useRouter } from "next/navigation";
 import PasswordField from "./register/components/PasswordField";
 import { EmailField } from "./sub/components";
