@@ -3,7 +3,8 @@ Facelift 3/5
 send email 5/5
 
 DOING
-Peru ilmoittautuminen 2/5
+Peru ilmoittautuminen korjaa statet 2/5
+
 
 DONE
 sijaisen omat vuorot näkyviin 3/5
