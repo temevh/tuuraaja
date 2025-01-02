@@ -14,42 +14,50 @@ const PostPage = () => {
 
   const params = useParams();
   const postCode = params.code;
+  let token = "";
 
-  const token = localStorage.getItem("token");
+  if (localStorage.getItem("token")) {
+    token = localStorage.getItem("token");
+  }
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/api/getposts", {
-          params: { code: postCode },
-        });
-        setPost(response.data[0]);
-        setIsFilled(response.data[0].isFilled);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching post:", error);
-      }
-    };
+    if (token) {
+      const fetchPosts = async () => {
+        try {
+          const response = await axios.get(
+            "http://localhost:5000/api/getposts",
+            {
+              params: { code: postCode },
+            }
+          );
+          setPost(response.data[0]);
+          setIsFilled(response.data[0].isFilled);
+          setLoading(false);
+        } catch (error) {
+          console.error("Error fetching post:", error);
+        }
+      };
 
-    const fetchUser = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:5000/api/getsubinfo",
-          {
-            params: {
-              token: token,
-            },
-          }
-        );
-        setUserdata(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+      const fetchUser = async () => {
+        try {
+          const response = await axios.get(
+            "http://localhost:5000/api/getsubinfo",
+            {
+              params: {
+                token: token,
+              },
+            }
+          );
+          setUserdata(response.data);
+          setLoading(false);
+        } catch (error) {
+          console.log(error);
+        }
+      };
 
-    fetchPosts();
-    fetchUser();
+      fetchPosts();
+      fetchUser();
+    }
   }, [postCode]);
 
   useEffect(() => {
@@ -74,7 +82,6 @@ const PostPage = () => {
           email: userdata.email,
           phoneNumber: userdata.phoneNumber,
         };
-        console.log("userdata:", userdata);
         const response = await axios.post(
           "http://localhost:5000/api/handlepost",
           {

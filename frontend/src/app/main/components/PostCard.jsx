@@ -19,7 +19,7 @@ const PostCard = ({ post }) => {
         <p className="text-lg text-black">{formattedDate}</p>
       </div>
       <div className="pl-6">
-        {post.primarySub !== "" ? (
+        {post.primarySub.email ? (
           <div className="flex flex-row">
             <p className="text-black text-xl pr-2">Ensisijainen:</p>
             <p className="text-black text-xl underline">
