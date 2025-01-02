@@ -284,7 +284,8 @@ app.post("/api/editpost", async (req, res) => {
       if (post && post.primarySub && post.primarySub.email === email) {
         await postsCollection.updateOne(
           { code: code },
-          { $unset: { primarySub: "" } }
+          { $unset: { primarySub: "" } },
+          { $set: { isFilled: false } }
         );
 
         await subsCollection.updateOne(
