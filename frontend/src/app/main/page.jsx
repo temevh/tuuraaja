@@ -115,10 +115,9 @@ export default function Home() {
     }
   };
 
-  const emailPressed = () => {
-    createPost();
-    sendEmail(selectedSubstitutes, selectedSubject, selectedDate);
-    //alert("Lähetettiin sähköposti valituille henkilöille");
+  const emailPressed = async () => {
+    await createPost();
+    await sendEmail(selectedSubstitutes, selectedSubject, selectedDate);
   };
 
   return (

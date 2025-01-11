@@ -4,8 +4,10 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const app = express();
 const cors = require("cors");
+const nodemailer = require("nodemailer");
 require("dotenv").config();
 const port = 5000;
+import authenticateToken from "./utils/authenticate";
 
 const uri = process.env.DB_URI;
 
@@ -39,6 +41,33 @@ app.use(cors());
 app.use(express.json());
 
 const JWT_SECRET = process.env.JWT_SECRET;
+
+app.post("/api/sendemails", async (req, res) => {
+  const { recipients, subject, message } = req.body;
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD,
+    },
+  });
+
+  const mailOptions = {
+    from: process.env.EMAIL,
+    to: recipients.join(","),
+    subject,
+    text: message,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ message: "Ilmoitus lisätty onnistuneesti" });
+  } catch (error) {
+    console.log("error sending email", error);
+    res.status(500).json({ message: "Virhe ilmoituksen lisäämisessä" });
+  }
+});
 
 app.post("/api/register", async (req, res) => {
   const { email, password, ...otherDetails } = req.body;
@@ -84,17 +113,6 @@ app.post("/api/login", async (req, res) => {
     res.status(500).json({ error: "Error logging in" });
   }
 });
-
-const authenticateToken = (req, res, next) => {
-  const token = req.headers["authorization"];
-  if (!token) return res.status(401).json({ error: "Access denied" });
-
-  jwt.verify(token, JWT_SECRET, (err, user) => {
-    if (err) return res.status(403).json({ error: "Invalid token" });
-    req.user = user;
-    next();
-  });
-};
 
 app.get("/api/protected", authenticateToken, (req, res) => {
   res.status(200).json({ message: "This is a protected route" });
