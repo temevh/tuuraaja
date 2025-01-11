@@ -4,10 +4,9 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const app = express();
 const cors = require("cors");
-const nodemailer = require("nodemailer");
+const sgMail = require("@sendgrid/mail");
 require("dotenv").config();
 const port = 5000;
-import authenticateToken from "./utils/authenticate";
 
 const uri = process.env.DB_URI;
 
@@ -18,6 +17,17 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   },
 });
+
+const authenticateToken = (req, res, next) => {
+  const token = req.headers["authorization"];
+  if (!token) return res.status(401).json({ error: "Access denied" });
+
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) return res.status(403).json({ error: "Invalid token" });
+    req.user = user;
+    next();
+  });
+};
 
 async function connectToDatabase() {
   try {
@@ -42,30 +52,27 @@ app.use(express.json());
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-app.post("/api/sendemails", async (req, res) => {
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+app.post("/api/sendEmails", async (req, res) => {
   const { recipients, subject, message } = req.body;
 
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.PASSWORD,
-    },
-  });
-
-  const mailOptions = {
+  const msg = {
     from: process.env.EMAIL,
-    to: recipients.join(","),
+    to: recipients,
     subject,
     text: message,
   };
 
   try {
-    await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: "Ilmoitus lisätty onnistuneesti" });
+    await sgMail.sendMultiple(msg);
+    res.status(200).json({ message: "Emails sent successfully!" });
   } catch (error) {
-    console.log("error sending email", error);
-    res.status(500).json({ message: "Virhe ilmoituksen lisäämisessä" });
+    console.error("Error sending emails:", error);
+    res.status(500).json({
+      message: "Failed to send emails",
+      error: error.response?.body || error,
+    });
   }
 });
 
