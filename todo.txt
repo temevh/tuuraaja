@@ -1,8 +1,8 @@
 DO
 Facelift 3/5
-send email 5/5
 
 DOING
+send email 5/5
 Peru ilmoittautuminen korjaa statet 2/5
 
 

@@ -9,7 +9,7 @@ const PostList = ({ posts }) => {
         </p>
         {posts.length !== 0 ? (
           posts.map((post) => {
-            return <PostCard post={post} key={post.id} />;
+            return <PostCard post={post} key={post.code} />;
           })
         ) : (
           <p className="text-black text-center text-2xl pt-40">

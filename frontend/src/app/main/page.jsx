@@ -14,7 +14,7 @@ import {
   FetchSubsButton,
   SendSmsButton,
 } from "./components/Buttons";
-//import sendEmail from "../utils/functions/sendEmail";
+import sendEmail from "../utils/functions/sendEmail";
 import PostList from "./components/PostsList";
 
 export default function Home() {
@@ -115,13 +115,9 @@ export default function Home() {
     }
   };
 
-  const sendSms = () => {
-    alert("Lähetettiin tekstiviesti (ei oikeesti)");
-  };
-
   const emailPressed = () => {
     createPost();
-    //sendEmail(selectedSubstitutes, selectedSubject, selectedDate);
+    sendEmail(selectedSubstitutes, selectedSubject, selectedDate);
     //alert("Lähetettiin sähköposti valituille henkilöille");
   };
 
@@ -162,14 +158,16 @@ export default function Home() {
             </div>
             <div className="flex flex-row justify-between">
               <FetchSubsButton fetchSubs={fetchSubs} />
-              <CreatePostButton
-                sendEmail={emailPressed}
-                buttonState={buttonState}
-              />
+              {selectedSubstitutes.length !== 0 && (
+                <CreatePostButton
+                  sendEmail={emailPressed}
+                  buttonState={buttonState}
+                />
+              )}
             </div>
             <SubList
               substitutes={substitutes}
-              onSubstituteSelected={handleSubstituteSelected}
+              substituteSelected={handleSubstituteSelected}
             />
           </div>
         </div>

@@ -19,6 +19,10 @@ const columns = [
     width: 200,
     editable: false,
   },
+];
+
+/*
+  
   {
     field: "sendEmail",
     headerName: "",
@@ -26,11 +30,11 @@ const columns = [
     editable: false,
     renderCell: (params) => (
       <IconButton
-        onClick={() => {
-          sendEmail(params.row.email);
-        }}
+      onClick={() => {
+        sendEmail(params.row.email);
+      }}
       >
-        <EmailIcon sx={{ color: "black" }} />
+      <EmailIcon sx={{ color: "black" }} />
       </IconButton>
     ),
   },
@@ -41,15 +45,12 @@ const columns = [
     editable: false,
     renderCell: (params) => (
       <IconButton
-        onClick={() => {
-          sendSms(params.row.phoneNumber);
-        }}
+      onClick={() => {
+        sendSms(params.row.phoneNumber);
+      }}
       >
-        <SmsIcon sx={{ color: "black" }} />
+      <SmsIcon sx={{ color: "black" }} />
       </IconButton>
-    ),
-  },
-];
 
 const sendEmail = (email) => {
   console.log("email to", email);
@@ -58,9 +59,10 @@ const sendEmail = (email) => {
 const sendSms = (phoneNumber) => {
   console.log("sms to", phoneNumber);
 };
+*/
 
 const SubList = ({ substitutes, substituteSelected }) => {
-  const rows = substitutes.map((substitute, index) => ({
+  const rows = substitutes.map((substitute) => ({
     id: substitute._id,
     firstName: substitute.firstName,
     lastName: substitute.lastName,
@@ -70,10 +72,16 @@ const SubList = ({ substitutes, substituteSelected }) => {
   }));
 
   const handleSelectionChange = (selectionModel) => {
-    const selectedEmails = selectionModel.map(
-      (id) => rows.find((row) => row.id === id).email
-    );
-    substituteSelected(selectedEmails);
+    const selectedSubstitutes = selectionModel.map((id) => {
+      const selectedRow = rows.find((row) => row.id === id);
+      return {
+        firstName: selectedRow.firstName,
+        lastName: selectedRow.lastName,
+        email: selectedRow.email,
+        phoneNumber: selectedRow.phoneNumber,
+      };
+    });
+    substituteSelected(selectedSubstitutes);
   };
 
   return (
