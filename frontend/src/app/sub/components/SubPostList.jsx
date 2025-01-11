@@ -1,7 +1,6 @@
 import SubPostCard from "./SubPostCard";
 
 const SubPostList = ({ userPosts }) => {
-  console.log(userPosts);
   return (
     <div className="w-full">
       <p className="text-2xl mb-2 text-center">Omat vuoroni</p>

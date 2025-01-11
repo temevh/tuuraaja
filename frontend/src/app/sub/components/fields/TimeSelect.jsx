@@ -6,27 +6,30 @@ const TimeSelect = ({ setSelectedTime }) => {
   const [selectedHour, setSelectedHour] = useState("");
   const [selectedMinute, setSelectedMinute] = useState("");
 
-  useEffect(() => {}, [selectedHour]);
-
   const changeHour = (hour) => {
     setSelectedHour(hour);
-    setSelectedTime([hour, selectedMinute]);
   };
 
   const changeMinute = (minute) => {
-    setSelectedTime([selectedHour, minute]);
+    setSelectedMinute(minute);
   };
+
+  useEffect(() => {
+    if (selectedHour && selectedMinute) {
+      setSelectedTime([selectedHour, selectedMinute]);
+    }
+  }, [selectedHour, selectedMinute, setSelectedTime]);
 
   return (
     <div className="flex flex-row gap-4 mt-4">
       <p className="text-lg">Aloitusaika</p>
-
       <div className="pb-2 rounded-lg">
         <div className="flex flex-row gap-1">
           <select
             className="p-2 rounded-lg bg-gray-400"
             onChange={(e) => changeHour(e.target.value)}
           >
+            <option value="">--</option>
             {hours.map((hour) => (
               <option key={hour} value={hour}>
                 {hour}
@@ -38,6 +41,7 @@ const TimeSelect = ({ setSelectedTime }) => {
             className="p-2 rounded-lg bg-gray-400"
             onChange={(e) => changeMinute(e.target.value)}
           >
+            <option value="">--</option>
             {minutes.map((minute) => (
               <option key={minute} value={minute}>
                 {minute.toString().padStart(2, "0")}

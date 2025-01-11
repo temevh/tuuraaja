@@ -51,6 +51,10 @@ const SubInfo = ({ userInfo, userPosts }) => {
     alert("Open settings");
   };
 
+  useEffect(() => {
+    console.log("selectedTime", selectedTime);
+  }, [selectedTime]);
+
   return (
     <div className=" w-full bg-blue-300 flex justify-center items-center p-4 rounded-lg">
       {loading ? (
