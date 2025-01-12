@@ -37,6 +37,8 @@ async function connectToDatabase() {
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
     console.log("connected to db");
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    console.log("sgMail API key set");
   } catch (err) {
     console.error(err);
   }
@@ -51,8 +53,6 @@ app.use(cors());
 app.use(express.json());
 
 const JWT_SECRET = process.env.JWT_SECRET;
-
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 app.post("/api/sendEmails", async (req, res) => {
   const { recipients, subject, message } = req.body;
@@ -69,6 +69,7 @@ app.post("/api/sendEmails", async (req, res) => {
     res.status(200).json({ message: "Emails sent successfully!" });
   } catch (error) {
     console.error("Error sending emails:", error);
+    console.error(error.response.body);
     res.status(500).json({
       message: "Failed to send emails",
       error: error.response?.body || error,
