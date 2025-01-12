@@ -3,21 +3,22 @@ import { useEffect, useState } from "react";
 const TimeSelect = ({ setSelectedTime }) => {
   const minutes = [0, 15, 30, 45];
   const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16];
-  const [selectedHour, setSelectedHour] = useState("");
-  const [selectedMinute, setSelectedMinute] = useState("");
+  const [selectedHour, setSelectedHour] = useState(null);
+  const [selectedMinute, setSelectedMinute] = useState(null);
 
   useEffect(() => {
-    if (selectedHour !== "" && selectedMinute !== "") {
+    if (selectedHour !== null && selectedMinute !== null) {
       setSelectedTime([selectedHour, selectedMinute]);
+      console.log("Time updated:", [selectedHour, selectedMinute]);
     }
   }, [selectedHour, selectedMinute, setSelectedTime]);
 
   const changeHour = (hour) => {
-    setSelectedHour(hour);
+    setSelectedHour(parseInt(hour, 10));
   };
 
   const changeMinute = (minute) => {
-    setSelectedMinute(minute);
+    setSelectedMinute(parseInt(minute, 10));
   };
 
   return (
@@ -26,10 +27,12 @@ const TimeSelect = ({ setSelectedTime }) => {
         <p className="text-lg font-bold text-black text-center mr-2">Aika</p>
         <select
           className="p-2 rounded-lg bg-blue-400"
-          value={selectedHour}
+          value={selectedHour || ""}
           onChange={(e) => changeHour(e.target.value)}
         >
-          <option value="" disabled></option>
+          <option value="" disabled>
+            HH
+          </option>
           {hours.map((hour) => (
             <option key={hour} value={hour}>
               {hour}
@@ -39,10 +42,12 @@ const TimeSelect = ({ setSelectedTime }) => {
         <p className="text-2xl text-black">:</p>
         <select
           className="p-2 rounded-lg bg-blue-400"
-          value={selectedMinute}
+          value={selectedMinute || ""}
           onChange={(e) => changeMinute(e.target.value)}
         >
-          <option value="" disabled></option>
+          <option value="" disabled>
+            MM
+          </option>
           {minutes.map((minute) => (
             <option key={minute} value={minute}>
               {minute.toString().padStart(2, "0")}

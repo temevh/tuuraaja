@@ -9,18 +9,15 @@ import {
   TimeSelect,
   LevelCheckboxes,
 } from "./components/index";
-import {
-  CreatePostButton,
-  FetchSubsButton,
-  SendSmsButton,
-} from "./components/Buttons";
+import { CreatePostButton, FetchSubsButton } from "./components/Buttons";
 import { sendEmail, generateToken } from "../utils/functions/";
+import { format, utcToZonedTime } from "date-fns-tz";
 import PostList from "./components/PostsList";
 
 export default function Home() {
   const [substitutes, setSubstitutes] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedTime, setSelectedTime] = useState([""]);
+  const [selectedTime, setSelectedTime] = useState([null, null]);
   const [selectedSubject, setSelectedSubject] = useState("");
   const [loading, setLoading] = useState(true);
   const [subjects, setSubjects] = useState([]);
@@ -29,6 +26,16 @@ export default function Home() {
   const [lukioChecked, setLukioChecked] = useState(false);
   const [ylakouluChecked, setYlakouluChecked] = useState(false);
   const [posts, setPosts] = useState([]);
+
+  const constructDate = (selectedDate, selectedTime) => {
+    const year = selectedDate.getFullYear();
+    const month = selectedDate.getMonth();
+    const day = selectedDate.getDate();
+    const hour = parseInt(selectedTime[0], 10);
+    const minute = parseInt(selectedTime[1], 10);
+
+    return new Date(year, month, day, hour, minute);
+  };
 
   const fetchPosts = async () => {
     try {
@@ -63,20 +70,19 @@ export default function Home() {
   }, []);
 
   const fetchSubs = async () => {
-    const year = selectedDate.getFullYear();
-    const month = selectedDate.getMonth();
-    const day = selectedDate.getDate();
+    if (!selectedTime[0] || !selectedTime[1]) {
+      console.error("Time is not fully selected");
+      return;
+    }
 
-    const hour = parseInt(selectedTime[0], 10);
-    const minute = parseInt(selectedTime[1], 10);
+    const date = constructDate(selectedDate, selectedTime);
 
-    const date = new Date(Date.UTC(year, month, day, hour, minute));
     console.log("date", date);
 
     let level = "molemmat";
-    if (lukioChecked === false && ylakouluChecked === true) {
+    if (!lukioChecked && ylakouluChecked) {
       level = "ylakoulu";
-    } else if (lukioChecked === true && ylakouluChecked === false) {
+    } else if (lukioChecked && !ylakouluChecked) {
       level = "lukio";
     }
 
@@ -102,10 +108,21 @@ export default function Home() {
   };
 
   const createPost = async () => {
+    if (!selectedTime[0] || !selectedTime[1]) {
+      console.error("Time is not fully selected");
+      return;
+    }
+
+    const date = constructDate(selectedDate, selectedTime);
+
+    console.log("Creating post with date:", date);
+
     const postCode = generateToken(16);
+
     try {
+      console.log("postDate", date);
       const response = await axios.post("http://localhost:5000/api/addpost", {
-        date: selectedDate,
+        date: date.toISOString(),
         subject: selectedSubject,
         postCode: postCode,
       });
@@ -113,7 +130,7 @@ export default function Home() {
       alert(response.data.message);
       fetchPosts();
     } catch (err) {
-      console.log(err);
+      console.error("Error creating post:", err);
     }
   };
 

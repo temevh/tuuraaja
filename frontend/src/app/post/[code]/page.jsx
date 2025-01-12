@@ -16,8 +16,6 @@ const PostPage = () => {
   const params = useParams();
   const postCode = params.code;
 
-  const router = useRouter();
-
   let token = "";
 
   if (localStorage.getItem("token")) {
@@ -204,7 +202,7 @@ const PostPage = () => {
         <h1 className="text-xl font-bold text-black mb-4">
           Jyväskylän Normaalikoulu
         </h1>
-        <p className="text-lg text-black mb-2">{formattedDate} klo 14:15</p>
+        <p className="text-lg text-black mb-2">{formattedDate} klo 10:15</p>
         {isPrimary && (
           <p className="text-2xl text-black underline">Ensisijainen </p>
         )}
