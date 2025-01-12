@@ -14,7 +14,7 @@ import {
   FetchSubsButton,
   SendSmsButton,
 } from "./components/Buttons";
-import sendEmail from "../utils/functions/sendEmail";
+import { sendEmail, generateToken } from "../utils/functions/";
 import PostList from "./components/PostsList";
 
 export default function Home() {
@@ -102,10 +102,12 @@ export default function Home() {
   };
 
   const createPost = async () => {
+    const postCode = generateToken(16);
     try {
       const response = await axios.post("http://localhost:5000/api/addpost", {
         date: selectedDate,
         subject: selectedSubject,
+        postCode: postCode,
       });
       console.log(response);
       alert(response.data.message);

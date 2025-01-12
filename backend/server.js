@@ -332,20 +332,8 @@ app.post("/api/editpost", async (req, res) => {
 
 app.post("/api/addpost", async (req, res) => {
   try {
-    const { date, subject } = req.body;
+    const { date, subject, postCode } = req.body;
     collection = database.collection("posts");
-
-    function generateToken(n) {
-      var chars =
-        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-      var token = "";
-      for (var i = 0; i < n; i++) {
-        token += chars[Math.floor(Math.random() * chars.length)];
-      }
-      return token;
-    }
-
-    const postCode = generateToken(16);
 
     const newPost = {
       date: date,
