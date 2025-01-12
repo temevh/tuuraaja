@@ -62,7 +62,7 @@ app.post("/api/sendEmails", async (req, res) => {
     from: process.env.EMAIL,
     to: recipients,
     subject,
-    text: message,
+    html: message,
   };
 
   try {

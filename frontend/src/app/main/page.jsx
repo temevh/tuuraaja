@@ -11,7 +11,6 @@ import {
 } from "./components/index";
 import { CreatePostButton, FetchSubsButton } from "./components/Buttons";
 import { sendEmail, generateToken } from "../utils/functions/";
-import { format, utcToZonedTime } from "date-fns-tz";
 import PostList from "./components/PostsList";
 
 export default function Home() {
@@ -129,14 +128,20 @@ export default function Home() {
       console.log(response);
       alert(response.data.message);
       fetchPosts();
+      return postCode;
     } catch (err) {
       console.error("Error creating post:", err);
     }
   };
 
   const emailPressed = async () => {
-    await createPost();
-    await sendEmail(selectedSubstitutes, selectedSubject, selectedDate);
+    const postCode = await createPost();
+    await sendEmail(
+      selectedSubstitutes,
+      selectedSubject,
+      selectedDate,
+      postCode
+    );
   };
 
   return (
