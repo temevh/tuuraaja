@@ -2,10 +2,10 @@ DO
 Facelift 3/5
 
 DOING
-send email 5/5
 Peru ilmoittautuminen korjaa statet 2/5
 
 
 DONE
+send email 5/5
 sijaisen omat vuorot näkyviin 3/5
 buttons to own components 2/5
