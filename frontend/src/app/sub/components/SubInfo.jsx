@@ -62,10 +62,12 @@ const SubInfo = ({ userInfo, userPosts }) => {
       ) : (
         <div>
           <div className="flex flex-row justify-between items-center pb-6">
-            <p className="text-2xl text-white">Moi {userInfo.firstName}!</p>
+            <div className="px-4 py-1 bg-blue-700 rounded-md">
+              <p className="text-2xl text-white">Moi {userInfo.firstName}!</p>
+            </div>
             <button
               onClick={settingsClicked}
-              className="bg-pink-300 rounded-lg hover:bg-blue-500 p-1 flex items-center justify-center"
+              className="bg-blue-700 rounded-lg hover:bg-blue-500 p-1 flex items-center justify-center"
             >
               <SettingsIcon sx={{ fontSize: 40 }} />
             </button>
@@ -76,13 +78,13 @@ const SubInfo = ({ userInfo, userPosts }) => {
               <Calendar dbDays={dbDays} setSelectedDates={setSelectedDates} />
               <TimeSelect setSelectedTime={setSelectedTime} />
             </div>
-            <div className="w-1/2">
+            <div className="w-full">
               <SubPostList userPosts={userPosts} />
             </div>
           </div>
           <button
             onClick={updateDates}
-            className="bg-buttonprimary rounded-lg p-4 hover:bg-buttonsecondary transition duration-300 ease-in-out transform hover:scale-105 shadow-lg mx-auto w-1/2"
+            className="bg-blue-600 rounded-lg p-4 hover:bg-buttonsecondary transition duration-300 ease-in-out transform hover:scale-105 shadow-lg mx-auto w-1/2"
           >
             <p className="text-center">Tallenna muutokset</p>
           </button>

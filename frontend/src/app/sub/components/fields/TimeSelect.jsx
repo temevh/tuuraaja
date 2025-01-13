@@ -22,11 +22,11 @@ const TimeSelect = ({ setSelectedTime }) => {
 
   return (
     <div className="flex flex-row gap-4 mt-4">
-      <p className="text-lg">Aloitusaika</p>
+      <p className="text-lg text-black">Aloitusaika</p>
       <div className="pb-2 rounded-lg">
         <div className="flex flex-row gap-1">
           <select
-            className="p-2 rounded-lg bg-gray-400"
+            className="p-2 rounded-lg bg-blue-700"
             onChange={(e) => changeHour(e.target.value)}
           >
             <option value="">--</option>
@@ -38,7 +38,7 @@ const TimeSelect = ({ setSelectedTime }) => {
           </select>
           <p className="text-2xl">:</p>
           <select
-            className="p-2 rounded-lg bg-gray-400"
+            className="p-2 rounded-lg bg-blue-700"
             onChange={(e) => changeMinute(e.target.value)}
           >
             <option value="">--</option>

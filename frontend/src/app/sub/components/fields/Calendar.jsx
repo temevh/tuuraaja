@@ -18,7 +18,7 @@ const Calendar = ({ dbDays, setSelectedDates }) => {
   };
 
   return (
-    <div className="rounded-lg">
+    <div className="bg-blue-800 rounded-lg shadow-lg p-6">
       <DayPicker
         mode="multiple"
         selected={selected}
@@ -27,11 +27,11 @@ const Calendar = ({ dbDays, setSelectedDates }) => {
         locale={fi}
         showWeekNumber
         classNames={{
-          today: `border-blue-600`,
-          day: `hover:bg-blue-100 focus:bg-blue-100 transition duration-200 ease-in-out rounded-md`,
-          selected: `bg-blue-500 border-blue-500 text-white`,
-          root: `${defaultClassNames.root} bg-pink-300 rounded-lg shadow-lg p-5`,
-          chevron: `${defaultClassNames.chevron} fill-green-500`,
+          today: `border-green-500 text-red-500`,
+          day: `hover:bg-blue-200 hover:text-black focus:bg-blue-500 transition duration-300 ease-in-out rounded-lg`,
+          selected: `bg-purple-600 border-blue-600 text-white rounded-md`,
+          root: `${defaultClassNames.root} bg-blue-600 rounded-lg shadow-lg p-5`,
+          chevron: `${defaultClassNames.chevron} fill-yellow-500`,
         }}
       />
     </div>

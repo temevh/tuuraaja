@@ -2,7 +2,7 @@ import SubPostCard from "./SubPostCard";
 
 const SubPostList = ({ userPosts }) => {
   return (
-    <div className="w-full bg-blue-900 rounded-lg h-full px-2">
+    <div className="w-full bg-blue-700 rounded-lg h-full">
       <p className="text-2xl mb-2 text-center">Omat vuoroni</p>
       {userPosts.length !== 0 ? (
         userPosts.map((post) => {
