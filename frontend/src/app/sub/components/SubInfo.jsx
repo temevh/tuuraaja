@@ -56,22 +56,22 @@ const SubInfo = ({ userInfo, userPosts }) => {
   }, [selectedTime]);
 
   return (
-    <div className="w-full bg-gray-500 flex justify-center items-center p-4 rounded-lg">
+    <div className="mx-auto flex p-4 rounded-lg">
       {loading ? (
         <p>Ladataan...</p>
       ) : (
         <div>
-          <div className="flex flex-row justify-between items-center">
-            <p className="text-2xl text-white font-bold pb-2">
-              {userInfo.firstName} {userInfo.lastName}
-            </p>
-            <button onClick={settingsClicked}>
-              <div className="bg-pink-300 rounded-lg hover:bg-blue-500 hover:scale-125">
-                <SettingsIcon sx={{ fontSize: 40 }} />
-              </div>
+          <div className="flex flex-row justify-between items-center pb-6">
+            <p className="text-2xl text-white">Moi {userInfo.firstName}!</p>
+            <button
+              onClick={settingsClicked}
+              className="bg-pink-300 rounded-lg hover:bg-blue-500 p-1 flex items-center justify-center"
+            >
+              <SettingsIcon sx={{ fontSize: 40 }} />
             </button>
           </div>
-          <div className="flex flex-row gap-6 pb-2">
+
+          <div className="flex flex-row gap-10 pb-2">
             <div>
               <Calendar dbDays={dbDays} setSelectedDates={setSelectedDates} />
               <TimeSelect setSelectedTime={setSelectedTime} />

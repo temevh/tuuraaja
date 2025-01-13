@@ -43,16 +43,17 @@ export default function Home() {
 
   return (
     <div className="flex items-center justify-center h-screen bg-gradient-to-tl from-gradientend to-gradientstart">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-2xl p-8 transform transition duration-500 hover:scale-105">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-2xl p-8 transform transition duration-500">
         <div className="flex flex-col gap-6">
           <p className="text-center text-black text-5xl italic underline font-bold pb-6">
             Tuuraaja
           </p>
           <EmailField email={email} updateEmail={updateEmail} />
           <PasswordField password={password} updatePassword={updatePassword} />
+          <div className="bg-"></div>
           <button
             onClick={login}
-            className="bg-buttonprimary rounded-lg p-4 hover:bg-buttonsecondary transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
+            className="bg-buttonprimary rounded-lg p-4 hover:bg-buttonsecondary transition duration-300 ease-in-out transform shadow-lg"
           >
             <p className="text-white text-2xl font-bold">Kirjaudu sisään</p>
           </button>

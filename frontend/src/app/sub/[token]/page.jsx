@@ -58,7 +58,7 @@ const userPage = () => {
   }, [userInfo]);
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gradient-to-tl from-gradientend to-gradientstart">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-tl from-gradientend to-gradientstart">
       {loading ? (
         <p>Ladataan...</p>
       ) : (

@@ -2,10 +2,10 @@ DO
 Facelift 3/5
 
 DOING
-Peru ilmoittautuminen korjaa statet 2/5
 
 
 DONE
+Peru ilmoittautuminen korjaa statet 2/5
 send email 5/5
 sijaisen omat vuorot näkyviin 3/5
 buttons to own components 2/5
