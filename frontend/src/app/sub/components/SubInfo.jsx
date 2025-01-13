@@ -56,7 +56,7 @@ const SubInfo = ({ userInfo, userPosts }) => {
   }, [selectedTime]);
 
   return (
-    <div className=" w-full bg-blue-300 flex justify-center items-center p-4 rounded-lg">
+    <div className="w-full bg-gray-500 flex justify-center items-center p-4 rounded-lg">
       {loading ? (
         <p>Ladataan...</p>
       ) : (

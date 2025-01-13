@@ -84,6 +84,7 @@ const PostPage = () => {
           email: userdata.email,
           phoneNumber: userdata.phoneNumber,
         };
+
         const response = await axios.post(
           "http://localhost:5000/api/handlepost",
           {
@@ -94,36 +95,10 @@ const PostPage = () => {
         );
 
         if (response.status === 200) {
-          const confirmResponse = await axios.get(
-            "http://localhost:5000/api/checkprimary",
-            {
-              params: {
-                postCode: postCode,
-                email: userdata.email,
-              },
-            }
-          );
-
-          if (confirmResponse.data.isPrimary) {
-            const token = localStorage.getItem("token");
-            try {
-              const editResponse = await axios.post(
-                "http://localhost:5000/api/editsubinfo",
-                { post: postCode, subCode: token }
-              );
-              if (editResponse.status === 200) {
-                alert(editResponse.data.message);
-                setIsPrimary(true);
-                setIsFilled(true);
-              } else {
-                alert("Failed to update substitute info");
-              }
-            } catch (editError) {
-              console.error("Error updating substitute info:", editError);
-            }
-          } else {
-            alert("Ilmoittautuminen epäonnistui");
-          }
+          alert(response.data.message);
+          await refreshPostData();
+        } else {
+          alert("Ilmoittautuminen epäonnistui");
         }
       } catch (error) {
         console.error("Error handling post:", error);
@@ -142,25 +117,72 @@ const PostPage = () => {
             primary: false,
           }
         );
+
         if (response.status === 200) {
-          setIsFilled(true);
-          setIsSecondary(true);
+          alert(response.data.message);
+          await refreshPostData();
+        } else {
+          alert("Virhe varasijalle ilmoittautumisessa");
         }
-        alert(response.data.message);
       } catch (error) {
         console.error("Error making the API call:", error);
       }
     }
   };
 
+  const refreshPostData = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/getposts", {
+        params: { code: postCode },
+      });
+      setPost(response.data[0]);
+      setIsFilled(response.data[0].isFilled);
+
+      const isPrimaryUser =
+        response.data[0].primarySub &&
+        response.data[0].primarySub.email === userdata.email;
+      const isSecondaryUser =
+        response.data[0].secondarySubs &&
+        response.data[0].secondarySubs.some(
+          (sub) => sub.email === userdata.email
+        );
+
+      setIsPrimary(isPrimaryUser);
+      setIsSecondary(isSecondaryUser);
+    } catch (error) {
+      console.error("Error refreshing post data:", error);
+    }
+  };
+
   const cancelPrimary = async () => {
-    const response = await axios.post("http://localhost:5000/api/editpost", {
-      action: "cancelPrimary",
-      email: userdata.email,
-      code: postCode,
-    });
-    alert(response.data.message);
-    setIsPrimary(false);
+    try {
+      const response = await axios.post("http://localhost:5000/api/editpost", {
+        action: "cancelPrimary",
+        email: userdata.email,
+        code: postCode,
+      });
+
+      if (response.status === 200) {
+        alert(response.data.message);
+
+        const updatedPost = await axios.get(
+          "http://localhost:5000/api/getposts",
+          {
+            params: { code: postCode },
+          }
+        );
+
+        setPost(updatedPost.data[0]);
+        setIsFilled(updatedPost.data[0].isFilled);
+
+        setIsPrimary(false);
+      } else {
+        alert("Virhe ilmoittautumisen perumisessa");
+      }
+    } catch (error) {
+      console.error("Error cancelling primary registration:", error);
+      alert("Virhe ilmoittautumisen perumisessa");
+    }
   };
 
   if (loading) {
@@ -186,15 +208,15 @@ const PostPage = () => {
     .toString()
     .padStart(2, "0")}.${date.getFullYear()}`;
 
-  let bgColor = "bg-green-800";
+  let bgColor = "bg-green-400";
   if (isPrimary) {
-    bgColor = "bg-green-400";
+    bgColor = "bg-green-200";
   } else if (isSecondary) {
     bgColor = "bg-yellow-400";
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen text-center">
+    <div className="flex items-center justify-center min-h-screen text-center bg-gradient-to-tl from-gradientend to-gradientstart">
       <div className={`w-full max-w-md p-8 rounded-lg shadow-lg ${bgColor}`}>
         <h1 className="text-3xl underline font-bold text-black mb-4">
           {post.subject}
@@ -219,11 +241,12 @@ const PostPage = () => {
         {!isPrimary && !isSecondary && (
           <>
             {!isFilled && (
-              <button
-                className="bg-blue-500 text-black p-2 rounded"
-                onClick={primaryPressed}
-              >
-                Ilmoittaudu ensisijaiseksi
+              <button className=" text-black " onClick={primaryPressed}>
+                <div className="bg-blue-500 hover:bg-green-600 hover:text-black hover:cursor-pointer p-2 rounded">
+                  <p className="text-2xl text-white">
+                    Ilmoittaudu ensisijaiseksi
+                  </p>
+                </div>
               </button>
             )}
             {isFilled && (
