@@ -9,13 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/cache": "^11.13.1",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
-    "@mui/icons-material": "^6.2.1",
-    "@mui/material": "^7.3.9",
-    "@mui/material-nextjs": "^6.1.5",
-    "@mui/x-data-grid": "^7.22.1",
+    "@mui/material": "^6.5.0",
     "antd": "^5.22.4",
     "axios": "^1.7.9",
     "cors": "^2.8.5",
@@ -24,6 +20,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "jwt-decode": "^4.0.0",
+    "lucide-react": "^0.577.0",
     "next": "^14.0.0",
     "next-auth": "^5.0.0-beta.25",
     "react": "^18.2.0",
@@ -34,10 +31,12 @@
   },
   "devDependencies": {
     "@types/node": "22.8.7",
+    "@types/react": "^19.2.14",
     "autoprefixer": "^10.4.20",
     "eslint": "^8",
     "eslint-config-next": "15.0.2",
     "postcss": "^8.4.47",
-    "tailwindcss": "^3.4.14"
+    "tailwindcss": "^3.4.14",
+    "typescript": "^5.9.3"
   }
 }

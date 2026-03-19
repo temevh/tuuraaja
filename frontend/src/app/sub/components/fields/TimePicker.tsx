@@ -1,7 +1,7 @@
 import { IconButton } from "@mui/material";
 import React, { useState } from "react";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { SelectedTime } from "../../../../types";
+import { ChevronRight, ChevronLeft } from 'lucide-react';
 
 const DAYS = ["Ma", "Ti", "Ke", "To", "Pe", "La", "Su"];
 const TIME_SLOTS = [
@@ -39,17 +39,25 @@ const formatDateRange = (d) => {
 
 export const TimePicker = ({ dbDays, setSelectedDates }) => {
   const [currentWeekDate, setCurrentWeekDate] = useState(new Date());
-  const [selectedSlots, setSelectedSlots] = useState(new Set());
+  const [selectedTimes, setSelectedTimes] = useState<SelectedTime>(new Set());
 
-  const toggleSlot = (dayIndex, slotIndex) => {
-    const slotId = `${dayIndex}-${slotIndex}`;
-    const newSelected = new Set(selectedSlots);
+  const getMonday = (d) => {
+    const date = new Date(d);
+    const day = date.getDay();
+    const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+    return new Date(date.setDate(diff));
+  };
+
+  const toggleSlot = (date, time) => {
+    const slotId = `${date.toISOString().split('T')[0]}T${time}`;
+
+    const newSelected = new Set(selectedTimes);
     if (newSelected.has(slotId)) {
       newSelected.delete(slotId);
     } else {
       newSelected.add(slotId);
     }
-    setSelectedSlots(newSelected);
+    setSelectedTimes(newSelected);
   };
 
   const forwardWeek = () => {
@@ -64,11 +72,13 @@ export const TimePicker = ({ dbDays, setSelectedDates }) => {
     setCurrentWeekDate(newDate);
   };
 
+  const monday = getMonday(currentWeekDate);
+
   return (
     <div className="w-full bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
       <div className="flex items-center justify-center mb-6">
         <IconButton onClick={backwardWeek}>
-          <ArrowBackIosIcon />
+          <ChevronLeft />
         </IconButton>
         <div className="mx-4 text-center">
           <h2 className="text-xl font-bold text-zinc-900 mb-1">
@@ -79,7 +89,7 @@ export const TimePicker = ({ dbDays, setSelectedDates }) => {
           </p>
         </div>
         <IconButton onClick={forwardWeek}>
-          <ArrowForwardIosIcon />
+          <ChevronRight />
         </IconButton>
       </div>
       <div className="grid grid-cols-7 gap-2">
@@ -94,21 +104,23 @@ export const TimePicker = ({ dbDays, setSelectedDates }) => {
 
         {TIME_SLOTS.map((time, rowIndex) => (
           <React.Fragment key={time}>
-            {DAYS.map((colIndex) => {
-              const slotId = `${colIndex}-${rowIndex}`;
-              const isSelected = selectedSlots.has(slotId);
+            {DAYS.map((_, colIndex) => {
+              const cellDate = new Date(monday);
+              cellDate.setDate(monday.getDate() + colIndex);
+
+              const slotId = `${cellDate.toISOString().split('T')[0]}T${time}`;
+              const isSelected = selectedTimes.has(slotId);
 
               return (
                 <button
                   key={slotId}
-                  onClick={() => toggleSlot(colIndex, rowIndex)}
+                  onClick={() => toggleSlot(cellDate, time)}
                   className={`
                     w-full aspect-square md:aspect-auto md:h-12 flex items-center justify-center
                     rounded-xl text-xs md:text-sm font-medium transition-all duration-200
-                    ${
-                      isSelected
-                        ? "bg-zinc-900 text-white shadow-md transform scale-105"
-                        : "bg-zinc-50 text-zinc-600 hover:bg-zinc-200 hover:scale-105"
+                    ${isSelected
+                      ? "bg-zinc-900 text-white shadow-md transform scale-105"
+                      : "bg-zinc-50 text-zinc-600 hover:bg-zinc-200 hover:scale-105"
                     }
                   `}
                 >

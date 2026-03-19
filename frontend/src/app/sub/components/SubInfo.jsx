@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import SettingsIcon from "@mui/icons-material/Settings";
 
 import Calendar from "./fields/Calendar";
 import { SubPostList } from "./index";
