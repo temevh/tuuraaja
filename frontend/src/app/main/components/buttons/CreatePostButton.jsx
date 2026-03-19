@@ -3,13 +3,13 @@ const CreatePostButton = ({ sendEmail, buttonState }) => {
     <button
       onClick={sendEmail}
       disabled={buttonState}
-      className={`rounded-lg p-4 transition duration-300 ease-in-out transform shadow-lg ${
+      className={`rounded-xl px-6 py-3 transition-colors duration-200 shadow-sm font-semibold ${
         buttonState
-          ? "bg-gray-400 cursor-not-allowed"
-          : "bg-buttonprimary hover:scale-105"
+          ? "bg-zinc-200 text-zinc-400 cursor-not-allowed"
+          : "bg-zinc-900 text-white hover:bg-zinc-800"
       }`}
     >
-      <p className="text-white font-bold text-md">Luo ilmoitus</p>
+      <p className="text-md">Luo ilmoitus</p>
     </button>
   );
 };

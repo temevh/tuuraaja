@@ -1,5 +1,5 @@
 import { IconButton } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 
 const DAYS = ["Ma", "Ti", "Ke", "To", "Pe", "La", "Su"];
@@ -38,10 +38,6 @@ const formatDateRange = (d) => {
 
 export const TimePicker = ({ selectedTimes, setSelectedTimes }) => {
   const [currentWeekDate, setCurrentWeekDate] = useState(new Date());
-
-  useEffect(() => {
-    console.log("selectedTimes", selectedTimes)
-  }, [selectedTimes])
 
   const getMonday = (d) => {
     const date = new Date(d);

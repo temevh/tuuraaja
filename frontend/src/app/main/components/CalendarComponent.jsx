@@ -48,9 +48,11 @@ const CalendarContainer = styled.div`
   max-width: 700px;
   margin: auto;
   margin-top: 20px;
-  background-color: #d4f7d4;
-  padding: 10px;
-  border-radius: 3px;
+  background-color: #ffffff;
+  border: 1px solid #e4e4e7;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+  padding: 16px;
+  border-radius: 12px;
 
   /* ~~~ calendar width ~~~ */
   .react-calendar {
@@ -89,18 +91,18 @@ const CalendarContainer = styled.div`
   /* ~~~ button styles ~~~ */
   button {
     margin: 3px;
-    background-color: #6f876f;
+    background-color: #18181b;
     border: 0;
-    border-radius: 3px;
+    border-radius: 8px;
     color: white;
-    padding: 5px 0;
+    padding: 8px 0;
 
     &:hover {
-      background-color: #556b55;
+      background-color: #27272a;
     }
 
     &:active {
-      background-color: #a5c1a5;
+      background-color: #3f3f46;
     }
   }
 
@@ -114,7 +116,7 @@ const CalendarContainer = styled.div`
     }
 
     .react-calendar__tile--range {
-      box-shadow: 0 0 6px 2px black;
+      box-shadow: 0 0 0px 1px #18181b;
     }
   }
 
@@ -123,8 +125,8 @@ const CalendarContainer = styled.div`
     opacity: 0.3;
   }
   .react-calendar__month-view__days__day--weekend {
-    color: #dfdfdf;
-    opacity: 0.3;
+    color: #a1a1aa;
+    opacity: 0.8;
   }
 
   .react-calendar__month-view__weekdays__weekday:nth-child(6),
@@ -133,9 +135,9 @@ const CalendarContainer = styled.div`
   }
 
   .react-calendar__tile--active {
-    background: #15803d !important;
-    border-radius: 10% !important;
-    color: black !important;
+    background: #18181b !important;
+    border-radius: 8px !important;
+    color: white !important;
   }
 
   /* ~~~ other view styles ~~~ */

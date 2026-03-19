@@ -1,8 +1,5 @@
-import Box from "@mui/material/Box";
+
 import { DataGrid } from "@mui/x-data-grid";
-import EmailIcon from "@mui/icons-material/Email";
-import IconButton from "@mui/material/IconButton";
-import SmsIcon from "@mui/icons-material/Sms";
 
 const columns = [
   { field: "firstName", headerName: "Etunimi", width: 100, editable: false },
@@ -85,7 +82,7 @@ const SubList = ({ substitutes, substituteSelected }) => {
   };
 
   return (
-    <Box sx={{ height: 400, width: "100%" }}>
+    <div className="h-[400px] w-full">
       <DataGrid
         rows={rows}
         columns={columns}
@@ -102,17 +99,17 @@ const SubList = ({ substitutes, substituteSelected }) => {
         onRowSelectionModelChange={handleSelectionChange}
         sx={{
           "& .MuiDataGrid-cell": {
-            color: "black",
+            color: "#171717",
           },
           "& .MuiDataGrid-checkboxInput .Mui-checked": {
-            color: "green",
+            color: "#18181b",
           },
           "& .MuiDataGrid-checkboxInput .MuiSvgIcon-root": {
-            color: "black",
+            color: "#71717a",
           },
         }}
       />
-    </Box>
+    </div>
   );
 };
 

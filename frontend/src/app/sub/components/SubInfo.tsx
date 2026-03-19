@@ -16,12 +16,10 @@ const SubInfo = ({ userInfo, userPosts }) => {
     if (userInfo.selectedTimes) {
       setSelectedTimes(new Set(userInfo.selectedTimes));
     }
-    console.log(userInfo.selectedTimes)
     setLoading(false);
   }, [userInfo.selectedTimes]);
 
   const updateDates = async () => {
-    console.log(selectedTimes)
     const token = localStorage.getItem("token")
     const response = await axios.post(
       "http://localhost:5000/api/updatedates",

@@ -7,33 +7,36 @@ const PostCard = ({ post }) => {
     .padStart(2, "0")}.${date.getFullYear()}`;
 
   const secondarySubs = post.secondarySubs;
-  const bgColor = post.isFilled ? "#90EE90" : "#f69697";
+  const borderColor = post.isFilled ? "border-emerald-500" : "border-rose-400";
 
   return (
     <div
-      className="bg-green-300 rounded-md pl-2 flex flex-cols-3 mb-4"
-      style={{ backgroundColor: bgColor }}
+      className={`bg-white border border-zinc-200 border-l-4 ${borderColor} rounded-xl p-5 mb-2 w-full shadow-sm`}
     >
-      <div>
-        <p className="text-xl font-bold text-black">{post.subject}</p>
-        <p className="text-lg text-black">{formattedDate}</p>
-      </div>
-      <div className="pl-6">
-        {post.primarySub.email ? (
-          <div className="flex flex-row">
-            <p className="text-black text-xl pr-2">Ensisijainen:</p>
-            <p className="text-black text-xl underline">
-              {post.primarySub.firstname} {post.primarySub.lastname}
-            </p>
-          </div>
-        ) : (
-          <div className="flex justify-center items-center h-full">
-            <p className="text-2xl text-black">Ei vielä sijaista</p>
-          </div>
-        )}
-        <div className="flex flex-row gap-2">
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-row justify-between items-start">
+          <p className="text-lg font-bold text-zinc-900">{post.subject}</p>
+          <p className="text-sm font-medium text-zinc-500 bg-zinc-100 px-3 py-1 rounded-full">{formattedDate}</p>
+        </div>
+        
+        <div className="flex flex-col gap-2">
+          {post.primarySub.email ? (
+            <div className="flex flex-row items-center gap-2 bg-zinc-50 p-3 rounded-lg border border-zinc-100">
+              <p className="text-zinc-600 text-sm font-medium">Ensisijainen:</p>
+              <p className="text-zinc-900 text-sm font-semibold">
+                {post.primarySub.firstname} {post.primarySub.lastname}
+              </p>
+            </div>
+          ) : (
+            <div className="flex items-center justify-center py-2 bg-rose-50 border border-rose-100 rounded-lg">
+              <p className="text-sm font-medium text-rose-600">Ei vielä sijaista</p>
+            </div>
+          )}
+          
           {secondarySubs.length !== 0 ? (
-            <p className="text-black">Varalla: {secondarySubs.length}</p>
+            <div className="flex items-center">
+              <p className="text-zinc-500 text-sm font-medium">Varalla: <span className="text-zinc-900 font-semibold">{secondarySubs.length}</span></p>
+            </div>
           ) : null}
         </div>
       </div>

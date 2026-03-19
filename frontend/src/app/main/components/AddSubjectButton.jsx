@@ -51,7 +51,7 @@ const AddSubjectButton = () => {
     <div>
       <button
         variant="contained"
-        className="bg-buttonprimary rounded-lg p-2 hover:bg-buttonsecondary transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
+        className="bg-zinc-900 text-white rounded-xl px-4 py-2 hover:bg-zinc-800 transition-colors duration-200 shadow-sm font-medium"
         onClick={handleClickOpen}
       >
         Lisää oppiaine
