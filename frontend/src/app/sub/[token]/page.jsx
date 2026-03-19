@@ -19,7 +19,7 @@ const userPage = () => {
             params: {
               token: token,
             },
-          }
+          },
         );
         setUserInfo(response.data);
         setLoading(false);
@@ -40,7 +40,7 @@ const userPage = () => {
               params: {
                 code: post,
               },
-            }
+            },
           );
           return response.data;
         });
@@ -58,13 +58,11 @@ const userPage = () => {
   }, [userInfo]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-tl from-gradientend to-gradientstart">
+    <div className="min-h-screen flex w-1/2 mx-auto bg-white items-center justify-center">
       {loading ? (
         <p>Ladataan...</p>
       ) : (
-        <div>
-          <SubInfo userInfo={userInfo} userPosts={userPosts} />
-        </div>
+        <SubInfo userInfo={userInfo} userPosts={userPosts} />
       )}
     </div>
   );

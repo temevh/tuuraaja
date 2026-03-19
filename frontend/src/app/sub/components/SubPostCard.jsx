@@ -16,15 +16,17 @@ const SubPostCard = ({ post }) => {
 
   return (
     <div
-      className="bg-green-300 rounded-md pl-2 flex flex-cols-3 mb-4 w-full p-2"
+      className="bg-white border border-zinc-200 border-l-4 border-l-zinc-900 rounded-xl p-5 mb-2 w-full shadow-sm hover:shadow-md hover:border-zinc-300 transition-all cursor-pointer group"
       onClick={postClicked}
     >
-      <div>
-        <div className="flex flex-row gap-2">
-          <p className="text-xl font-bold text-black">{post[0].subject}</p>
-          <p className="text-md text-black mt-1">{formattedDate}</p>
+      <div className="flex flex-col justify-between h-full">
+        <div className="flex flex-row justify-between items-start mb-2">
+          <p className="text-lg font-bold text-zinc-900 group-hover:text-zinc-600 transition-colors">{post[0].subject}</p>
+          <p className="text-sm font-medium text-zinc-500 bg-zinc-100 px-3 py-1 rounded-full">{formattedDate}</p>
         </div>
-        <p className="text-black">Jyväskylän normaalikoulu lukio</p>
+        <div className="flex items-center mt-2">
+          <p className="text-zinc-600 text-sm font-medium">Jyväskylän normaalikoulu lukio</p>
+        </div>
       </div>
     </div>
   );

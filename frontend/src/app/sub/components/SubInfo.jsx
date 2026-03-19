@@ -6,6 +6,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import Calendar from "./fields/Calendar";
 import { SubPostList } from "./index";
 import { TimeSelect } from ".";
+import { TimePicker } from "./fields";
 
 const SubInfo = ({ userInfo, userPosts }) => {
   const [dbDays, setDbDays] = useState([]);
@@ -47,49 +48,29 @@ const SubInfo = ({ userInfo, userPosts }) => {
     }
   };
 
-  const settingsClicked = () => {
-    alert("Open settings");
-  };
-
-  useEffect(() => {
-    console.log("selectedTime", selectedTime);
-  }, [selectedTime]);
-
   return (
-    <div className="mx-auto flex p-4 rounded-lg">
-      {loading ? (
-        <p>Ladataan...</p>
-      ) : (
-        <div>
-          <div className="flex flex-row justify-between items-center pb-6">
-            <div className="px-4 py-1 bg-blue-700 rounded-md">
-              <p className="text-2xl text-white">Moi {userInfo.firstName}!</p>
-            </div>
-            <button
-              onClick={settingsClicked}
-              className="bg-blue-700 rounded-lg hover:bg-blue-500 p-1 flex items-center justify-center"
-            >
-              <SettingsIcon sx={{ fontSize: 40 }} />
-            </button>
-          </div>
+    <div className="mx-auto flex flex-col p-4 w-full">
+      <>
+        <p className="text-3xl font-extrabold tracking-tight text-zinc-900">
+          Moi {userInfo.firstName}! 👋
+        </p>
 
-          <div className="flex flex-row gap-10 pb-2">
-            <div>
-              <Calendar dbDays={dbDays} setSelectedDates={setSelectedDates} />
+        {/*<Calendar dbDays={dbDays} setSelectedDates={setSelectedDates} /
               <TimeSelect setSelectedTime={setSelectedTime} />
-            </div>
-            <div className="w-full">
-              <SubPostList userPosts={userPosts} />
-            </div>
-          </div>
-          <button
-            onClick={updateDates}
-            className="bg-blue-600 rounded-lg p-4 hover:bg-buttonsecondary transition duration-300 ease-in-out transform hover:scale-105 shadow-lg mx-auto w-1/2"
-          >
-            <p className="text-center">Tallenna muutokset</p>
-          </button>
+              */}
+        <div className="space-y-8">
+          <TimePicker dbDays={dbDays} setSelectedDates={setSelectedDates} />
+          <SubPostList userPosts={userPosts} />
         </div>
-      )}
+        <button
+          onClick={updateDates}
+          className="bg-zinc-900 rounded-xl py-3 px-8 hover:bg-zinc-800 transition-colors duration-200 shadow-sm w-full md:w-1/2"
+        >
+          <p className="text-center text-white font-semibold tracking-wide">
+            Tallenna muutokset
+          </p>
+        </button>
+      </>
     </div>
   );
 };

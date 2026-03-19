@@ -112,57 +112,81 @@ export default function Home() {
   return (
     <div>
       {loading ? (
-        <div className="flex items-center justify-center h-screen bg-gradient-to-tl from-gradientend to-gradientstart">
-          <p className="text-black font-bold text-6xl bg-white rounded-md p-12">
-            Ladataan...
-          </p>
+        <div className="flex items-center justify-center h-screen bg-zinc-50">
+          <div className="animate-pulse flex flex-col items-center">
+            <div className="h-8 w-32 bg-zinc-200 rounded mb-4"></div>
+            <p className="text-zinc-400 font-medium">Ladataan...</p>
+          </div>
         </div>
       ) : (
-        <div className="flex items-center justify-center h-screen bg-gradient-to-tl from-gradientend to-gradientstart">
-          <div className="w-full flex flex-col gap-6 items-center max-w-md bg-white rounded-lg shadow-2xl p-8 transform transition duration-500 hover:scale-105">
-            <p className="text-center text-black text-xl">
-              Täytä alla olevat kentät
-            </p>
-            <div className="flex flex-row gap-6">
-              <FirstNameField
-                firstName={firstname}
-                updateFirstName={updateFirstname}
-              />
-              <LastNameField
-                lastName={lastname}
-                updateLastName={updateLastname}
-              />
+        <div className="flex items-center justify-center min-h-screen bg-zinc-50 py-12">
+          <div className="w-full flex flex-col gap-6 items-center max-w-xl bg-white border border-zinc-200 rounded-2xl shadow-sm p-10 mx-4">
+            <div className="w-full text-center pb-2">
+              <p className="text-zinc-900 text-2xl font-bold tracking-tight">
+                Luo profiili
+              </p>
+              <p className="text-zinc-500 text-sm mt-1">
+                Täytä alla olevat kentät jatkaaksesi
+              </p>
             </div>
-            <div className="flex flex-row gap-6">
-              <EmailField email={email} updateEmail={updateEmail} />
-              <PhoneNumberField
-                phoneNumber={phoneNumber}
-                updateNumber={updateNumber}
-              />
+            
+            <div className="w-full flex flex-col gap-5">
+              <div className="flex flex-col sm:flex-row gap-5 w-full">
+                <div className="w-full sm:w-1/2">
+                  <FirstNameField
+                    firstName={firstname}
+                    updateFirstName={updateFirstname}
+                  />
+                </div>
+                <div className="w-full sm:w-1/2">
+                  <LastNameField
+                    lastName={lastname}
+                    updateLastName={updateLastname}
+                  />
+                </div>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-5 w-full">
+                <div className="w-full sm:w-1/2">
+                  <EmailField email={email} updateEmail={updateEmail} />
+                </div>
+                <div className="w-full sm:w-1/2">
+                  <PhoneNumberField
+                    phoneNumber={phoneNumber}
+                    updateNumber={updateNumber}
+                  />
+                </div>
+              </div>
+              
+              <div className="flex flex-col gap-5 w-full">
+                <SubjectsField
+                  subjectList={subjectList}
+                  selectedSubjects={selectedSubjects}
+                  updateSelectedSubjects={updateSubjects}
+                />
+                <CodeField code={schoolCode} updateCode={updateSchoolCode} />
+              </div>
+              
+              <div className="w-full pt-2">
+                <LevelCheckboxes
+                  setLukioCheck={() => setLukioChecked(!lukioChecked)}
+                  setYlakouluCheck={() => setYlakouluChecked(!ylakouluChecked)}
+                />
+              </div>
+              
+              <div className="w-full pt-2">
+                <PasswordField
+                  password={password}
+                  updatePassword={updatePassword}
+                />
+              </div>
             </div>
-            <div className="flex flex-row gap-6">
-              <SubjectsField
-                subjectList={subjectList}
-                selectedSubjects={selectedSubjects}
-                updateSelectedSubjects={updateSubjects}
-              />
-              <CodeField code={schoolCode} updateCode={updateSchoolCode} />
-            </div>
-            <LevelCheckboxes
-              setLukioCheck={() => setLukioChecked(!lukioChecked)}
-              setYlakouluCheck={() => setYlakouluChecked(!ylakouluChecked)}
-            />
-            <div className="flex flex-row gap-6">
-              <PasswordField
-                password={password}
-                updatePassword={updatePassword}
-              />
-            </div>
+            
             <button
               onClick={createPressed}
-              className="bg-buttonprimary rounded-lg p-4 hover:bg-buttonsecondary transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
+              className="w-full mt-4 bg-zinc-900 rounded-xl p-4 hover:bg-zinc-800 transition-colors duration-200"
             >
-              <p className="text-white text-2xl font-bold">Luo profiili</p>
+              <p className="text-white text-lg font-semibold tracking-wide">Rekisteröidy</p>
             </button>
           </div>
         </div>

@@ -4,6 +4,8 @@ import { fi } from "react-day-picker/locale";
 import "react-day-picker/style.css";
 
 const Calendar = ({ dbDays, setSelectedDates }) => {
+  console.log("dbDays", dbDays);
+  console.log("setSelectedDates", setSelectedDates);
   const defaultClassNames = getDefaultClassNames();
   const [selected, setSelected] = useState([]);
 
@@ -13,6 +15,7 @@ const Calendar = ({ dbDays, setSelectedDates }) => {
   }, [dbDays]);
 
   const handleSelect = (selectedDates) => {
+    console.log("selectedDates", selectedDates);
     setSelected(selectedDates);
     setSelectedDates(selectedDates);
   };

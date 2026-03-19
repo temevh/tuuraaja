@@ -145,11 +145,16 @@ export default function Home() {
   };
 
   return (
-    <div className="flex items-center justify-center p-6 min-h-screen bg-gradient-to-tl from-gradientend to-gradientstart">
+    <div className="flex justify-center p-6 min-h-screen bg-zinc-50">
       {loading ? (
-        <p className="text-black font-bold text-3xl">Ladataan...</p>
+        <div className="flex items-center justify-center w-full h-full min-h-[50vh]">
+          <div className="animate-pulse flex flex-col items-center">
+            <div className="h-8 w-32 bg-zinc-200 rounded mb-4"></div>
+            <p className="text-zinc-600 font-medium">Ladataan...</p>
+          </div>
+        </div>
       ) : (
-        <div className="w-full max-w-4xl bg-white rounded-lg shadow-2xl p-8">
+        <div className="w-full max-w-5xl bg-white border border-zinc-200 rounded-2xl shadow-sm p-10">
           <div className="flex flex-col gap-2">
             <div className="flex flex-row gap-6">
               <SubjectDropdown
