@@ -3,9 +3,10 @@ import SubInfo from "../components/SubInfo";
 import axios from "axios";
 
 import { useEffect, useState } from "react";
+import { User } from "../../../types";
 
-const userPage = () => {
-  const [userInfo, setUserInfo] = useState([]);
+const UserPage = () => {
+  const [userInfo, setUserInfo] = useState<User>(null);
   const [userPosts, setUserPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -68,4 +69,4 @@ const userPage = () => {
   );
 };
 
-export default userPage;
+export default UserPage;

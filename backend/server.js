@@ -35,7 +35,7 @@ async function connectToDatabase() {
     await client.connect();
     await client.db("admin").command({ ping: 1 });
     console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
+      "Pinged your deployment. You successfully connected to MongoDB!",
     );
     console.log("connected to db");
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -114,7 +114,7 @@ app.post("/api/login", async (req, res) => {
 
     await collection.updateOne(
       { email: user.email },
-      { $set: { token: token } }
+      { $set: { token: token } },
     );
 
     res.status(200).json({ token });
@@ -228,7 +228,13 @@ app.get("/api/getsubinfo", async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    res.status(200).json(result);
+    const data = {
+      token: token,
+      name: result.firstName,
+      selectedTimes: result.selectedTimes,
+    };
+
+    res.status(200).json(data);
   } catch (err) {
     console.error("Error retrieving data:", err);
     res.status(500).json({ error: "An error occurred while retrieving data" });
@@ -243,7 +249,7 @@ app.post("/api/editsubinfo", async (req, res) => {
 
     const result = await collection.updateOne(
       { token: subCode },
-      { $push: { posts: post } }
+      { $push: { posts: post } },
     );
 
     console.log(result);
@@ -311,12 +317,12 @@ app.post("/api/editpost", async (req, res) => {
       if (post && post.primarySub && post.primarySub.email === email) {
         await postsCollection.updateOne(
           { code: code },
-          { $set: { primarySub: "", isFilled: false } }
+          { $set: { primarySub: "", isFilled: false } },
         );
 
         await subsCollection.updateOne(
           { email: email },
-          { $pull: { posts: code } }
+          { $pull: { posts: code } },
         );
 
         res.status(200).json({ message: "Ilmoitus peruttu onnistuneesti" });
@@ -362,22 +368,14 @@ app.post("/api/addpost", async (req, res) => {
 
 app.post("/api/updatedates", async (req, res) => {
   try {
-    const { email, dates } = req.body;
-    console.log("update info for", email);
-    console.log("new dates", dates);
+    const { token, selectedTimes } = req.body;
+    console.log("token", token);
+    console.log("selectedTimes", selectedTimes);
     const collection = database.collection("substitutes");
 
-    const dateObjects = dates.map((date) => {
-      const originalDate = new Date(date);
-      const adjustedDate = new Date(
-        originalDate.getTime() + 2 * 60 * 60 * 1000
-      );
-      return adjustedDate;
-    });
-
     const result = await collection.updateOne(
-      { email: email },
-      { $set: { dates: dateObjects } }
+      { token: token },
+      { $set: { selectedTimes: selectedTimes } },
     );
 
     if (result.modifiedCount === 0) {

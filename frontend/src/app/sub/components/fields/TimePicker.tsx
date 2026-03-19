@@ -1,6 +1,5 @@
 import { IconButton } from "@mui/material";
-import React, { useState } from "react";
-import { SelectedTime } from "../../../../types";
+import React, { useEffect, useState } from "react";
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 
 const DAYS = ["Ma", "Ti", "Ke", "To", "Pe", "La", "Su"];
@@ -37,9 +36,12 @@ const formatDateRange = (d) => {
   return `${format(start)} - ${format(end)}${end.getFullYear()}`;
 };
 
-export const TimePicker = ({ dbDays, setSelectedDates }) => {
+export const TimePicker = ({ selectedTimes, setSelectedTimes }) => {
   const [currentWeekDate, setCurrentWeekDate] = useState(new Date());
-  const [selectedTimes, setSelectedTimes] = useState<SelectedTime>(new Set());
+
+  useEffect(() => {
+    console.log("selectedTimes", selectedTimes)
+  }, [selectedTimes])
 
   const getMonday = (d) => {
     const date = new Date(d);

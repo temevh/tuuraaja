@@ -6,40 +6,27 @@ import Calendar from "./fields/Calendar";
 import { SubPostList } from "./index";
 import { TimeSelect } from ".";
 import { TimePicker } from "./fields";
+import { SelectedTime } from "../../../types";
 
 const SubInfo = ({ userInfo, userPosts }) => {
-  const [dbDays, setDbDays] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedTime, setSelectedTime] = useState([""]);
-  const [selectedDates, setSelectedDates] = useState([]);
+  const [selectedTimes, setSelectedTimes] = useState<Set<string>>(new Set());
 
   useEffect(() => {
-    if (userInfo.dates) {
-      const formattedDates = userInfo.dates.map((day) => new Date(day));
-      setDbDays(formattedDates);
+    if (userInfo.selectedTimes) {
+      setSelectedTimes(new Set(userInfo.selectedTimes));
     }
+    console.log(userInfo.selectedTimes)
     setLoading(false);
-  }, [userInfo.dates]);
+  }, [userInfo.selectedTimes]);
 
   const updateDates = async () => {
-    if (!Array.isArray(selectedDates)) {
-      console.error("selectedDates is not an array!");
-      return;
-    }
-
-    const datesWithTime = selectedDates.map((date) => {
-      const year = date.getFullYear();
-      const month = date.getMonth();
-      const day = date.getDate();
-      const hour = parseInt(selectedTime[0], 10);
-      const minute = parseInt(selectedTime[1], 10);
-      return new Date(year, month, day, hour, minute);
-    });
-
-    const response = await axios.post("http://localhost:5000/api/updatedates", {
-      email: userInfo.email,
-      dates: datesWithTime,
-    });
+    console.log(selectedTimes)
+    const token = localStorage.getItem("token")
+    const response = await axios.post(
+      "http://localhost:5000/api/updatedates",
+      { token: token, selectedTimes: Array.from(selectedTimes) },
+    );
     if (response.status === 200) {
       alert(response.data.message);
     } else {
@@ -54,11 +41,11 @@ const SubInfo = ({ userInfo, userPosts }) => {
           Moi {userInfo.firstName}! 👋
         </p>
 
-        {/*<Calendar dbDays={dbDays} setSelectedDates={setSelectedDates} /
-              <TimeSelect setSelectedTime={setSelectedTime} />
-              */}
         <div className="space-y-8">
-          <TimePicker dbDays={dbDays} setSelectedDates={setSelectedDates} />
+          <TimePicker
+            selectedTimes={selectedTimes}
+            setSelectedTimes={setSelectedTimes}
+          />
           <SubPostList userPosts={userPosts} />
         </div>
         <button
