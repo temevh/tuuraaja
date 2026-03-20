@@ -130,30 +130,24 @@ app.get("/api/protected", authenticateToken, (req, res) => {
 app.get("/api/getsubs", async (req, res) => {
   try {
     const { subject, date, level } = req.query;
-    const inputDate = new Date(date);
-
-    const inputYear = inputDate.getUTCFullYear();
-    const inputMonth = inputDate.getUTCMonth();
-    const inputDay = inputDate.getUTCDate();
-    const startOfDay = new Date(Date.UTC(inputYear, inputMonth, inputDay));
-    const endOfDay = new Date(Date.UTC(inputYear, inputMonth, inputDay + 1));
-
-    let query = {};
-
-    if (subject) {
-      query = {
-        subjects: subject,
-        dates: {
-          $elemMatch: {
-            $gte: inputDate,
-            $lt: endOfDay,
-          },
-        },
-      };
+    if (!subject || !date) {
+      return res.status(400).json({ error: "Subject and date are required" });
     }
+    console.log("subject", subject, "date", date);
+    const inputDate = new Date(date);
+    const dateStringPrefix = inputDate.toISOString().split("T")[0];
+
+    let query = {
+      subjects: subject,
+      selectedTimes: {
+        $regex: `^${dateStringPrefix}`,
+      },
+    };
 
     const collection = database.collection("substitutes");
     const substitutes = await collection.find(query).toArray();
+
+    console.log("substitutes", substitutes);
     res.status(200).json(substitutes);
   } catch (err) {
     res.status(500).json({ error: "An error occurred while retrieving data" });
