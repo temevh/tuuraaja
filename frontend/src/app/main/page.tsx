@@ -47,8 +47,12 @@ export default function Home() {
   };
 
   const createPressed = async () => {
+    if (!selectedTime[0] || !selectedTime[1]) return;
     const postCode = await createPost();
-    sendEmail(selectedSubstitutes, selectedSubject, selectedDate, postCode)
+    if (!postCode) return;
+    
+    const date = constructDate(selectedDate, selectedTime);
+    sendEmail(selectedSubstitutes, selectedSubject, date, postCode);
   };
 
   useEffect(() => {
