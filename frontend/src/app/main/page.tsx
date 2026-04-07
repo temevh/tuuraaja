@@ -11,7 +11,7 @@ import {
   LevelCheckboxes,
 } from "./components/index";
 import { FetchSubsButton } from "./components/Buttons";
-import { generateToken } from "../utils/functions";
+import { generateToken, sendEmail } from "../utils/functions";
 import PostList from "./components/PostsList";
 
 export default function Home() {
@@ -48,10 +48,7 @@ export default function Home() {
 
   const createPressed = async () => {
     const postCode = await createPost();
-    console.log("postCode", postCode);
-    console.log("Selected subject", selectedSubject);
-    console.log("Selected date", selectedDate);
-    console.log("Selected substitutes", selectedSubstitutes);
+    sendEmail(selectedSubstitutes, selectedSubject, selectedDate, postCode)
   };
 
   useEffect(() => {
