@@ -44,16 +44,17 @@ const SubInfo = ({ userInfo, userPosts }) => {
             selectedTimes={selectedTimes}
             setSelectedTimes={setSelectedTimes}
           />
+          <button
+            onClick={updateDates}
+            className="bg-zinc-900 rounded-xl py-3 px-8 hover:bg-zinc-800 transition-colors duration-200 shadow-sm w-full md:w-1/2"
+          >
+            <p className="text-center text-white font-semibold tracking-wide">
+              Tallenna muutokset
+            </p>
+          </button>
           <SubPostList userPosts={userPosts} />
         </div>
-        <button
-          onClick={updateDates}
-          className="bg-zinc-900 rounded-xl py-3 px-8 hover:bg-zinc-800 transition-colors duration-200 shadow-sm w-full md:w-1/2"
-        >
-          <p className="text-center text-white font-semibold tracking-wide">
-            Tallenna muutokset
-          </p>
-        </button>
+
       </>
     </div>
   );

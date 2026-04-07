@@ -1,4 +1,3 @@
-
 import { DataGrid } from "@mui/x-data-grid";
 
 const columns = [
@@ -69,16 +68,17 @@ const SubList = ({ substitutes, substituteSelected }) => {
   }));
 
   const handleSelectionChange = (selectionModel) => {
-    const selectedSubstitutes = selectionModel.map((id) => {
-      const selectedRow = rows.find((row) => row.id === id);
-      return {
-        firstName: selectedRow.firstName,
-        lastName: selectedRow.lastName,
-        email: selectedRow.email,
-        phoneNumber: selectedRow.phoneNumber,
-      };
-    });
-    substituteSelected(selectedSubstitutes);
+    const selectionIds = Array.isArray(selectionModel)
+      ? selectionModel
+      : selectionModel.ids || [];
+
+    console.log("Selected IDs:", selectionIds);
+
+    const selectedRowsData = substitutes.filter((sub) =>
+      selectionIds.includes(sub._id),
+    );
+
+    substituteSelected(selectedRowsData);
   };
 
   return (

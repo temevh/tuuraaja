@@ -323,6 +323,24 @@ app.post("/api/editpost", async (req, res) => {
       } else {
         res.status(404).json({ message: "Virhe ilmoittautumisen perumisessa" });
       }
+    } else if (action === "cancelSecondary") {
+      const post = await postsCollection.findOne({ code: code });
+
+      if (post && post.secondarySubs && post.secondarySubs.some(sub => sub.email === email)) {
+        await postsCollection.updateOne(
+          { code: code },
+          { $pull: { secondarySubs: { email: email } } }
+        );
+
+        await subsCollection.updateOne(
+          { email: email },
+          { $pull: { posts: code } },
+        );
+
+        res.status(200).json({ message: "Varasija peruttu onnistuneesti" });
+      } else {
+        res.status(404).json({ message: "Virhe varasijan perumisessa" });
+      }
     } else {
       res.status(400).json({ message: "Virheellinen toiminto" });
     }

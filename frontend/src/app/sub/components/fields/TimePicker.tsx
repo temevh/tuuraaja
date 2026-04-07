@@ -24,6 +24,7 @@ const getWeekNumber = (d) => {
 };
 
 const formatDateRange = (d) => {
+  console.log(d)
   const date = new Date(d);
   const day = date.getDay();
   const diffToMonday = date.getDate() - day + (day === 0 ? -6 : 1);
@@ -91,14 +92,23 @@ export const TimePicker = ({ selectedTimes, setSelectedTimes }) => {
         </IconButton>
       </div>
       <div className="grid grid-cols-7 gap-2">
-        {DAYS.map((day) => (
-          <div
-            key={day}
-            className="text-center font-semibold text-gray-500 text-sm mb-2"
-          >
-            {day}
-          </div>
-        ))}
+        {DAYS.map((day, index) => {
+          const dateForDay = new Date(monday)
+          dateForDay.setDate(monday.getDate() + index)
+          return (
+            <div
+              key={day}
+              className="flex flex-col items-center mb-2"
+            >
+              <span className="text-center font-semibold text-gray-500 text-sm">
+                {day}
+              </span>
+              <span className="text-[10px] md:text-xs font-medium text-zinc-400">
+                {dateForDay.getDate()}.{dateForDay.getMonth() + 1}.
+              </span>
+            </div>
+          );
+        })}
 
         {TIME_SLOTS.map((time, rowIndex) => (
           <React.Fragment key={time}>
