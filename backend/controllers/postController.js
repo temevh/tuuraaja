@@ -72,7 +72,7 @@ export const checkPrimary = async (req, res) => {
 export const editPost = async (req, res) => {
   try {
     const postsCollection = database.collection("posts");
-    const subsCollection = database.collection("substitutes");
+    const subsCollection = database.collection("users");
     const { action, email, code } = req.body;
 
     if (action === "cancelPrimary") {

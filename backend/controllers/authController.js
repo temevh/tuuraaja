@@ -8,7 +8,7 @@ export const register = async (req, res) => {
   const user = { email, password: hashedPassword, ...otherDetails };
 
   try {
-    const collection = database.collection("substitutes");
+    const collection = database.collection("users");
     await collection.insertOne(user);
     res.status(201).json({ message: "User registered successfully" });
   } catch (err) {
@@ -19,7 +19,7 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   const { email, password } = req.body;
   console.log("email:", email, "password:", password);
-  const collection = database.collection("substitutes");
+  const collection = database.collection("users");
 
   try {
     const user = await collection.findOne({ email });

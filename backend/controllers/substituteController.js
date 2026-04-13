@@ -17,7 +17,7 @@ export const getSubs = async (req, res) => {
       },
     };
 
-    const collection = database.collection("substitutes");
+    const collection = database.collection("users");
     const substitutes = await collection.find(query).toArray();
 
     console.log("substitutes", substitutes);
@@ -30,7 +30,7 @@ export const getSubs = async (req, res) => {
 export const getSubInfo = async (req, res) => {
   try {
     const { token } = req.query;
-    const collection = database.collection("substitutes");
+    const collection = database.collection("users");
 
     const result = await collection.findOne({ token: token });
     console.log("found info of substitute", result);
@@ -54,7 +54,7 @@ export const getSubInfo = async (req, res) => {
 
 export const editSubInfo = async (req, res) => {
   try {
-    const collection = database.collection("substitutes");
+    const collection = database.collection("users");
 
     const { post, subCode } = req.body;
 
@@ -80,7 +80,7 @@ export const editSubInfo = async (req, res) => {
 export const addSub = async (req, res) => {
   try {
     const newSub = req.body;
-    const collection = database.collection("substitutes");
+    const collection = database.collection("users");
 
     const result = await collection.insertOne(newSub);
 
@@ -95,7 +95,7 @@ export const updateDates = async (req, res) => {
     const { token, selectedTimes } = req.body;
     console.log("token", token);
     console.log("selectedTimes", selectedTimes);
-    const collection = database.collection("substitutes");
+    const collection = database.collection("users");
 
     const result = await collection.updateOne(
       { token: token },
