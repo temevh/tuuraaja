@@ -58,6 +58,8 @@ const JWT_SECRET = process.env.JWT_SECRET;
 app.post("/api/sendEmails", async (req, res) => {
   const { recipients, date, subject, postCode } = req.body;
 
+  console.log("date in backend", date);
+
   const templateParams = {
     email: "temehama@gmail.com",
     subject,
@@ -65,18 +67,22 @@ app.post("/api/sendEmails", async (req, res) => {
     postCode,
   };
 
+  console.log("templateParams", templateParams);
+
   try {
     const response = await emailjs.send(
-      process.env.SERVICEID, 
-      process.env.TEMPLATEID, 
-      templateParams, 
+      process.env.SERVICEID,
+      process.env.TEMPLATEID,
+      templateParams,
       {
         publicKey: process.env.PUBLIC_KEY,
         privateKey: process.env.PRIVATE_KEY,
-      }
+      },
     );
     console.log("SUCCESS!", response.status, response.text);
-    return res.status(200).json({ message: "Sähköpostit lähetetty onnistuneesti" });
+    return res
+      .status(200)
+      .json({ message: "Sähköpostit lähetetty onnistuneesti" });
   } catch (error) {
     console.error("Error sending emails:", error);
     return res.status(500).json({
