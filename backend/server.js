@@ -1,13 +1,15 @@
-const express = require("express");
-const { MongoClient, ServerApiVersion } = require("mongodb");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+import express from "express";
+import { MongoClient, ServerApiVersion } from "mongodb";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import emailjs, { EmailJSResponseStatus } from "@emailjs/nodejs";
+import cors from "cors";
+import dotenv from "dotenv";
+
+dotenv.config();
+
 const app = express();
-const cors = require("cors");
-const sgMail = require("@sendgrid/mail");
-require("dotenv").config();
 const port = 5000;
-const { formatISO, utcToZonedTime } = require("date-fns-tz");
 
 const uri = process.env.DB_URI;
 
@@ -38,8 +40,6 @@ async function connectToDatabase() {
       "Pinged your deployment. You successfully connected to MongoDB!",
     );
     console.log("connected to db");
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-    console.log("sgMail API key set");
   } catch (err) {
     console.error(err);
   }
@@ -56,24 +56,38 @@ app.use(express.json());
 const JWT_SECRET = process.env.JWT_SECRET;
 
 app.post("/api/sendEmails", async (req, res) => {
-  const { recipients, subject, message } = req.body;
+  const { recipients, date, subject, postCode } = req.body;
 
-  const msg = {
-    from: process.env.EMAIL,
-    to: recipients,
+  console.log("date in backend", date);
+
+  const templateParams = {
+    email: "temehama@gmail.com",
     subject,
-    html: message,
+    date,
+    postCode,
   };
 
+  console.log("templateParams", templateParams);
+
   try {
-    await sgMail.sendMultiple(msg);
-    res.status(200).json({ message: "Emails sent successfully!" });
+    const response = await emailjs.send(
+      process.env.SERVICEID,
+      process.env.TEMPLATEID,
+      templateParams,
+      {
+        publicKey: process.env.PUBLIC_KEY,
+        privateKey: process.env.PRIVATE_KEY,
+      },
+    );
+    console.log("SUCCESS!", response.status, response.text);
+    return res
+      .status(200)
+      .json({ message: "Sähköpostit lähetetty onnistuneesti" });
   } catch (error) {
     console.error("Error sending emails:", error);
-    console.error(error.response.body);
-    res.status(500).json({
+    return res.status(500).json({
       message: "Failed to send emails",
-      error: error.response?.body || error,
+      error: error.text || error.message || "Unknown error",
     });
   }
 });
@@ -326,10 +340,14 @@ app.post("/api/editpost", async (req, res) => {
     } else if (action === "cancelSecondary") {
       const post = await postsCollection.findOne({ code: code });
 
-      if (post && post.secondarySubs && post.secondarySubs.some(sub => sub.email === email)) {
+      if (
+        post &&
+        post.secondarySubs &&
+        post.secondarySubs.some((sub) => sub.email === email)
+      ) {
         await postsCollection.updateOne(
           { code: code },
-          { $pull: { secondarySubs: { email: email } } }
+          { $pull: { secondarySubs: { email: email } } },
         );
 
         await subsCollection.updateOne(

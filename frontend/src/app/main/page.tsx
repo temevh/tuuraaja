@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { GridRowSelectionModel } from "@mui/x-data-grid";
 import {
   AddSubjectButton,
   SubList,
@@ -9,8 +10,8 @@ import {
   TimeSelect,
   LevelCheckboxes,
 } from "./components/index";
-import { CreatePostButton, FetchSubsButton } from "./components/Buttons";
-import { sendEmail, generateToken } from "../utils/functions/";
+import { FetchSubsButton } from "./components/Buttons";
+import { generateToken, sendEmail } from "../utils/functions";
 import PostList from "./components/PostsList";
 
 export default function Home() {
@@ -20,8 +21,8 @@ export default function Home() {
   const [selectedSubject, setSelectedSubject] = useState("");
   const [loading, setLoading] = useState(true);
   const [subjects, setSubjects] = useState([]);
-  const [buttonState, setButtonState] = useState(true);
-  const [selectedSubstitutes, setSelectedSubstitutes] = useState([]);
+  const [selectedSubstitutes, setSelectedSubstitutes] =
+    useState<GridRowSelectionModel>({ type: 'include', ids: new Set() });
   const [lukioChecked, setLukioChecked] = useState(false);
   const [ylakouluChecked, setYlakouluChecked] = useState(false);
   const [posts, setPosts] = useState([]);
@@ -45,11 +46,20 @@ export default function Home() {
     }
   };
 
+  const createPressed = async () => {
+    if (!selectedTime[0] || !selectedTime[1]) return;
+    const postCode = await createPost();
+    if (!postCode) return;
+    
+    const date = constructDate(selectedDate, selectedTime);
+    sendEmail(selectedSubstitutes, selectedSubject, date, postCode);
+  };
+
   useEffect(() => {
     const fetchSubjects = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/getsubjects"
+          "http://localhost:5000/api/getsubjects",
         );
         const tempSub = response.data;
         const subjectNames = tempSub.map((subject) => subject.name);
@@ -95,15 +105,10 @@ export default function Home() {
       });
       if (response.data.length > 0) {
         setSubstitutes(response.data);
-        setButtonState(false);
       }
     } catch (error) {
       console.error("Error fetching subs", error);
     }
-  };
-
-  const handleSubstituteSelected = (newSubs) => {
-    setSelectedSubstitutes(newSubs);
   };
 
   const createPost = async () => {
@@ -132,16 +137,6 @@ export default function Home() {
     } catch (err) {
       console.error("Error creating post:", err);
     }
-  };
-
-  const emailPressed = async () => {
-    const postCode = await createPost();
-    await sendEmail(
-      selectedSubstitutes,
-      selectedSubject,
-      selectedDate,
-      postCode
-    );
   };
 
   return (
@@ -186,17 +181,15 @@ export default function Home() {
             </div>
             <div className="flex flex-row justify-between">
               <FetchSubsButton fetchSubs={fetchSubs} />
-              {selectedSubstitutes.length !== 0 && (
-                <CreatePostButton
-                  sendEmail={emailPressed}
-                  buttonState={buttonState}
-                />
-              )}
             </div>
             <SubList
               substitutes={substitutes}
-              substituteSelected={handleSubstituteSelected}
+              selectedSubstitutes={selectedSubstitutes}
+              setSelectedSubstitutes={setSelectedSubstitutes}
             />
+            <button onClick={createPressed}>
+              <p className="text-black">Luo ilmoitus</p>
+            </button>
           </div>
         </div>
       )}
