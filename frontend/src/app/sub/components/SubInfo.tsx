@@ -2,11 +2,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import Calendar from "./fields/Calendar";
 import { SubPostList } from "./index";
-import { TimeSelect } from ".";
 import { TimePicker } from "./fields";
-import { SelectedTime } from "../../../types";
 
 const SubInfo = ({ userInfo, userPosts }) => {
   const [loading, setLoading] = useState(true);
@@ -20,10 +17,12 @@ const SubInfo = ({ userInfo, userPosts }) => {
   }, [userInfo.selectedTimes]);
 
   const updateDates = async () => {
-    const token = localStorage.getItem("token")
     const response = await axios.post(
       "http://localhost:5000/api/updatedates",
-      { token: token, selectedTimes: Array.from(selectedTimes) },
+      {
+        selectedTimes: Array.from(selectedTimes),
+      },
+      { withCredentials: true },
     );
     if (response.status === 200) {
       alert(response.data.message);
@@ -54,7 +53,6 @@ const SubInfo = ({ userInfo, userPosts }) => {
           </button>
           <SubPostList userPosts={userPosts} />
         </div>
-
       </>
     </div>
   );

@@ -22,15 +22,18 @@ export default function Home() {
 
   const login = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/api/login", {
-        email,
-        password,
-      });
-      const token = response.data.token;
-      localStorage.setItem("token", token);
-      const user = jwtDecode(token);
-      console.log("Logged in user:", user);
-      router.push(`/sub/${token}`);
+      const response = await axios.post(
+        "http://localhost:5000/api/login",
+        {
+          email,
+          password,
+        },
+        { withCredentials: true },
+      );
+      const userData = response.data.user;
+      console.log("Logged in user info:", userData);
+
+      router.push("/sub");
     } catch (error) {
       console.error("Error logging in:", error);
       alert("Väärä sähköposti tai salasana");
@@ -50,13 +53,18 @@ export default function Home() {
           </p>
           <div className="flex flex-col gap-5">
             <EmailField email={email} updateEmail={updateEmail} />
-            <PasswordField password={password} updatePassword={updatePassword} />
+            <PasswordField
+              password={password}
+              updatePassword={updatePassword}
+            />
           </div>
           <button
             onClick={login}
             className="mt-2 bg-zinc-900 rounded-xl p-4 hover:bg-zinc-800 transition-colors duration-200"
           >
-            <p className="text-white text-lg font-semibold tracking-wide">Kirjaudu sisään</p>
+            <p className="text-white text-lg font-semibold tracking-wide">
+              Kirjaudu sisään
+            </p>
           </button>
           <div className="flex flex-row gap-2 pt-2 justify-center items-center">
             <p className="text-zinc-500 text-sm">Ei vielä käyttäjää?</p>

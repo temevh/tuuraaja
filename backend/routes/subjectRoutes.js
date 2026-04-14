@@ -1,8 +1,5 @@
 import express from "express";
-import {
-  getSubjects,
-  addSubject,
-} from "../controllers/subjectController.js";
+import { getSubjects, addSubject } from "../controllers/subjectController.js";
 
 const router = express.Router();
 

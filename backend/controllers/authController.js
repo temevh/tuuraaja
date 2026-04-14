@@ -32,8 +32,18 @@ export const login = async (req, res) => {
       return res.status(401).json({ error: "Väärä sähköposti tai salasana" });
     }
 
-    const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+    const token = jwt.sign(
+      { email: user.email, id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      },
+    );
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: "strict",
+      maxAge: 24 * 60 * 60 * 1000,
     });
 
     await collection.updateOne(
@@ -41,7 +51,12 @@ export const login = async (req, res) => {
       { $set: { token: token } },
     );
 
-    res.status(200).json({ token });
+    res
+      .status(200)
+      .json({
+        message: "Login succesfull",
+        user: { id: user._id, role: user.role },
+      });
   } catch (err) {
     res.status(500).json({ error: "Error logging in" });
   }

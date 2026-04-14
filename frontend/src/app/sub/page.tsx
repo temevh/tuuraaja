@@ -1,31 +1,31 @@
 "use client";
-import SubInfo from "../components/SubInfo";
+import SubInfo from "./components/SubInfo";
 import axios from "axios";
-
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { User } from "../../../types";
+import { User } from "../../types";
 
 const UserPage = () => {
+  const router = useRouter();
+
   const [userInfo, setUserInfo] = useState<User>(null);
   const [userPosts, setUserPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
     const fetchSubInfo = async () => {
       try {
         const response = await axios.get(
           "http://localhost:5000/api/getsubinfo",
           {
-            params: {
-              token: token,
-            },
+            withCredentials: true,
           },
         );
         setUserInfo(response.data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching sub info", error);
+        router.push("/");
       }
     };
     fetchSubInfo();
@@ -38,9 +38,8 @@ const UserPage = () => {
           const response = await axios.get(
             "http://localhost:5000/api/getposts",
             {
-              params: {
-                code: post,
-              },
+              params: { code: post },
+              withCredentials: true,
             },
           );
           return response.data;
@@ -53,9 +52,7 @@ const UserPage = () => {
       }
     };
 
-    if (userInfo && userInfo.posts) {
-      fetchUserPosts();
-    }
+    if (userInfo?.posts) fetchUserPosts();
   }, [userInfo]);
 
   return (
