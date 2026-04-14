@@ -32,8 +32,15 @@ export default function Home() {
       );
       const userData = response.data.user;
       console.log("Logged in user info:", userData);
+      const userRole = userData.role;
 
-      router.push("/sub");
+      if (userRole === "admin") {
+        router.push("/main");
+      } else if (userRole === "substitute") {
+        router.push("/sub");
+      } else {
+        router.push("/");
+      }
     } catch (error) {
       console.error("Error logging in:", error);
       alert("Väärä sähköposti tai salasana");
