@@ -1,4 +1,5 @@
 import { database } from "../config/db.js";
+import { ObjectId } from "mongodb";
 
 export const getSubs = async (req, res) => {
   try {
@@ -29,10 +30,12 @@ export const getSubs = async (req, res) => {
 
 export const getSubInfo = async (req, res) => {
   try {
-    const { token } = req.query;
+    const userId = req.user.id;
+
+    //const { token } = req.query;
     const collection = database.collection("users");
 
-    const result = await collection.findOne({ token: token });
+    const result = await collection.findOne({ _id: new ObjectId(userId) });
     console.log("found info of substitute", result);
 
     if (!result) {
@@ -40,9 +43,11 @@ export const getSubInfo = async (req, res) => {
     }
 
     const data = {
-      token: token,
+      id: result._id,
       name: result.firstName,
       selectedTimes: result.selectedTimes,
+      posts: result.posts || [],
+      role: result.role,
     };
 
     res.status(200).json(data);
@@ -92,22 +97,24 @@ export const addSub = async (req, res) => {
 
 export const updateDates = async (req, res) => {
   try {
-    const { token, selectedTimes } = req.body;
-    console.log("token", token);
-    console.log("selectedTimes", selectedTimes);
+    const userId = req.user.id;
+    const { selectedTimes } = req.body;
+
+    console.log("Updating dates for user ID:", userId);
+
     const collection = database.collection("users");
 
     const result = await collection.updateOne(
-      { token: token },
+      { _id: new ObjectId(userId) },
       { $set: { selectedTimes: selectedTimes } },
     );
-
-    if (result.modifiedCount === 0) {
-      return res.status(404).json({ message: "Virhe päivien päivittämisessä" });
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ message: "Käyttäjää ei löytynyt" });
     }
+
     res.status(200).json({ message: "Tiedot päivitetty onnistuneesti" });
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "An error occurred while updating info" });
+    console.error("Update Error:", err);
+    res.status(500).json({ error: "Palvelinvirhe tietoja päivitettäessä" });
   }
 };
