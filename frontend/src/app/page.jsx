@@ -4,8 +4,8 @@ import PasswordField from "./register/components/PasswordField";
 import { EmailField } from "./sub/components";
 import { useState } from "react";
 import axios from "axios";
-
 import { jwtDecode } from "jwt-decode";
+import Button from "./components/Button";
 
 export default function Home() {
   const router = useRouter();
@@ -69,37 +69,34 @@ export default function Home() {
               updatePassword={updatePassword}
             />
           </div>
-          <button
-            onClick={login}
-            className="mt-2 bg-zinc-900 rounded-xl p-4 hover:bg-zinc-800 transition-colors duration-200"
-          >
-            <p className="text-white text-lg font-semibold tracking-wide">
-              Kirjaudu sisään
-            </p>
-          </button>
+          <Button variant="primary" size="lg" fullWidth onClick={login}>
+            Kirjaudu sisään
+          </Button>
           <div className="flex flex-row gap-2 pt-2 justify-center items-center">
             <p className="text-zinc-500 text-sm">Ei vielä käyttäjää?</p>
-            <button onClick={registerClicked} className="group">
-              <p className="text-zinc-900 text-sm font-medium group-hover:text-zinc-600 transition-colors duration-200">
-                Luo profiili
-              </p>
-            </button>
+            <Button variant="ghost" size="sm" onClick={registerClicked}>
+              Luo profiili
+            </Button>
           </div>
 
           <div className="mt-4 pt-4 border-t border-zinc-100 flex flex-col gap-2">
             <div className="flex gap-2">
-              <button
+              <Button
+                variant="secondary"
+                size="md"
+                fullWidth
                 onClick={() => login("sub@mail.com", "Testi123!")}
-                className="flex-1 bg-zinc-100 hover:bg-zinc-200 rounded-lg p-3 transition-colors duration-200"
               >
-                <p className="text-zinc-700 text-sm font-medium">Sub</p>
-              </button>
-              <button
+                Sub
+              </Button>
+              <Button
+                variant="secondary"
+                size="md"
+                fullWidth
                 onClick={() => login("admin@mail.com", "Testi123!")}
-                className="flex-1 bg-zinc-100 hover:bg-zinc-200 rounded-lg p-3 transition-colors duration-200"
               >
-                <p className="text-zinc-700 text-sm font-medium">Admin</p>
-              </button>
+                Admin
+              </Button>
             </div>
           </div>
         </div>

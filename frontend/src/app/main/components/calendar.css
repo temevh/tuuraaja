@@ -4,7 +4,8 @@
 }
 
 .custom-day:hover {
-  background-color: #f4f4f5;
+  background-color: #888888a2;
+  color: #18181b;
 }
 
 .custom-day.selected {
@@ -27,16 +28,16 @@
   border-radius: 20%;
   margin-left: 1rem;
   height: 2rem;
-  width: 3rem;  
-  color: #18181b; 
+  width: 3rem;
+  color: #18181b;
 }
 
 .custom-arrow:hover {
-  background-color: #e4e4e7; 
+  background-color: #3d3d44;
   color: #18181b;
 }
 
-.custom-today{
-  color: #18181b;
+.custom-today {
+  color: #ff0000;
   font-weight: bold;
 }

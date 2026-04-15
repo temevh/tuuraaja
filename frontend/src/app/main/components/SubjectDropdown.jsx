@@ -14,7 +14,7 @@ const SubjectDropdown = ({ selectedSubject, onSubjectChange, subjects }) => {
   }, [subjects]);
 
   return (
-    <FormControl fullWidth>
+    <FormControl style={{ width: "300px" }}>
       <InputLabel id="subject-select-label">Oppiaine</InputLabel>
       <Select
         labelId="subject-select-label"

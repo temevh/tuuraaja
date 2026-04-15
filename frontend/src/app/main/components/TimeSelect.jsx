@@ -24,10 +24,12 @@ const TimeSelect = ({ setSelectedTime }) => {
   return (
     <div className="pb-2 pt-2">
       <div className="flex flex-row gap-2 items-center">
-        <p className="text-sm font-bold tracking-tight text-zinc-500 mr-2 uppercase">Aika</p>
+        <p className="text-sm font-bold tracking-tight text-zinc-500 mr-2 uppercase">
+          Aika
+        </p>
         <select
           className="p-2 rounded-xl bg-white border border-zinc-200 text-zinc-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-zinc-900 transition-shadow transition-colors"
-          value={selectedHour || ""}
+          value={selectedHour ?? ""}
           onChange={(e) => changeHour(e.target.value)}
         >
           <option value="" disabled>
@@ -42,7 +44,7 @@ const TimeSelect = ({ setSelectedTime }) => {
         <p className="text-2xl text-zinc-300 font-bold mb-1">:</p>
         <select
           className="p-2 rounded-xl bg-white border border-zinc-200 text-zinc-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-zinc-900 transition-shadow transition-colors"
-          value={selectedMinute || ""}
+          value={selectedMinute ?? ""}
           onChange={(e) => changeMinute(e.target.value)}
         >
           <option value="" disabled>

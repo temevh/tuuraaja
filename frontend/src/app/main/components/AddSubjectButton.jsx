@@ -4,10 +4,11 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Button,
+  Button as MuiButton,
   TextField,
 } from "@mui/material";
 import axios from "axios";
+import Button from "../../components/Button";
 
 const AddSubjectButton = () => {
   const [open, setOpen] = useState(false);
@@ -28,10 +29,9 @@ const AddSubjectButton = () => {
 
   const handleAddSubject = async () => {
     try {
-      console.log("Attempting to add subject:", subjectName);
       const response = await axios.post(
         "http://localhost:5000/api/addsubject",
-        { name: subjectName }
+        { name: subjectName },
       );
 
       const exists = response.data.exists;
@@ -49,13 +49,9 @@ const AddSubjectButton = () => {
 
   return (
     <div>
-      <button
-        variant="contained"
-        className="bg-zinc-900 text-white rounded-xl px-4 py-2 hover:bg-zinc-800 transition-colors duration-200 shadow-sm font-medium"
-        onClick={handleClickOpen}
-      >
+      <Button variant="secondary" size="md" onClick={handleClickOpen}>
         Lisää oppiaine
-      </button>
+      </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Lisää uusi oppiaine</DialogTitle>
         <DialogContent>
@@ -72,12 +68,12 @@ const AddSubjectButton = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <MuiButton onClick={handleClose} color="primary">
             Sulje
-          </Button>
-          <Button onClick={handleAddSubject} color="primary">
+          </MuiButton>
+          <MuiButton onClick={handleAddSubject} color="primary">
             Lisää
-          </Button>
+          </MuiButton>
         </DialogActions>
       </Dialog>
     </div>

@@ -10,9 +10,9 @@ import {
   TimeSelect,
   LevelCheckboxes,
 } from "./components/index";
-import { FetchSubsButton } from "./components/Buttons";
 import { generateToken, sendEmail } from "../utils/functions";
 import PostList from "./components/PostsList";
+import Button from "../components/Button";
 
 export default function Home() {
   const [substitutes, setSubstitutes] = useState([]);
@@ -22,7 +22,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [subjects, setSubjects] = useState([]);
   const [selectedSubstitutes, setSelectedSubstitutes] =
-    useState<GridRowSelectionModel>({ type: 'include', ids: new Set() });
+    useState<GridRowSelectionModel>({ type: "include", ids: new Set() });
   const [lukioChecked, setLukioChecked] = useState(false);
   const [ylakouluChecked, setYlakouluChecked] = useState(false);
   const [posts, setPosts] = useState([]);
@@ -50,7 +50,7 @@ export default function Home() {
     if (!selectedTime[0] || !selectedTime[1]) return;
     const postCode = await createPost();
     if (!postCode) return;
-    
+
     const date = constructDate(selectedDate, selectedTime);
     sendEmail(selectedSubstitutes, selectedSubject, date, postCode);
   };
@@ -151,14 +151,6 @@ export default function Home() {
       ) : (
         <div className="w-full max-w-5xl bg-white border border-zinc-200 rounded-2xl shadow-sm p-10">
           <div className="flex flex-col gap-2">
-            <div className="flex flex-row gap-6">
-              <SubjectDropdown
-                selectedSubject={selectedSubject}
-                onSubjectChange={setSelectedSubject}
-                subjects={subjects}
-              />
-              <AddSubjectButton />
-            </div>
             <div className="flex flex-row gap-4 w-full">
               <div className="w-1/2">
                 <Calendar
@@ -179,17 +171,27 @@ export default function Home() {
                 <PostList posts={posts} />
               </div>
             </div>
+            <span className="flex flex-row gap-6">
+              <SubjectDropdown
+                selectedSubject={selectedSubject}
+                onSubjectChange={setSelectedSubject}
+                subjects={subjects}
+              />
+              <AddSubjectButton />
+            </span>
             <div className="flex flex-row justify-between">
-              <FetchSubsButton fetchSubs={fetchSubs} />
+              <Button variant="primary" size="lg" onClick={fetchSubs}>
+                Hae sijaisia
+              </Button>
             </div>
             <SubList
               substitutes={substitutes}
               selectedSubstitutes={selectedSubstitutes}
               setSelectedSubstitutes={setSelectedSubstitutes}
             />
-            <button onClick={createPressed}>
-              <p className="text-black">Luo ilmoitus</p>
-            </button>
+            <Button variant="primary" size="lg" onClick={createPressed}>
+              Luo ilmoitus
+            </Button>
           </div>
         </div>
       )}
