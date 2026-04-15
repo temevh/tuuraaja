@@ -61,3 +61,8 @@ export const login = async (req, res) => {
     res.status(500).json({ error: "Error logging in" });
   }
 };
+
+export const getMe = (req, res) => {
+  // req.user is populated by authenticateToken middleware
+  res.status(200).json({ role: req.user.role, id: req.user.id });
+};

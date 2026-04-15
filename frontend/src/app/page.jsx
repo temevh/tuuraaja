@@ -20,13 +20,17 @@ export default function Home() {
     setPassword(event.target.value);
   };
 
-  const login = async () => {
+  const login = async (overrideEmail, overridePassword) => {
+    const loginEmail =
+      typeof overrideEmail === "string" ? overrideEmail : email;
+    const loginPassword =
+      typeof overridePassword === "string" ? overridePassword : password;
     try {
       const response = await axios.post(
         "http://localhost:5000/api/login",
         {
-          email,
-          password,
+          email: loginEmail,
+          password: loginPassword,
         },
         { withCredentials: true },
       );
@@ -80,6 +84,23 @@ export default function Home() {
                 Luo profiili
               </p>
             </button>
+          </div>
+
+          <div className="mt-4 pt-4 border-t border-zinc-100 flex flex-col gap-2">
+            <div className="flex gap-2">
+              <button
+                onClick={() => login("sub@mail.com", "Testi123!")}
+                className="flex-1 bg-zinc-100 hover:bg-zinc-200 rounded-lg p-3 transition-colors duration-200"
+              >
+                <p className="text-zinc-700 text-sm font-medium">Sub</p>
+              </button>
+              <button
+                onClick={() => login("admin@mail.com", "Testi123!")}
+                className="flex-1 bg-zinc-100 hover:bg-zinc-200 rounded-lg p-3 transition-colors duration-200"
+              >
+                <p className="text-zinc-700 text-sm font-medium">Admin</p>
+              </button>
+            </div>
           </div>
         </div>
       </div>
